@@ -44,11 +44,12 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(3);
+	__webpack_require__(1);
 	__webpack_require__(14);
-	__webpack_require__(5);
-	var header = __webpack_require__(7);
-	var share = __webpack_require__(2);
+
+	console.log(1)
+	var header = __webpack_require__(10);
+	var share = __webpack_require__(13);
 
 	$(function() {
 	    $('#banner').unslider({
@@ -63,123 +64,44 @@
 	            url: 'http://www.baidu.com',
 	            title: '测试share功能'
 	        })
-	        
+	    });
+
+	    $('.action-card').click(function() {
+	        window.open('/demo/detail.html', '_blank');
 	    })
 	});
 
 /***/ },
-/* 1 */,
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(2);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./button.less", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./button.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// http://www.jiathis.com/help/html/share-with-jiathis-api
-	// http://www.jiathis.com/help/html/support-media-website
-	module.exports = function share(options) {
-	    options = options || {};
-	    if (!options.webid || !options.url) {
-	        return;
-	    }
-
-	    window.open('http://www.jiathis.com/send/?webid=' +
-	        options.webid + '&url=' + 
-	        options.url + '&title=' +
-	        options.title);
-	}
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(4);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./normalize.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./normalize.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(12)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "/*! normalize.css v3.0.2 | MIT License | git.io/normalize */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n  text-decoration: none;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box; /* 2 */\n  box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}", ""]);
-
-	// exports
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(6);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./list.less", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./list.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(12)();
-	// imports
-	exports.i(__webpack_require__(4), "");
-
-	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n}\n#content #banner {\n  position: relative;\n  overflow: auto;\n  height: 700px!important;\n}\n#content #banner ul {\n  margin: 0;\n  padding: 0;\n}\n#content #banner ul li {\n  position: relative;\n  float: left;\n}\n#content #banner ul li img {\n  width: 1190px;\n}\n#content #banner ul li .banner-brief {\n  position: absolute;\n  top: 40px;\n  right: 70px;\n  width: 410px;\n  border-bottom: 1px solid #bebebe;\n  font-family: 'HeiTi SC';\n  font-size: 18px;\n}\n#content #banner ul li .banner-brief .banner-type {\n  font-size: 36px;\n  margin: 0;\n}\n#content #banner ul li .banner-brief .banner-name {\n  font-size: 48px;\n  margin: 20px 0 10px;\n}\n#content #banner ul li .banner-brief .banner-time {\n  height: 30px;\n  line-height: 30px;\n  margin: 8px 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -90px;\n}\n#content #banner ul li .banner-brief .banner-location {\n  height: 30px;\n  line-height: 30px;\n  margin: 8px 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -15px;\n}\n#content #banner ul li .banner-brief .banner-price {\n  font-size: 40px;\n  color: #ff4545;\n  position: absolute;\n  bottom: 10px;\n  right: 10px;\n}\n#content #banner li {\n  list-style: none;\n}\n#content #banner .dots {\n  position: absolute;\n  bottom: 30px;\n  right: 30px;\n  margin: 0;\n}\n#content #banner .dots .dot {\n  float: left;\n  width: 18px;\n  height: 18px;\n  line-height: 18px;\n  border: 1px solid #f2f2f2;\n  background-color: white;\n  margin-left: 6px;\n  text-indent: -9999px;\n  cursor: pointer;\n}\n#content #banner .dots .dot.active {\n  background-color: #ff7300;\n}\n#content #filter {\n  height: 80px;\n  line-height: 80px;\n  text-align: center;\n  background-color: white;\n  font-size: 30px;\n}\n#content #filter #hot {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #category {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #list {\n  padding: 30px 30px 10px 30px;\n}\n#content #list ul {\n  margin: 0;\n  padding: 0;\n}\n#content #list ul li.action-card {\n  position: relative;\n  float: left;\n  width: 32%;\n  margin-right: 2%;\n  margin-bottom: 20px;\n  list-style: none;\n  color: #727272;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #list ul li.action-card img {\n  width: 100%;\n  -webkit-border-radius: 10px 10px 0 0;\n  border-radius: 10px 10px 0 0;\n  background-clip: padding-box;\n}\n#content #list ul li.action-card .brief-info {\n  margin: 10px;\n  border-bottom: 1px solid #f1f1f1;\n}\n#content #list ul li.action-card .brief-info .brief-important .title {\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #list ul li.action-card .brief-info .brief-important .price {\n  float: right;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #list ul li.action-card .brief-info .brief-important .hot-tag {\n  float: right;\n  padding: 2px;\n  margin-top: 5px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #list ul li.action-card .brief-info .host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #list ul li.action-card .brief-info .criteria {\n  margin: 12px 0;\n}\n#content #list ul li.action-card .brief-info .criteria p {\n  margin: 6px 0;\n}\n#content #list ul li.action-card .items {\n  padding: 0 10px 12px 10px;\n}\n#content #list ul li.action-card .items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #list ul li.action-card .items .location {\n  background-position: -216px -15px;\n}\n#content #list ul li.action-card .items .num {\n  background-position: -216px -51px;\n}\n#content #list ul li.action-card .items .time {\n  background-position: -216px -90px;\n}\n#content #list ul li.action-card .items .extra {\n  background-position: -216px -127px;\n}\n#content #list ul li.action-card.last {\n  margin: 0;\n}\n#content #list ul li.action-card:hover {\n  cursor: pointer;\n  -webkit-box-shadow: 2px 2px 0 0 #dadada;\n  box-shadow: 2px 2px 0 0 #dadada;\n}\n#content #list ul li.action-card .like {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -87px -58px;\n}\n#content #list ul li.action-card .like.selected {\n  background-position: -87px -15px;\n}\n#content #list ul li.action-card .share {\n  position: absolute;\n  top: 10px;\n  right: 70px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #commercial img {\n  width: 100%;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(10);
-
-	// export something which is related to header
-	module.exports = function() {}
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(12)();
+	exports = module.exports = __webpack_require__(3)();
 	// imports
 
 
@@ -190,7 +112,63 @@
 
 
 /***/ },
-/* 9 */
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -415,16 +393,43 @@
 
 
 /***/ },
+/* 5 */,
+/* 6 */,
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "/*! normalize.css v3.0.2 | MIT License | git.io/normalize */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n  text-decoration: none;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box; /* 2 */\n  box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 8 */,
+/* 9 */,
 /* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(11);
+
+	// export something which is related to header
+	module.exports = function() {}
+
+/***/ },
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(11);
+	var content = __webpack_require__(12);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
+	var update = __webpack_require__(4)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -441,12 +446,12 @@
 	}
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(12)();
+	exports = module.exports = __webpack_require__(3)();
 	// imports
-	exports.i(__webpack_require__(4), "");
+	exports.i(__webpack_require__(7), "");
 
 	// module
 	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#header {\n  height: 48px;\n  line-height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  padding-left: 12px;\n  font-size: 34px;\n  color: #5e5e5e;\n}\n#header #area {\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  background: url(/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n}\n#header .action {\n  float: right;\n  margin-right: 12px;\n}\n#header .action button {\n  height: 28px;\n  line-height: 24px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub button {\n  padding-left: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #search input {\n  width: 130px;\n  height: 24px;\n  line-height: 24px;\n  padding-left: 36px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 12px;\n  border-radius: 12px;\n  background-clip: padding-box;\n}\n", ""]);
@@ -455,80 +460,41 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
+	// http://www.jiathis.com/help/html/share-with-jiathis-api
+	// http://www.jiathis.com/help/html/support-media-website
+	module.exports = function share(options) {
+	    options = options || {};
+	    if (!options.webid || !options.url) {
+	        return;
+	    }
 
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
+	    window.open('http://www.jiathis.com/send/?webid=' +
+	        options.webid + '&url=' + 
+	        options.url + '&title=' +
+	        options.title);
+	}
 
 /***/ },
-/* 13 */,
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(8);
+	var content = __webpack_require__(15);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
+	var update = __webpack_require__(4)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./button.less", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./button.less");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./list.less", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./list.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -536,6 +502,20 @@
 		// When the module is disposed, remove the <style> tags
 		module.hot.dispose(function() { update(); });
 	}
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+	exports.i(__webpack_require__(7), "");
+
+	// module
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n}\n#content #banner {\n  position: relative;\n  overflow: auto;\n  height: 700px!important;\n}\n#content #banner ul {\n  margin: 0;\n  padding: 0;\n}\n#content #banner ul li {\n  position: relative;\n  float: left;\n}\n#content #banner ul li img {\n  width: 1190px;\n}\n#content #banner ul li .banner-brief {\n  position: absolute;\n  top: 40px;\n  right: 70px;\n  width: 410px;\n  border-bottom: 1px solid #bebebe;\n  font-family: 'HeiTi SC';\n  font-size: 18px;\n}\n#content #banner ul li .banner-brief .banner-type {\n  font-size: 36px;\n  margin: 0;\n}\n#content #banner ul li .banner-brief .banner-name {\n  font-size: 48px;\n  margin: 20px 0 10px;\n}\n#content #banner ul li .banner-brief .banner-time {\n  height: 30px;\n  line-height: 30px;\n  margin: 8px 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -90px;\n}\n#content #banner ul li .banner-brief .banner-location {\n  height: 30px;\n  line-height: 30px;\n  margin: 8px 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -15px;\n}\n#content #banner ul li .banner-brief .banner-price {\n  font-size: 40px;\n  color: #ff4545;\n  position: absolute;\n  bottom: 10px;\n  right: 10px;\n}\n#content #banner li {\n  list-style: none;\n}\n#content #banner .dots {\n  position: absolute;\n  bottom: 30px;\n  right: 30px;\n  margin: 0;\n}\n#content #banner .dots .dot {\n  float: left;\n  width: 18px;\n  height: 18px;\n  line-height: 18px;\n  border: 1px solid #f2f2f2;\n  background-color: white;\n  margin-left: 6px;\n  text-indent: -9999px;\n  cursor: pointer;\n}\n#content #banner .dots .dot.active {\n  background-color: #ff7300;\n}\n#content #filter {\n  height: 80px;\n  line-height: 80px;\n  text-align: center;\n  background-color: white;\n  font-size: 30px;\n}\n#content #filter #hot {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #category {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #list {\n  padding: 30px 30px 10px 30px;\n}\n#content #list ul {\n  margin: 0;\n  padding: 0;\n}\n#content #list ul li.action-card {\n  position: relative;\n  float: left;\n  width: 32%;\n  margin-right: 2%;\n  margin-bottom: 20px;\n  list-style: none;\n  color: #727272;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #list ul li.action-card img {\n  width: 100%;\n  -webkit-border-radius: 10px 10px 0 0;\n  border-radius: 10px 10px 0 0;\n  background-clip: padding-box;\n}\n#content #list ul li.action-card .brief-info {\n  margin: 10px;\n  border-bottom: 1px solid #f1f1f1;\n}\n#content #list ul li.action-card .brief-info .brief-important .title {\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #list ul li.action-card .brief-info .brief-important .price {\n  float: right;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #list ul li.action-card .brief-info .brief-important .hot-tag {\n  float: right;\n  padding: 2px;\n  margin-top: 5px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #list ul li.action-card .brief-info .host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #list ul li.action-card .brief-info .criteria {\n  margin: 12px 0;\n}\n#content #list ul li.action-card .brief-info .criteria p {\n  margin: 6px 0;\n}\n#content #list ul li.action-card .items {\n  padding: 0 10px 12px 10px;\n}\n#content #list ul li.action-card .items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #list ul li.action-card .items .location {\n  background-position: -216px -15px;\n}\n#content #list ul li.action-card .items .num {\n  background-position: -216px -51px;\n}\n#content #list ul li.action-card .items .time {\n  background-position: -216px -90px;\n}\n#content #list ul li.action-card .items .extra {\n  background-position: -216px -127px;\n}\n#content #list ul li.action-card.last {\n  margin: 0;\n}\n#content #list ul li.action-card:hover {\n  cursor: pointer;\n  -webkit-box-shadow: 2px 2px 0 0 #dadada;\n  box-shadow: 2px 2px 0 0 #dadada;\n}\n#content #list ul li.action-card .like {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -87px -58px;\n}\n#content #list ul li.action-card .like.selected {\n  background-position: -87px -15px;\n}\n#content #list ul li.action-card .share {\n  position: absolute;\n  top: 10px;\n  right: 70px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #commercial img {\n  width: 100%;\n}\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

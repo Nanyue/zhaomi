@@ -1,7 +1,8 @@
 // webpack.config.js
 module.exports = {
   entry: {
-    list: './modules/list/js/list.js'
+    list: './modules/list/js/list.js',
+    detail: './modules/detail/js/detail.js'
   },
   output: {
     path: 'build',
