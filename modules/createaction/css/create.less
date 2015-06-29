@@ -1,5 +1,6 @@
 @import '../../../lib/common/common.less';
 
+
 body {
     background-color: #eaeaea!important;
 }
@@ -13,13 +14,50 @@ body {
         img {
             width: 100%;
         }
-        #step {
+        #progress {
             position: absolute;
-            top: 15px;
-            left: 100px;
-            width: 300px;
-            height: 50px;
-            .icons-bg(-32px -720px);
+            top: 20px;
+            left: 400px;
+        }
+    }
+    #criteria-operation {
+        position: fixed;
+        top: 150px;
+        left: 0;
+        width: 100px;
+        height: 400px;
+        ul {
+            margin: 0;
+            padding: 0;
+            li {
+                list-style: none;
+                display: block;
+                width: 100px;
+                height: 40px;
+                padding-top: 60px;
+                background-color: #3f3f3f;
+                text-align: center;
+                color: white;
+                cursor: pointer;
+                &.radio {
+                    .icons-bg(-93px -406px);
+                }
+                &.checkbox {
+                    .icons-bg(-93px -500px);
+                }
+                &.question {
+                    .icons-bg(-97px -603px);
+                }
+                &.image {
+                    .icons-bg(-98px -692px);
+                }
+                &.radio, &.checkbox, &.question, &.image {
+                    background-color: #3f3f3f;
+                    &.selected {
+                        background-color: #8b8b8b;
+                    }
+                }
+            }
         }
     }
     #action-container {
@@ -269,6 +307,61 @@ body {
         }
         #action-criteria {
             margin-top: 80px;
+            &.criteria-c {
+                margin-top: 0;
+                #action-questions {
+                    .action-item {
+                        .criteria-q {
+                            padding-bottom: 20px;
+                            .criteria-seqno {
+                                display: inline-block;
+                                width: 30px;
+                                height: 30px;
+                                line-height: 30px;
+                                float: left;
+                            }
+                            .criteria-q-input {
+                                float: left;
+                                width: 300px;
+                                height: 30px;
+                                border: none;
+                                border-bottom: 1px solid #ccc;
+                            }
+                        }
+                        .action-answers {
+                            .criteria-a-input {
+                                float: left;
+                                width: 100px;
+                                height: 30px;
+                                border: none;
+                                border-bottom: 1px solid #ccc;
+                            }
+                            ul {
+                                li {
+
+                                }
+                            }
+                        }
+                        .criteria-del {
+                            display: none;
+                            width: 30px;
+                            height: 30px;
+                            line-height: 30px;
+                            float: left;
+                            cursor: pointer;
+                            .icons-bg(-31px -627px);
+                        }
+                        .criteria-add {
+                            width: 32px;
+                            height: 32px;
+                            line-height: 32px;
+                            float: left;
+                            cursor: pointer;
+                            .icons-bg(-38px -700px);
+                        }
+                    }
+                }
+            }
             h2 {
                 font-family: 'HeiTi SC';
                 font-size: 34px;
@@ -284,7 +377,20 @@ body {
                         font-size: 16px;
                         color: #747474;
                     }
+                    input {
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                    
                     .action-answers {
+                        .criteria-a-input {
+                            float: left;
+                            width: 100px;
+                            height: 30px;
+                            border: none;
+                            border-bottom: 1px solid #ccc;
+                        }
                         ul {
                             margin: 0;
                             padding: 0;
@@ -352,6 +458,11 @@ body {
         .hint {
             margin: 8px 0;
             text-align: right;
+            font-size: 16px;
+            color: #727272;
+        }
+        .tips {
+            margin-bottom: 20px;
             font-size: 16px;
             color: #727272;
         }

@@ -6,6 +6,8 @@ module.exports = {
     mine: './modules/mine/js/mine.js',
     login: './modules/login/js/login.js',
     register: './modules/register/js/register.js',
+    'create-basic': './modules/createaction/js/create-basic.js',
+    'create-criteria': './modules/createaction/js/create-criteria.js',
     create: './modules/createaction/js/create.js'
   },
   output: {

@@ -50,6 +50,20 @@
 
 	var header = __webpack_require__(13);
 
+	$(function() {
+	    $('#criteria-operation').on('click', 'ul li', function() {
+
+	    })
+
+	    $('#action-container').on('mouseenter', '.criteria-q, ul li', function() {
+	        $(this).find('.criteria-del').show();
+	    }).on('mouseleave', '.criteria-q, ul li', function() {
+	        $(this).find('.criteria-del').hide();
+	    });
+
+
+	});
+
 /***/ },
 /* 1 */,
 /* 2 */,

@@ -44,8 +44,8 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(3);
-	__webpack_require__(16);
+	__webpack_require__(4);
+	__webpack_require__(21);
 
 	$(function() {
 	    $doc = $(document);
@@ -56,16 +56,17 @@
 /***/ },
 /* 1 */,
 /* 2 */,
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(4);
+	var content = __webpack_require__(5);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(7)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -82,10 +83,10 @@
 	}
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
 
 
@@ -96,7 +97,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/*
@@ -152,7 +153,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -377,13 +378,14 @@
 
 
 /***/ },
-/* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
 
 
@@ -394,21 +396,24 @@
 
 
 /***/ },
-/* 11 */,
-/* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(17);
+	var content = __webpack_require__(22);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(7)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -425,12 +430,12 @@
 	}
 
 /***/ },
-/* 17 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
-	exports.i(__webpack_require__(10), "");
+	exports.i(__webpack_require__(12), "");
 
 	// module
 	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\nbody {\n  background: url(/assets/imgs/login-bg.png) no-repeat 0 0;\n  background-size: 100%;\n  padding-bottom: 50px;\n}\nbody #header {\n  height: 40px;\n  line-height: 40px;\n  padding: 10px;\n}\nbody #header .logo {\n  font-size: 36px;\n  color: white;\n}\nbody #header .quit {\n  float: right;\n  display: inline-block;\n  width: 36px;\n  height: 36px;\n  margin-right: 10px;\n  cursor: pointer;\n  background: url(/assets/imgs/icons.png) no-repeat -88px -350px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  background-color: grey;\n}\nbody #container {\n  width: 400px;\n  margin: 160px auto 0 auto;\n}\nbody #container #login-txt {\n  text-align: center;\n  color: white;\n  font-size: 40px;\n}\nbody #container #username-c {\n  height: 40px;\n  line-height: 40px;\n  padding-left: 36px;\n  border-bottom: 1px solid white;\n  background: url(/assets/imgs/icons.png) no-repeat -220px -397px;\n}\nbody #container #pwd-c {\n  height: 40px;\n  line-height: 40px;\n  padding-left: 36px;\n  border-bottom: 1px solid white;\n  margin-top: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -223px -439px;\n}\nbody #container input {\n  width: 360px;\n  border: none;\n  color: white;\n  background-color: transparent;\n  height: 24px;\n  line-height: 24px;\n}\nbody #container input:focus {\n  outline: none;\n}\nbody #container #login-btn-c {\n  position: relative;\n  z-index: 50;\n  padding-bottom: 10px;\n  margin-top: 20px;\n}\nbody #container #login-btn-c a,\nbody #container #login-btn-c button {\n  float: right;\n  height: 36px;\n  line-height: 36px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  color: white;\n  box-sizing: border-box;\n}\nbody #container #login-btn-c .login-btn {\n  background-color: #7ed321;\n}\nbody #container #login-btn-c .register-btn {\n  border: 1px solid white;\n  background-color: transparent;\n  margin-right: 20px;\n}\nbody #container #login-splitline span {\n  display: inline-block;\n  width: 180px;\n  height: 30px;\n  border-bottom: 1px solid #eee;\n}\nbody #container #login-splitline #left-bottom {\n  float: left;\n}\nbody #container #login-splitline #right-bottom {\n  float: right;\n}\nbody #container #login-others {\n  text-align: center;\n  margin-top: -10px;\n  color: white;\n}\nbody #container #login-others #or-txt {\n  position: relative;\n  z-index: 100;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  line-height: 30px;\n  margin-top: -30px;\n}\nbody #container #login-others p {\n  font-size: 14px;\n  color: #B8B8B8;\n  text-align: center;\n}\nbody #container #login-others #socials {\n  width: 200px;\n  margin: 10px auto;\n}\nbody #container #login-others #socials span {\n  float: left;\n  display: inline-block;\n  width: 36px;\n  height: 36px;\n  margin-right: 40px;\n  cursor: pointer;\n  background: url(/assets/imgs/icons.png) no-repeat -26px -284px;\n}\nbody #container #login-others #socials span.last {\n  margin-right: 0;\n}\nbody #container #login-others #socials #qq {\n  background: url(/assets/imgs/icons.png) no-repeat -29px -350px;\n}\nbody #container #login-others #socials #sina {\n  background: url(/assets/imgs/icons.png) no-repeat -30px -418px;\n}\n", ""]);
