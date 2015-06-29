@@ -2,7 +2,11 @@
 module.exports = {
   entry: {
     list: './modules/list/js/list.js',
-    detail: './modules/detail/js/detail.js'
+    detail: './modules/detail/js/detail.js',
+    mine: './modules/mine/js/mine.js',
+    login: './modules/login/js/login.js',
+    register: './modules/register/js/register.js',
+    create: './modules/createaction/js/create.js'
   },
   output: {
     path: 'build',

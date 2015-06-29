@@ -45,10 +45,61 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(3);
-	__webpack_require__(11);
+	__webpack_require__(23);
 
 	var header = __webpack_require__(7);
-	var share = __webpack_require__(13);
+
+	$(function() {
+	    $('#city').citySelect({
+	        prov: '北京',
+	        nodata: "none"
+	    });
+
+	    $('#form_datetime_start').datetimepicker({
+	        language: 'zh-CN',
+	        weekStart: 1,
+	        autoclose: 1,
+	        startView: 1,
+	        forceParse: 0,
+	        showMeridian: 1,
+	        minView: 0,
+	        maxView: 4,
+	        format: 'yyyy-mm-dd hh:ii',
+	        initialDate: new Date()
+	    }).on('changeDate', function(ev) {
+	        var startDate = $('#startdate').val();
+
+	        $('#form_datetime_end').datetimepicker({
+	            language: 'zh-CN',
+	            weekStart: 1,
+	            autoclose: 1,
+	            startView: 1,
+	            forceParse: 0,
+	            showMeridian: 1,
+	            minView: 0,
+	            maxView: 4,
+	            format: 'yyyy-mm-dd hh:ii',
+	            startDate: startDate,
+	            initialDate: startDate
+	        })
+	    });
+
+	    var $actionTypeContainer = $('#action-type-c');
+	    var $actionTypeDroplist = $actionTypeContainer.find('#action-type-droplist');
+	    var $actionType = $actionTypeContainer.find('#action-type');
+
+	    $('#action-type-c').on('mouseenter', function() {
+	        $actionTypeDroplist.show();
+	    }).on('mouseleave', function() {
+	        $actionTypeDroplist.hide();
+	    }).on('click', 'ul li', function() {
+	        var actionTypeTxt = $(this).data('txt');
+	        var actionType = $(this).data('val');
+	        $actionTypeContainer.find('p').text(actionTypeTxt);
+	        $actionType.val(actionType);
+	        $actionTypeDroplist.hide();
+	    });
+	});
 
 /***/ },
 /* 1 */,
@@ -437,13 +488,25 @@
 
 
 /***/ },
-/* 11 */
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(12);
+	var content = __webpack_require__(24);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(6)(content, {});
@@ -452,8 +515,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./detail.less", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./detail.less");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./create.less", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./create.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -463,7 +526,7 @@
 	}
 
 /***/ },
-/* 12 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(5)();
@@ -471,28 +534,10 @@
 	exports.i(__webpack_require__(10), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n  font-family: 'HeiTi SC';\n}\n#content #detail-bg img {\n  width: 100%;\n}\n#content #detail-container {\n  position: relative;\n  width: 1000px;\n  min-height: 500px;\n  padding: 20px;\n  margin: -160px auto 0 auto;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #detail-container #detail-important .detail-name {\n  float: left;\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #detail-container #detail-important .detail-hot {\n  float: left;\n  padding: 2px;\n  margin-top: 5px;\n  margin-left: 160px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #detail-container #detail-important .detail-price {\n  float: left;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #detail-container #detail-important .like {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -87px -105px;\n}\n#content #detail-container #detail-important .like.selected {\n  background-position: -87px -17px;\n}\n#content #detail-container #detail-important .share {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  margin-right: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -28px -17px;\n}\n#content #detail-container #detail-host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #detail-container #detail-info {\n  width: 480px;\n  color: #747474;\n}\n#content #detail-container #detail-info p {\n  margin: 18px 0;\n}\n#content #detail-container #detail-items {\n  width: 480px;\n  border-top: 1px solid #ccc;\n  margin-top: 30px;\n  padding-top: 20px;\n  color: #727272;\n}\n#content #detail-container #detail-items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #detail-container #detail-items .location {\n  background-position: -216px -15px;\n}\n#content #detail-container #detail-items .num {\n  background-position: -216px -51px;\n}\n#content #detail-container #detail-items .time {\n  background-position: -216px -90px;\n}\n#content #detail-container #detail-items .extra {\n  background-position: -216px -127px;\n}\n#content #detail-container #detail-pic {\n  width: 400px;\n  position: absolute;\n  right: 20px;\n  top: 120px;\n}\n#content #detail-container #detail-pic img {\n  width: 100%;\n}\n#content #detail-container #detail-criteria {\n  margin-top: 80px;\n}\n#content #detail-container #detail-criteria h2 {\n  font-family: 'HeiTi SC';\n  font-size: 34px;\n  font-weight: 400;\n  color: #4b4b4b;\n  border-bottom: 1px solid #eee;\n  padding-bottom: 12px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item {\n  margin-bottom: 40px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item h3 {\n  font-size: 16px;\n  color: #747474;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul {\n  margin: 0;\n  padding: 0;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li {\n  float: left;\n  height: 30px;\n  line-height: 30px;\n  margin-right: 50px;\n  list-style: none;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-radio {\n  display: inline-block;\n  float: left;\n  width: 36px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -266px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-radio.selected {\n  background-position: -216px -312px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-checkbox {\n  display: inline-block;\n  float: left;\n  width: 36px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -266px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-checkbox.selected {\n  background-position: -216px -312px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item textarea {\n  width: 420px;\n  height: 100px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item input {\n  width: 200px;\n  height: 50px;\n}\n#content #detail-container #detail-apply {\n  border-top: 1px solid #eee;\n  padding: 20px 0 10px 0;\n}\n#content #detail-container #detail-apply .apply {\n  float: right;\n  background-color: #7ed321;\n  color: white;\n  height: 30px;\n  line-height: 30px;\n  border-radius: 15px;\n}\n#content #detail-container #detail-apply .share-bonus {\n  float: right;\n  padding-left: 40px;\n  height: 30px;\n  line-height: 30px;\n  border-radius: 15px;\n  margin-right: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -360px;\n}\n#content #detail-container .hint {\n  margin: 8px 0;\n  text-align: right;\n  font-size: 16px;\n  color: #727272;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\nbody {\n  background-color: #eaeaea!important;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n  font-family: 'HeiTi SC';\n}\n#content #action-bg {\n  position: relative;\n}\n#content #action-bg img {\n  width: 100%;\n}\n#content #action-bg #step {\n  position: absolute;\n  top: 15px;\n  left: 100px;\n  width: 300px;\n  height: 50px;\n  background: url(/assets/imgs/icons.png) no-repeat -32px -720px;\n}\n#content #action-container {\n  position: relative;\n  width: 1000px;\n  min-height: 500px;\n  padding: 20px 20px 80px 20px;\n  margin: -160px auto 100px auto;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #action-container #main,\n#content #action-container #secondary,\n#content #action-container #extra {\n  width: 800px;\n  padding-bottom: 20px;\n  border-bottom: 1px solid #eee;\n}\n#content #action-container #main .title,\n#content #action-container #secondary .title,\n#content #action-container #extra .title {\n  font-size: 28px;\n  color: #4B4B4B;\n  margin-top: 12px;\n  margin-bottom: 8px;\n}\n#content #action-container #main .title-img,\n#content #action-container #secondary .title-img,\n#content #action-container #extra .title-img {\n  padding-left: 36px;\n}\n#content #action-container #main .title.location,\n#content #action-container #secondary .title.location,\n#content #action-container #extra .title.location {\n  background: url(/assets/imgs/icons.png) no-repeat -216px -12px;\n}\n#content #action-container #main .title.datetime,\n#content #action-container #secondary .title.datetime,\n#content #action-container #extra .title.datetime {\n  background: url(/assets/imgs/icons.png) no-repeat -216px -84px;\n}\n#content #action-container #main .title.duration,\n#content #action-container #secondary .title.duration,\n#content #action-container #extra .title.duration {\n  background: url(/assets/imgs/icons.png) no-repeat -216px -124px;\n}\n#content #action-container #main .title.count,\n#content #action-container #secondary .title.count,\n#content #action-container #extra .title.count {\n  background: url(/assets/imgs/icons.png) no-repeat -216px -48px;\n}\n#content #action-container #main .title.money,\n#content #action-container #secondary .title.money,\n#content #action-container #extra .title.money {\n  background: url(/assets/imgs/icons.png) no-repeat -228px -642px;\n}\n#content #action-container #main .content,\n#content #action-container #secondary .content,\n#content #action-container #extra .content {\n  height: 32px;\n  line-height: 32px;\n  border: 1px solid #BEBEBE;\n}\n#content #action-container #main input,\n#content #action-container #secondary input,\n#content #action-container #extra input {\n  width: 400px;\n  text-indent: 10px;\n}\n#content #action-container #main input.time,\n#content #action-container #secondary input.time,\n#content #action-container #extra input.time {\n  width: 100px;\n  margin-right: 10px;\n}\n#content #action-container #main input#name,\n#content #action-container #secondary input#name,\n#content #action-container #extra input#name {\n  width: 500px;\n}\n#content #action-container #main #datatime-c .form_datetime,\n#content #action-container #secondary #datatime-c .form_datetime,\n#content #action-container #extra #datatime-c .form_datetime {\n  float: left;\n  width: 200px;\n  margin-right: 8px;\n}\n#content #action-container #main #datatime-c .form_datetime input,\n#content #action-container #secondary #datatime-c .form_datetime input,\n#content #action-container #extra #datatime-c .form_datetime input {\n  width: 200px;\n}\n#content #action-container #main #desc,\n#content #action-container #secondary #desc,\n#content #action-container #extra #desc {\n  width: 400px;\n  height: 200px;\n}\n#content #action-container #main #city,\n#content #action-container #secondary #city,\n#content #action-container #extra #city {\n  height: 30px;\n}\n#content #action-container #main .host {\n  float: left;\n}\n#content #action-container #main .verified {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  margin-left: 8px;\n  background: url(/assets/imgs/icons.png) no-repeat -229px -700px;\n}\n#content #action-container #main .verifiedmember {\n  float: left;\n  height: 32px;\n  line-height: 32px;\n  margin-left: 8px;\n  -webkit-border-radius: 16px;\n  border-radius: 16px;\n  background-clip: padding-box;\n}\n#content #action-container #extra #poster {\n  text-indent: 0;\n  display: none;\n}\n#content #action-container #extra #poster-t {\n  height: 36px;\n  line-height: 36px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n}\n#content #action-container #extra #poster-hint {\n  color: #ccc;\n}\n#content #action-container #extra #action-type-c {\n  position: relative;\n  width: 400px;\n}\n#content #action-container #extra #action-type-c p {\n  width: 400px;\n  height: 40px;\n  line-height: 40px;\n  padding-right: 60px;\n  margin: 0;\n  text-indent: 8px;\n  border: 1px solid #ccc;\n  background: url(/assets/imgs/icons.png) no-repeat 330px -166px;\n}\n#content #action-container #extra #action-type-c #action-type-droplist {\n  position: absolute;\n  z-index: 200;\n  top: 39px;\n  left: 0;\n  display: none;\n  margin: 0;\n  padding: 0;\n}\n#content #action-container #extra #action-type-c #action-type-droplist li {\n  display: inline-block;\n  width: 400px;\n  height: 40px;\n  line-height: 40px;\n  list-style: none;\n  background-color: #ddd;\n  text-indent: 20px;\n}\n#content #action-container #extra #action-type-c #action-type-droplist li:hover {\n  background-color: #eee;\n}\n#content #action-container #btns {\n  width: 800px;\n  margin-top: 12px;\n}\n#content #action-container #btns .next {\n  float: right;\n  height: 36px;\n  line-height: 36px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  background-color: #7ed321;\n  color: white;\n}\n#content #action-container #action-important .action-name {\n  float: left;\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #action-container #action-important .action-hot {\n  float: left;\n  padding: 2px;\n  margin-top: 5px;\n  margin-left: 160px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #action-container #action-important .action-price {\n  float: left;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #action-container #action-important .like {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -87px -105px;\n}\n#content #action-container #action-important .like.selected {\n  background-position: -87px -17px;\n}\n#content #action-container #action-important .share {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  margin-right: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -28px -17px;\n}\n#content #action-container #action-host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #action-container #action-info {\n  width: 480px;\n  color: #747474;\n}\n#content #action-container #action-info p {\n  margin: 18px 0;\n}\n#content #action-container #action-items {\n  width: 480px;\n  border-top: 1px solid #ccc;\n  margin-top: 30px;\n  padding-top: 20px;\n  color: #727272;\n}\n#content #action-container #action-items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #action-container #action-items .location {\n  background-position: -216px -15px;\n}\n#content #action-container #action-items .num {\n  background-position: -216px -51px;\n}\n#content #action-container #action-items .time {\n  background-position: -216px -90px;\n}\n#content #action-container #action-items .extra {\n  background-position: -216px -127px;\n}\n#content #action-container #action-pic {\n  width: 400px;\n  position: absolute;\n  right: 20px;\n  top: 120px;\n}\n#content #action-container #action-pic img {\n  width: 100%;\n}\n#content #action-container #action-criteria {\n  margin-top: 80px;\n}\n#content #action-container #action-criteria h2 {\n  font-family: 'HeiTi SC';\n  font-size: 34px;\n  font-weight: 400;\n  color: #4b4b4b;\n  border-bottom: 1px solid #eee;\n  padding-bottom: 12px;\n}\n#content #action-container #action-criteria #action-questions .action-item {\n  margin-bottom: 40px;\n}\n#content #action-container #action-criteria #action-questions .action-item h3 {\n  font-size: 16px;\n  color: #747474;\n}\n#content #action-container #action-criteria #action-questions .action-item .action-answers ul {\n  margin: 0;\n  padding: 0;\n}\n#content #action-container #action-criteria #action-questions .action-item .action-answers ul li {\n  float: left;\n  height: 30px;\n  line-height: 30px;\n  margin-right: 50px;\n  list-style: none;\n}\n#content #action-container #action-criteria #action-questions .action-item .action-answers ul li .z-radio {\n  display: inline-block;\n  float: left;\n  width: 36px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -266px;\n}\n#content #action-container #action-criteria #action-questions .action-item .action-answers ul li .z-radio.selected {\n  background-position: -216px -312px;\n}\n#content #action-container #action-criteria #action-questions .action-item .action-answers ul li .z-checkbox {\n  display: inline-block;\n  float: left;\n  width: 36px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -266px;\n}\n#content #action-container #action-criteria #action-questions .action-item .action-answers ul li .z-checkbox.selected {\n  background-position: -216px -312px;\n}\n#content #action-container #action-criteria #action-questions .action-item textarea {\n  width: 420px;\n  height: 100px;\n}\n#content #action-container #action-criteria #action-questions .action-item input {\n  width: 200px;\n  height: 50px;\n}\n#content #action-container #action-apply {\n  border-top: 1px solid #eee;\n  padding: 20px 0 10px 0;\n}\n#content #action-container #action-apply .apply {\n  float: right;\n  background-color: #7ed321;\n  color: white;\n  height: 30px;\n  line-height: 30px;\n  border-radius: 15px;\n}\n#content #action-container #action-apply .share-bonus {\n  float: right;\n  padding-left: 40px;\n  height: 30px;\n  line-height: 30px;\n  border-radius: 15px;\n  margin-right: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -360px;\n}\n#content #action-container .hint {\n  margin: 8px 0;\n  text-align: right;\n  font-size: 16px;\n  color: #727272;\n}\n", ""]);
 
 	// exports
 
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	// http://www.jiathis.com/help/html/share-with-jiathis-api
-	// http://www.jiathis.com/help/html/support-media-website
-	module.exports = function share(options) {
-	    options = options || {};
-	    if (!options.webid || !options.url) {
-	        return;
-	    }
-
-	    window.open('http://www.jiathis.com/send/?webid=' +
-	        options.webid + '&url=' + 
-	        options.url + '&title=' +
-	        options.title);
-	}
 
 /***/ }
 /******/ ]);
