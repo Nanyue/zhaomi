@@ -48,14 +48,17 @@ body {
                 &.question {
                     .icons-bg(-97px -603px);
                 }
-                &.image {
+                &.upload {
                     .icons-bg(-98px -692px);
                 }
-                &.radio, &.checkbox, &.question, &.image {
+                &.radio, &.checkbox, &.question, &.upload {
                     background-color: #3f3f3f;
                     &.selected {
                         background-color: #8b8b8b;
                     }
+                }
+                &:hover {
+                    background-color: #8b8b8b;
                 }
             }
         }
@@ -152,7 +155,13 @@ body {
             }
         }
         #secondary {
-
+            .city {
+                margin-left: 10px;
+            }
+            #detail-addr {
+                width: 300px;
+                margin-left: 10px;
+            }
         }
         #extra {
             #poster {
@@ -214,6 +223,7 @@ body {
                 background-color: #7ed321;
                 color: white;
             }
+
         }
         #action-important {
             .action-name {
@@ -307,6 +317,7 @@ body {
         }
         #action-criteria {
             margin-top: 80px;
+            margin-bottom: 20px;
             &.criteria-c {
                 margin-top: 0;
                 #action-questions {
@@ -399,6 +410,7 @@ body {
                                 height: 30px;
                                 line-height: 30px;
                                 margin-right: 50px;
+                                margin-bottom: 10px;
                                 list-style: none;
                                 .z-radio {
                                     display: inline-block;
@@ -431,7 +443,29 @@ body {
                         width: 200px;
                         height: 50px;
                     }
+                    input[type=file] {
+                        height: 30px;
+                    }
                 }
+            }
+        }
+        #action-criteria-btns {
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            button {
+                float: right;
+                height: 30px;
+                line-height: 30px;
+                margin-left: 12px;
+                .border-radius(15px);
+            }
+            .next {
+                background-color: #7ed321;
+                color: white;
+                border: none;
+            }
+            .prev {
+            
             }
         }
         #action-apply {
@@ -444,6 +478,7 @@ body {
                 height: 30px;
                 line-height: 30px;
                 border-radius: 15px;
+                border: none;
             }
             .share-bonus {
                 float: right;

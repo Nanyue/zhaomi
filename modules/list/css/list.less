@@ -90,15 +90,113 @@ body {
         text-align: center;
         background-color: white;
         font-size: 30px;
-        #hot {
-            padding: 0 60px;
+        #hot-wrapper {
+            position: relative;
             display: inline-block;
-            .icons-bg(164px -144px);
+            z-index: 100;
+            #hot {
+                padding: 0 60px;
+                display: inline-block;
+                .icons-bg(164px -144px);
+            }
+            #hot-droplist {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: -110px;
+                width: 400px;
+                height: 200px;
+                padding: 0 30px 20px 30px;
+                border: 1px solid #ccc;
+                background-color: white;
+                p {
+                    text-align: center;
+                    border-bottom: 1px solid #ccc;
+                    margin: 0;
+                    margin-bottom: 20px;
+                }
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    li {
+                        list-style: none;
+                        float: left;
+                        height: 50px;
+                        line-height: 50px;
+                        width: 49%;
+                        color: #727272;
+                        cursor: pointer;
+                        &:hover, &.selected {
+                            color: black;
+                        }
+
+                    }
+                }
+            }
+            &:hover {
+                z-index: 101;
+                #hot-droplist {
+                    display: block;
+                }
+            }
         }
-        #category {
-            padding: 0 60px;
+        #category-wrapper {
+            position: relative;
             display: inline-block;
-            .icons-bg(164px -144px); 
+            z-index: 100;
+            #category {
+                padding: 0 60px;
+                display: inline-block;
+                .icons-bg(164px -144px);
+            }
+            #category-droplist {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: -110px;
+                width: 400px;
+                height: 300px;
+                padding: 0 30px 20px 30px;
+                border: 1px solid #ccc;
+                background-color: white;
+                p {
+                    text-align: center;
+                    border-bottom: 1px solid #ccc;
+                    margin: 0;
+                    margin-bottom: 20px;
+                }
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    li {
+                        list-style: none;
+                        float: left;
+                        height: 50px;
+                        line-height: 50px;
+                        width: 33%;
+                        color: #727272;
+                        cursor: pointer;
+                        &:hover, &.selected {
+                            color: black;
+                        }
+                        &.row-first {
+                            text-align: left;
+                        }
+                        &.row-second {
+                            text-align: center;
+                        }
+                        &.row-third {
+                            text-align: right;
+                        }
+                    }
+                }
+            }
+            &:hover {
+                z-index: 101;
+                #category-droplist {
+                    display: block;
+                }
+            }
         }
     }
     #list {

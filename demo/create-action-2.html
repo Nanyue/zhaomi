@@ -32,16 +32,16 @@
     </div>
     <div id="criteria-operation">
         <ul>
-            <li class="radio">
+            <li class="radio" data-type="radio">
                 单选
             </li>
-            <li class="checkbox">
+            <li class="checkbox" data-type="checkbox">
                 多选
             </li>
-            <li class="question">
+            <li class="question" data-type="question">
                 问答
             </li>
-            <li class="image">
+            <li class="upload" data-type="upload">
                 图片
             </li>
         </ul>
@@ -50,7 +50,7 @@
         <p class="tips">找米已为您获取的信息：用户头像、昵称、手机号，不需要在问卷中设置</p>
         <div id="action-criteria" class="criteria-c">
             <div id="action-questions">
-                <div class="action-item t-radio">
+                <!-- <div class="action-item" data-type="radio">
                     <div class="criteria-q fn-clr">
                         <span class="criteria-seqno">1、</span>
                         <input class="criteria-q-input" placeholder="在这里填写你的单选问题~"></input>
@@ -79,7 +79,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="action-item t-checkbox">
+                <div class="action-item" data-type="checkbox">
                     <div class="criteria-q fn-clr">
                         <span class="criteria-seqno">2、</span>
                         <input class="criteria-q-input" placeholder="在这里填写你的多选问题~"></input>
@@ -108,7 +108,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="action-item t-question">
+                <div class="action-item" data-type="question">
                     <div class="criteria-q fn-clr">
                         <span class="criteria-seqno">3、</span>
                         <input class="criteria-q-input" placeholder="请在这里填写你要问的问答题~"></input>
@@ -116,15 +116,19 @@
                     </div>
                     <textarea></textarea>
                 </div>
-                <div class="action-item t-upload">
+                <div class="action-item" data-type="upload">
                     <div class="criteria-q fn-clr">
                         <span class="criteria-seqno">4、</span>
                         <input class="criteria-q-input" placeholder="请在这里填写你要求上传的文件~"></input>
                         <span class="criteria-del"></span>
                     </div>
                     <input type="file"/>
-                </div>
+                </div> -->
             </div>
+        </div>
+        <div id="action-criteria-btns">
+            <button class="z-btn next">下一步</button>
+            <button class="z-btn prev">上一步</button>
         </div>
     </div>
 </div>
