@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/lib/unslider/unslider.js"></script>
+    <script type="text/javascript" src="/lib/cityselect/jquery.cityselect.js"></script>
     <script type="text/javascript" src="/build/list.js"></script>
 </head>
 <body>
@@ -13,6 +14,10 @@
         <a href="//zhaomi.biz" id="logo">找米</a>
         <div id="area">
             <em>北京</em>
+            <div id="area-droplist">
+                <select class="prov"></select><span>省</span>
+                <select class="city" disabled="disabled"></select><span class="city-txt">市/区</span>
+            </div>
         </div>
         <div id="reg" class="action"><button class="z-btn">注册/登陆</button></div>
         <div id="pub" class="action"><button class="z-btn">发布活动</button></div>
@@ -58,10 +63,10 @@
             <div id="hot-droplist">
                 <p>找米热门</p>
                 <ul>
-                    <li class="selected">热门推荐</li>
-                    <li>限时报名</li>
-                    <li>限额报名</li>
-                    <li>奖励金额</li>
+                    <li class="selected" data-type="0">热门推荐</li>
+                    <li data-type="1">限时报名</li>
+                    <li data-type="2">限额报名</li>
+                    <li data-type="3">奖励金额</li>
                 </ul>
             </div>    
         </div>
@@ -71,17 +76,17 @@
             <div id="category-droplist">
                 <p>全部类别</p>
                 <ul>
-                    <li class="row-first selected">全部</li>
-                    <li class="row-second">汽车</li>
-                    <li class="row-third">母婴</li>
-                    <li class="row-first">化妆品</li>
-                    <li class="row-second">奢侈品</li>
-                    <li class="row-third">酒类</li>
-                    <li class="row-first">房产</li>
-                    <li class="row-second">旅游</li>
-                    <li class="row-third">游戏</li>
-                    <li class="row-first">食品</li>
-                    <li class="row-second">其他</li>
+                    <li class="row-first selected" data-type="0">全部</li>
+                    <li class="row-second" data-type="1">汽车</li>
+                    <li class="row-third" data-type="2">母婴</li>
+                    <li class="row-first" data-type="3">化妆品</li>
+                    <li class="row-second" data-type="4">奢侈品</li>
+                    <li class="row-third" data-type="5">酒类</li>
+                    <li class="row-first" data-type="6">房产</li>
+                    <li class="row-second" data-type="7">旅游</li>
+                    <li class="row-third" data-type="8">游戏</li>
+                    <li class="row-first" data-type="9">食品</li>
+                    <li class="row-second" data-type="10">其他</li>
                 </ul>
             </div>    
         </div>

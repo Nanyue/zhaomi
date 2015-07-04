@@ -1,7 +1,6 @@
 require('../../../common/pkgs/button/button');
 require('../css/list');
 
-console.log(1)
 var header = require('../../header/js/header');
 var share = require('../../../common/pkgs/share/share');
 
