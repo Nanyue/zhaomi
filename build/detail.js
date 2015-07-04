@@ -45,10 +45,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(4);
-	__webpack_require__(17);
+	__webpack_require__(19);
 
 	var header = __webpack_require__(13);
-	var share = __webpack_require__(19);
+	var share = __webpack_require__(21);
 
 /***/ },
 /* 1 */,
@@ -397,7 +397,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(14);
-	var _ = __webpack_require__(29);
+	var _ = __webpack_require__(16);
+	var utils = __webpack_require__(33);
 
 	// export something which is related to header
 	module.exports = function() {}
@@ -408,8 +409,6 @@
 	    var $doc = $(document);
 	    var $area = $('#area');
 	    var $areaDroplist = $area.find('#area-droplist');
-	    var $hotWrapper = $('#hot-wrapper');
-	    var $categoryWrapper = $('#category-wrapper');
 	    var $search = $('#search');
 	    // 查询开始下标
 	    var from = 0;
@@ -417,14 +416,16 @@
 	    var size = 20;
 
 	    // 初始化地区筛选列表
-	    $areaDroplist.citySelect({
-	        prov: '北京',
-	        nodata: 'none'
-	    });
+	    if ($areaDroplist.citySelect) {
+	        $areaDroplist.citySelect({
+	            prov: '北京',
+	            nodata: 'none'
+	        });
+	    }
 
 	    // 获取地区数据
 	    $areaDroplist.find('.city').change(function() {
-	        goTo({
+	        utils.goTo({
 	            loc: $(this).val()
 	        })
 	    });
@@ -442,57 +443,14 @@
 	        var q = $search.find('input').val();
 	        if (ev.keyCode === 13) {
 	            if (q) {
-	                goTo({
+	                utils.goTo({
 	                    q: q
 	                })
 	            }
 	        }
 	    })
 
-	    // 处理过滤找米热门
-	    $hotWrapper.on('click', 'ul li', function() {
-	        goTo({
-	            hot: $(this).data('type')
-	        });
-	    })
-
-	    // 处理过滤类别
-	    $categoryWrapper.on('click', 'ul li', function() {
-	        goTo({
-	            type: $(this).data('type')
-	        });
-	    })
-
-	    // 处理加载更多
-	    $doc.scroll(function() {
-	        var LOADING_GAP = 200;
-	        if ($doc.height() < $doc.scrollTop() + $win.height() + LOADING_GAP) {
-	            $('body').height($('body').height() + 500)
-	            console.log('加载更多')
-	        }
-	    })
-
-	    // 根据传入参数拼装url，并跳转到该url
-	    function goTo(params) {
-	        var oldParams = getUrlParameter();
-	        var newParams = _.extend({}, oldParams, params);
-
-	        location.href = '/search?' + $.param(newParams);
-	    }
-
-	    function getUrlParameter() {
-	        var sPageURL = window.location.search.substring(1);
-	        var sURLVariables = sPageURL.split('&');
-	        var pairs;
-	        var ret = {};
-	        for (var i = 0; i < sURLVariables.length; i++) {
-	            var pairs = sURLVariables[i].split('=');
-	            if (pairs[0]) {
-	                ret[pairs[0]] = decodeURIComponent(pairs[1]);
-	            }
-	        }
-	        return ret;
-	    }
+	    
 	});
 
 /***/ },
@@ -530,81 +488,13 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\n#header {\n  height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  padding-left: 12px;\n  margin-top: 8px;\n  font-size: 34px;\n  color: #5e5e5e;\n}\n#header #area {\n  position: relative;\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  z-index: 200;\n  background: url(/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n  display: inline-block;\n  width: 60px;\n  height: 48px;\n  line-height: 48px;\n}\n#header #area #area-droplist {\n  display: none;\n  position: absolute;\n  top: 48px;\n  left: 0;\n  width: 400px;\n  height: 32px;\n  line-height: 32px;\n  padding-top: 8px;\n}\n#header #area #area-droplist .prov,\n#header #area #area-droplist .city {\n  float: left;\n  height: 32px;\n  line-height: 24px;\n}\n#header #area #area-droplist span {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n#header #area #area-droplist span.city-txt {\n  width: 60px;\n}\n#header .action {\n  float: right;\n  margin-right: 12px;\n}\n#header .action button {\n  height: 28px;\n  line-height: 24px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #reg button {\n  margin-top: 12px;\n}\n#header #pub button {\n  padding-left: 30px;\n  margin-top: 12px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #msg button {\n  padding-left: 40px;\n  padding-right: 12px;\n  min-width: 80px;\n  margin-top: 12px;\n  background: url(/assets/imgs/icons.png) no-repeat -222px -827px;\n}\n#header #personal-info {\n  width: 32px;\n  height: 32px;\n  margin-top: 8px;\n  background-color: #ccc;\n  -webkit-border-radius: 40px;\n  border-radius: 40px;\n  background-clip: padding-box;\n}\n#header #personal-info img {\n  width: 100%;\n}\n#header #search input {\n  width: 130px;\n  height: 24px;\n  line-height: 24px;\n  padding-left: 36px;\n  margin-top: 12px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 12px;\n  border-radius: 12px;\n  background-clip: padding-box;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\n* {\n  box-sizing: border-box !important;\n}\n#header {\n  height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  padding-left: 12px;\n  margin-top: 8px;\n  font-size: 34px;\n  color: #5e5e5e;\n  line-height: 1;\n}\n#header #area {\n  position: relative;\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  z-index: 200;\n  background: url(/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n  display: inline-block;\n  width: 60px;\n  height: 48px;\n  line-height: 48px;\n}\n#header #area #area-droplist {\n  display: none;\n  position: absolute;\n  top: 48px;\n  left: 0;\n  width: 400px;\n  height: 32px;\n  line-height: 32px;\n  padding-top: 8px;\n}\n#header #area #area-droplist .prov,\n#header #area #area-droplist .city {\n  float: left;\n  height: 32px;\n  line-height: 24px;\n}\n#header #area #area-droplist span {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n#header #area #area-droplist span.city-txt {\n  width: 60px;\n}\n#header .action {\n  float: right;\n  margin-right: 12px;\n}\n#header .action button {\n  height: 28px;\n  line-height: 24px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #reg button {\n  margin-top: 12px;\n}\n#header #pub button {\n  padding-left: 30px;\n  margin-top: 12px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #msg button {\n  padding-left: 40px;\n  padding-right: 12px;\n  min-width: 80px;\n  margin-top: 12px;\n  background: url(/assets/imgs/icons.png) no-repeat -222px -827px;\n}\n#header #personal-info {\n  width: 32px;\n  height: 32px;\n  margin-top: 8px;\n  background-color: #ccc;\n  cursor: pointer;\n  -webkit-border-radius: 40px;\n  border-radius: 40px;\n  background-clip: padding-box;\n}\n#header #personal-info img {\n  width: 100%;\n}\n#header #search input {\n  width: 140px;\n  height: 28px;\n  line-height: 28px;\n  padding-left: 36px;\n  margin-top: 12px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 12px;\n  border-radius: 12px;\n  background-clip: padding-box;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 16 */,
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(18);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(7)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./detail.less", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./detail.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(6)();
-	// imports
-	exports.i(__webpack_require__(12), "");
-
-	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n  font-family: 'HeiTi SC';\n}\n#content #detail-bg img {\n  width: 100%;\n}\n#content #detail-container {\n  position: relative;\n  width: 1000px;\n  min-height: 500px;\n  padding: 20px;\n  margin: -160px auto 0 auto;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #detail-container #detail-important .detail-name {\n  float: left;\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #detail-container #detail-important .detail-hot {\n  float: left;\n  padding: 2px;\n  margin-top: 5px;\n  margin-left: 160px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #detail-container #detail-important .detail-price {\n  float: left;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #detail-container #detail-important .like {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -87px -105px;\n}\n#content #detail-container #detail-important .like.selected {\n  background-position: -87px -17px;\n}\n#content #detail-container #detail-important .share {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  margin-right: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -28px -17px;\n}\n#content #detail-container #detail-host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #detail-container #detail-info {\n  width: 480px;\n  color: #747474;\n}\n#content #detail-container #detail-info p {\n  margin: 18px 0;\n}\n#content #detail-container #detail-items {\n  width: 480px;\n  border-top: 1px solid #ccc;\n  margin-top: 30px;\n  padding-top: 20px;\n  color: #727272;\n}\n#content #detail-container #detail-items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #detail-container #detail-items .location {\n  background-position: -216px -15px;\n}\n#content #detail-container #detail-items .num {\n  background-position: -216px -51px;\n}\n#content #detail-container #detail-items .time {\n  background-position: -216px -90px;\n}\n#content #detail-container #detail-items .extra {\n  background-position: -216px -127px;\n}\n#content #detail-container #detail-pic {\n  width: 400px;\n  position: absolute;\n  right: 20px;\n  top: 120px;\n}\n#content #detail-container #detail-pic img {\n  width: 100%;\n}\n#content #detail-container #detail-criteria {\n  margin-top: 80px;\n}\n#content #detail-container #detail-criteria h2 {\n  font-family: 'HeiTi SC';\n  font-size: 34px;\n  font-weight: 400;\n  color: #4b4b4b;\n  border-bottom: 1px solid #eee;\n  padding-bottom: 12px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item {\n  margin-bottom: 40px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item h3 {\n  font-size: 16px;\n  color: #747474;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul {\n  margin: 0;\n  padding: 0;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li {\n  float: left;\n  height: 30px;\n  line-height: 30px;\n  margin-right: 50px;\n  list-style: none;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-radio {\n  display: inline-block;\n  float: left;\n  width: 36px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -266px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-radio.selected {\n  background-position: -216px -312px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-checkbox {\n  display: inline-block;\n  float: left;\n  width: 36px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -266px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-checkbox.selected {\n  background-position: -216px -312px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item textarea {\n  width: 420px;\n  height: 100px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item input {\n  width: 200px;\n  height: 50px;\n}\n#content #detail-container #detail-apply {\n  border-top: 1px solid #eee;\n  padding: 20px 0 10px 0;\n}\n#content #detail-container #detail-apply .apply {\n  float: right;\n  background-color: #7ed321;\n  color: white;\n  height: 30px;\n  line-height: 30px;\n  border-radius: 15px;\n}\n#content #detail-container #detail-apply .share-bonus {\n  float: right;\n  padding-left: 40px;\n  height: 30px;\n  line-height: 30px;\n  border-radius: 15px;\n  margin-right: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -360px;\n}\n#content #detail-container .hint {\n  margin: 8px 0;\n  text-align: right;\n  font-size: 16px;\n  color: #727272;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
-
-	// http://www.jiathis.com/help/html/share-with-jiathis-api
-	// http://www.jiathis.com/help/html/support-media-website
-	module.exports = function share(options) {
-	    options = options || {};
-	    if (!options.webid || !options.url) {
-	        return;
-	    }
-
-	    window.open('http://www.jiathis.com/send/?webid=' +
-	        options.webid + '&url=' + 
-	        options.url + '&title=' +
-	        options.title);
-	}
-
-/***/ },
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -709,10 +599,10 @@
 	"\xfd":"y","\xff":"y","\xc6":"Ae","\xe6":"ae","\xde":"Th","\xfe":"th","\xdf":"ss"},Tn={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","`":"&#96;"},Pn={"&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#39;":"'","&#96;":"`"},zn={"function":true,object:true},Bn={0:"x30",1:"x31",2:"x32",3:"x33",4:"x34",5:"x35",6:"x36",7:"x37",8:"x38",9:"x39",A:"x41",B:"x42",C:"x43",D:"x44",E:"x45",F:"x46",a:"x61",b:"x62",c:"x63",d:"x64",e:"x65",f:"x66",n:"x6e",r:"x72",t:"x74",u:"x75",v:"x76",x:"x78"},Dn={"\\":"\\",
 	"'":"'","\n":"n","\r":"r","\u2028":"u2028","\u2029":"u2029"},Mn=zn[typeof exports]&&exports&&!exports.nodeType&&exports,qn=zn[typeof module]&&module&&!module.nodeType&&module,Kn=zn[typeof self]&&self&&self.Object&&self,Vn=zn[typeof window]&&window&&window.Object&&window,Zn=qn&&qn.exports===Mn&&Mn,Yn=Mn&&qn&&typeof global=="object"&&global&&global.Object&&global||Vn!==(this&&this.window)&&Vn||Kn||this,Gn=function(){try{Object({toString:0}+"")}catch(n){return function(){return false}}return function(n){
 	return typeof n.toString!="function"&&typeof(n+"")=="string"}}(),Jn=m();true?(Yn._=Jn, !(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Jn}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))):Mn&&qn?Zn?(qn.exports=Jn)._=Jn:Mn._=Jn:Yn._=Jn}).call(this);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)(module), (function() { return this; }())))
 
 /***/ },
-/* 30 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -726,6 +616,102 @@
 		return module;
 	}
 
+
+/***/ },
+/* 18 */,
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(20);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(7)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./detail.less", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./detail.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(6)();
+	// imports
+	exports.i(__webpack_require__(12), "");
+
+	// module
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\n* {\n  box-sizing: border-box !important;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n  font-family: 'HeiTi SC';\n}\n#content #detail-bg img {\n  width: 100%;\n}\n#content #detail-container {\n  position: relative;\n  width: 1000px;\n  min-height: 500px;\n  padding: 20px;\n  margin: -160px auto 0 auto;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #detail-container #detail-important .detail-name {\n  float: left;\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #detail-container #detail-important .detail-hot {\n  float: left;\n  padding: 2px;\n  margin-top: 5px;\n  margin-left: 160px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #detail-container #detail-important .detail-price {\n  float: left;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #detail-container #detail-important .like {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -87px -105px;\n}\n#content #detail-container #detail-important .like.selected {\n  background-position: -87px -17px;\n}\n#content #detail-container #detail-important .share {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  margin-right: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -28px -17px;\n}\n#content #detail-container #detail-host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #detail-container #detail-info {\n  width: 480px;\n  color: #747474;\n}\n#content #detail-container #detail-info p {\n  margin: 18px 0;\n}\n#content #detail-container #detail-items {\n  width: 480px;\n  border-top: 1px solid #ccc;\n  margin-top: 30px;\n  padding-top: 20px;\n  color: #727272;\n}\n#content #detail-container #detail-items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #detail-container #detail-items .location {\n  background-position: -216px -15px;\n}\n#content #detail-container #detail-items .num {\n  background-position: -216px -51px;\n}\n#content #detail-container #detail-items .time {\n  background-position: -216px -90px;\n}\n#content #detail-container #detail-items .extra {\n  background-position: -216px -127px;\n}\n#content #detail-container #detail-pic {\n  width: 400px;\n  position: absolute;\n  right: 20px;\n  top: 120px;\n}\n#content #detail-container #detail-pic img {\n  width: 100%;\n}\n#content #detail-container #detail-criteria {\n  margin-top: 80px;\n}\n#content #detail-container #detail-criteria h2 {\n  font-family: 'HeiTi SC';\n  font-size: 34px;\n  font-weight: 400;\n  color: #4b4b4b;\n  border-bottom: 1px solid #eee;\n  padding-bottom: 12px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item {\n  margin-bottom: 40px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item h3 {\n  font-size: 16px;\n  color: #747474;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul {\n  margin: 0;\n  padding: 0;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li {\n  float: left;\n  height: 30px;\n  line-height: 30px;\n  margin-right: 50px;\n  list-style: none;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-radio {\n  display: inline-block;\n  float: left;\n  width: 36px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -266px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-radio.selected {\n  background-position: -216px -312px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-checkbox {\n  display: inline-block;\n  float: left;\n  width: 36px;\n  height: 30px;\n  background: url(/assets/imgs/icons.png) no-repeat -216px -266px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item .detail-answers ul li .z-checkbox.selected {\n  background-position: -216px -312px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item textarea {\n  width: 420px;\n  height: 100px;\n}\n#content #detail-container #detail-criteria #detail-questions .detail-item input {\n  width: 200px;\n  height: 50px;\n}\n#content #detail-container #detail-apply {\n  border-top: 1px solid #eee;\n  padding: 20px 0 10px 0;\n}\n#content #detail-container #detail-apply .apply {\n  float: right;\n  background-color: #7ed321;\n  color: white;\n  height: 30px;\n  line-height: 30px;\n  border-radius: 15px;\n}\n#content #detail-container #detail-apply .share-bonus {\n  float: right;\n  padding-left: 40px;\n  height: 30px;\n  line-height: 30px;\n  border-radius: 15px;\n  margin-right: 20px;\n  background: url(/assets/imgs/icons.png) no-repeat -210px -360px;\n}\n#content #detail-container .hint {\n  margin: 8px 0;\n  text-align: right;\n  font-size: 16px;\n  color: #727272;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	// http://www.jiathis.com/help/html/share-with-jiathis-api
+	// http://www.jiathis.com/help/html/support-media-website
+	module.exports = function share(options) {
+	    options = options || {};
+	    if (!options.webid || !options.url) {
+	        return;
+	    }
+
+	    window.open('http://www.jiathis.com/send/?webid=' +
+	        options.webid + '&url=' + 
+	        options.url + '&title=' +
+	        options.title);
+	}
+
+/***/ },
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */
+/***/ function(module, exports) {
+
+	// 根据传入参数拼装url，并跳转到该url
+	exports.goTo = function(params) {
+	    var oldParams = getUrlParameter();
+	    var newParams = _.extend({}, oldParams, params);
+
+	    location.href = '/search?' + $.param(newParams);
+	}
+
+	function getUrlParameter() {
+	    var sPageURL = window.location.search.substring(1);
+	    var sURLVariables = sPageURL.split('&');
+	    var pairs;
+	    var ret = {};
+	    for (var i = 0; i < sURLVariables.length; i++) {
+	        var pairs = sURLVariables[i].split('=');
+	        if (pairs[0]) {
+	            ret[pairs[0]] = decodeURIComponent(pairs[1]);
+	        }
+	    }
+	    return ret;
+	}
 
 /***/ }
 /******/ ]);

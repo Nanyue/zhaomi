@@ -124,6 +124,129 @@ body {
                 font-style: normal;
             }
         }
+        #action-info {
+            span {
+                display: inline-block;
+                height: 30px;
+                line-height: 30px;
+            }
+            .action-title {
+                margin-right: 30px;
+            }
+            .action-cnt {
+                padding-left: 30px;
+                margin-right: 20px;
+                .icons-bg(-89px -288px);
+            }
+        }
+        #apply-list {
+            width: 770px;
+            float: left;
+            .apply-item {
+                min-height: 40px;
+                padding: 12px;
+                border-bottom: 1px solid #ccc;
+                .portrait {
+                    float: left;
+                    display: inline-block;
+                    width: 37px;
+                    height: 37px;
+                    .border-radius(14px);
+                    background-color: #eee;
+                    img {
+                        width: 100%;
+                    }
+                }
+                .name {
+                    float: left;
+                    display: inline-block;
+                    width: 60px;
+                    height: 37px;
+                    line-height: 37px;
+                    margin-left: 20px;
+                }
+                .detail {
+                    float: right;
+                    height: 30px;
+                    line-height: 30px;
+                    padding-right: 30px;
+                    margin-left: 20px;
+                    cursor: pointer;
+                    .icons-bg(10px -109px);
+                    &.on {
+                        .icons-bg(-118px -107px);
+                    }
+                }
+                .detail-content {
+                    display: none;
+                    padding-top: 10px;
+                    .personal-info {
+                        color: #B8B8B8;
+                        span {
+                            font-size: 12px;
+                            margin-right: 8px;
+                        }
+                    }
+                    .apply-answers {
+                        .apply-answer {
+                            margin-bottom: 8px;
+                            p {
+                                margin: 8px 0;
+                            }
+                            span {
+                                margin-right: 8px;
+                            }
+                            .answer-img {
+                                width: 150px;
+                                height: 150px;
+                                img {
+                                    width: 100%;
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+                button {
+                    float: right;
+                    height: 30px;
+                    line-height: 30px;
+                    margin-left: 12px;
+                    .border-radius(15px);
+                    &.approve, &.completed {
+                        color: white;
+                        border: none;
+                        background-color: #7ed321;
+                    }
+                    &.reject {
+
+                    }
+                    &.rejected {
+                        color: white;
+                        border: none;
+                        background-color: #f56467;
+                    }
+                }
+            }
+        }
+        #apply-extra {
+            width: 200px;
+            height: 300px;
+            float: right;
+            .export {
+                height: 30px;
+                line-height: 30px;
+                padding-left: 40px;
+                cursor: pointer;
+                .icons-bg(-230px -888px); 
+            }
+            .confirm {
+                height: 30px;
+                line-height: 30px;
+                margin-left: 12px;
+                .border-radius(15px);
+            }
+        }
         #tbl {
             width: 560px;
             margin: 20px auto;

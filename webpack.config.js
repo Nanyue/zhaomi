@@ -8,7 +8,8 @@ module.exports = {
     register: './modules/register/js/register.js',
     'create-basic': './modules/createaction/js/create-basic.js',
     'create-criteria': './modules/createaction/js/create-criteria.js',
-    create: './modules/createaction/js/create.js'
+    create: './modules/createaction/js/create.js',
+    message: './modules/message/js/message.js'
   },
   output: {
     path: 'build',
