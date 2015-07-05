@@ -3,7 +3,10 @@
 <head>
     <title>活动列表页面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="//zhaomi.biz/lib/jqueryui/jquery-ui.css"/>
     <script type="text/javascript" src="//zhaomi.biz/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="//zhaomi.biz/lib/jqueryui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="//zhaomi.biz/lib/jquery-qrcode/jquery.qrcode.js"></script>
     <script type="text/javascript" src="//zhaomi.biz/lib/unslider/unslider.js"></script>
     <script type="text/javascript" src="//zhaomi.biz/lib/cityselect/jquery.cityselect.js"></script>
     <script type="text/javascript" src="//zhaomi.biz/build/list.js"></script>
@@ -93,7 +96,7 @@
     </div>
     <div id="list">
         <ul class="fn-clr">
-            <li class="action-card">
+            <li class="action-card" data-id="123456" data-code="123456">
                 <div class="pic">
                     <img src="//zhaomi.biz/assets/imgs/action-pic.png">
                 </div>
@@ -247,6 +250,20 @@
     </div>
     <div id="commercial">
         <a href="http://www.tmall.com"><img src="//zhaomi.biz/assets/imgs/banner.png"></a>
+    </div>
+
+    
+</div>
+<div id="share-dialog" class="z-dialog share-dialog">
+    <span class="share-link">http://zhaomi.biz/action/123456?code=1234</span>
+    <p class="dialog-txt">通过二维码分享</p>
+    <span class="share-qrcode"></span>
+    <p class="dialog-txt">通过社交网络分享</p>
+    <div class="socials">
+        <span id="wechat" title="请用微信扫描上方二维码后分享"></span>
+        <span id="wechat-group" title="请用微信扫描上方二维码后分享"></span>
+        <span id="qq" data-webid="cqq"></span>
+        <span id="sina" data-webid="tsina" class="last"></span>
     </div>
 </div>
 </body>    

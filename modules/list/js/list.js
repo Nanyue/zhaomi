@@ -2,7 +2,7 @@ require('../../../common/pkgs/button/button');
 require('../css/list');
 
 var header = require('../../header/js/header');
-var share = require('../../../common/pkgs/share/share');
+var shareBox = require('../../../common/pkgs/shareBox/shareBox');
 var utils = require('../../../common/utils');
 
 $(function() {
@@ -20,10 +20,14 @@ $(function() {
     });
 
     $('.share').click(function() {
-        share({
-            webid: 'cqq',
-            url: 'http://www.baidu.com',
-            title: '测试share功能'
+        var $actionCard = $(this).closest('.action-card');
+        var id = $actionCard.data('id');
+        var code = $actionCard.data('code');
+        var shareLink = 'http://zhaomi.biz/action/' + id + '?code=' + code;
+
+        shareBox.show({
+            selector: '#share-dialog',
+            shareLink: shareLink
         })
     });
 

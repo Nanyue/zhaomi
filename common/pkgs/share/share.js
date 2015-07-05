@@ -6,8 +6,15 @@ module.exports = function share(options) {
         return;
     }
 
+    var title = options.title || '找米分享';
+
+    // $("#share-dialog").dialog({
+    //     resizable: false,
+    //     width: 500,
+    //     title: '通过链接分享：'
+    // });
     window.open('http://www.jiathis.com/send/?webid=' +
         options.webid + '&url=' + 
         options.url + '&title=' +
-        options.title);
+        title);
 }

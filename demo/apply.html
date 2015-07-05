@@ -4,6 +4,7 @@
     <title>我报名的活动页面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script type="text/javascript" src="//zhaomi.biz/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="//zhaomi.biz/lib/jquery-form/jquery.form.js"></script>
     <script type="text/javascript" src="//zhaomi.biz/build/mine.js"></script>
 </head>
 <body>
@@ -34,7 +35,27 @@
                 </div>
             </div>
         </div>
-        <img src="/assets/imgs/detail-banner.png">
+        <div id="personal-info-modify">
+            <form action="/user/modify" id="personal-info-form" enctype="multipart/form-data" method="post">
+                <div id="portrait-c">
+                    <img src="//zhaomi.biz/assets/imgs/portrait.png"/>
+                    <label for="portrait"></label>
+                    <input id="portrait" name="portrait" type="file" class="fn-hide"></input>
+                </div>
+                <div class="info-items">
+                    <div class="main-items">
+                        <input id="info-name" name="name" type="text" placeholder="龚子仪"/>
+                    </div>
+                    <div class="sub-items">
+                        <input id="info-mobile" name="mobile" type="text" placeholder="1591111111"></input>
+                        <input id="info-gender" name="gender" type="text" placeholder="男"/>
+                        <input id="info-bday" name="bday" type="date" placeholder="1988-09-26"/>
+                        <button class="z-btn save-info">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <img src="//zhaomi.biz/assets/imgs/detail-banner.png">
     </div>
     <div id="mine-container">
         <div id="mine-type" class="fn-clr">

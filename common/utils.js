@@ -6,6 +6,22 @@ exports.goTo = function(params) {
     location.href = '/search?' + $.param(newParams);
 }
 
+exports.assert = function(value, msg) {
+    if (!value) {
+        exports.warn(msg);
+    }
+}
+
+exports.assertEquals = function(value, anotherValue, msg) {
+    if (value !== anotherValue) {
+        exports.warn(msg);   
+    }
+}
+
+exports.warn = function(msg) {
+    window.alert(msg);
+}
+
 function getUrlParameter() {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');

@@ -68,6 +68,104 @@ body {
                 }
             }
         }
+        #personal-info-modify {
+            display: none;
+            position: absolute;
+            top: 15px;
+            left: 390px;
+            color: white;
+            #portrait-c {
+                float: left;
+                position: relative;
+                width: 70px;
+                height: 70px;
+                .border-radius(35px);
+                background-color: #eee;
+                margin: 0 auto;
+                img {
+                    width: 100%;
+                }
+                label {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    z-index: 100;
+                    display: inline-block;
+                    width: 48px;
+                    height: 48px;
+                    cursor: pointer;
+                    .icons-bg(-25px -478px);
+                }
+                input {
+                    display: none;
+                }
+            }
+            .info-items {
+                float: left;
+                width: 440px;
+                height: 70px;
+                margin-left: 10px;
+                .main-items {
+                    height: 40px;
+                    .name {
+                        font-size: 28px;
+                    }
+                    
+                    span {
+                        margin-right: 18px;
+                        vertical-align: bottom;
+                    }
+                }
+                .sub-items {
+                    height: 30px;
+                    line-height: 30px;
+                    span {
+                        margin-right: 18px;
+                    }
+                    .save-info {
+                        min-width: 80px;
+                        height: 30px;
+                        line-height: 30px;
+                        margin-left: 20px;
+                        .border-radius(18px);
+                        color: white;
+                        background-color: transparent;
+                        border: 1px solid white;
+                        &:hover {
+                            background-color: #7ed321;
+                        }
+                    }
+                }
+                input {
+                    width: 80px;
+                    height: 22px;
+                    margin-left: 12px;
+                    border: none;
+                    border-bottom: 1px solid #ccc;
+                    background-color: transparent;
+                    padding-bottom: 2px;
+                    &:focus {
+                        outline: none;
+                        border-bottom: 1px solid #7ED321;
+                    }
+                }
+                #info-name {
+                    width: 120px;
+                    height: 38px;
+                    font-size: 32px;
+                }
+                #info-mobile {
+                    width: 100px;
+                }
+                #info-gender {
+                    width: 30px;
+                }
+                #info-bday {
+                    width: 140px;
+                }
+            }
+
+        }
         img {
             width: 100%;
         }
