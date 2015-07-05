@@ -68,7 +68,7 @@
 	        var confirmedPwd = $('#pwd-confirm').val();
 
 	        if (!username) {
-	            utils.warn('请填写邮箱用户名!');
+	            utils.warn('请填写邮箱/用户名!');
 	            return false;
 	        }
 
@@ -89,7 +89,7 @@
 	    $('#sendcode').click(function() {
 	        var mobile = $('#mobile').val();
 
-	        zhaomi.postData('/sendCode', {
+	        zhaomi.postData('/sendcode/', {
 	            mobile: mobile
 	        }, function() {
 	            utils.warn('已发送验证码!');
@@ -541,11 +541,11 @@
 	module.exports = {
 	    postData: function(url, data, successCallback, errorCallback) {
 
-	        var csrfToken = $('#csrf_token').val();
+	        var csrfToken = $('input[name=csrfmiddlewaretoken]').val();
 	        $.ajax({
 	            url: url,
 	            type: 'post',
-	            data: $.extend(data, {csrfToken: csrfToken}), 
+	            data: $.extend(data, {csrfmiddlewaretoken: csrfToken}), 
 	            success: successCallback || noop,
 	            error: errorCallback || noop
 	        })
