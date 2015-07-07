@@ -14,21 +14,21 @@
 
     <div id="container">
         <p class="title-txt">重置密码</p>
-        <form id="resetForm" action="//zhaomi.biz/resetPwd" method="post">
+        <form id="resetForm" action="/resetPwd" method="post">
             <div id="mobile-wrapper" class="fn-clr">
                 <div id="mobile-c">
-                    <input id="mobile" placeholder="请输入手机号码"></input>    
+                    <input id="mobile" name="mobile" placeholder="请输入手机号码"></input>    
                 </div>
-                <button id="sendcode" class="z-btn">发送验证码</button>
+                <a id="sendcode" class="z-btn">发送验证码</a>
             </div>
             <div id="verifycode-c">
                 <input id="verifycode" name="verifycode" placeholder="请输入验证码"></input>
             </div>
             <div id="pwd-c">
-                <input id="pwd" type="password" placeholder="请输入密码"></input>
+                <input id="pwd" name="pwd" type="password" placeholder="请输入密码"></input>
             </div>
             <div id="pwd-confirm-c">
-                <input id="pwd-confirm" type="password" placeholder="请再次输入密码"></input>
+                <input id="pwd-confirm" name="pwd-confirm" type="password" placeholder="请再次输入密码"></input>
             </div>
             <div id="login-btn-c" class="fn-clr">
                 <button type="submit" class="z-btn register-btn">验证</button>

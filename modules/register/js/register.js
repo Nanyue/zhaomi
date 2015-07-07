@@ -43,7 +43,7 @@ $(function() {
     $('#sendcode').click(function() {
         var mobile = $('#mobile').val();
 
-        zhaomi.postData('/sendcode/', {
+        zhaomi.postData('/sendcode', {
             mobile: mobile
         }, function() {
             utils.warn('已发送验证码!');

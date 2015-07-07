@@ -57,10 +57,11 @@
     }
     .action {
         float: right;
+        margin-top: 12px;
         margin-right: 12px;
-        button {
+        a {
             height: 28px;
-            line-height: 24px;
+            line-height: 28px;
             border: 1px solid #cfcfcf;
             background-color: transparent;
             font-size: 14px;
@@ -68,24 +69,33 @@
             .border-radius(14px);    
         }
     }
+
     #reg {
-        button {
-            margin-top: 12px;
+        a {
+            
         }
     }
     #pub {
-        button {
+        a {
             padding-left: 30px;
-            margin-top: 12px;
-            .icons-bg(-210px -182px);    
+            padding-right: 12px;
+            .icons-bg(-210px -182px);
+        }
+        &.cancel-create {
+            background-color: #888;
+            .border-radius(14px);
+            a {
+                color: white;
+                .icons-bg(-88px -355px);
+            }
         }
     }
     #msg {
-        button {
+        a {
             padding-left: 40px;
             padding-right: 12px;
             min-width: 80px;
-            margin-top: 12px;
+            
             .icons-bg(-222px -827px);
         }
     }
@@ -93,24 +103,31 @@
         width: 32px;
         height: 32px;
         margin-top: 8px;
-        background-color: #ccc;
+        background-color: #888;
         cursor: pointer;
+        overflow: hidden;
         .border-radius(40px);
         img {
             width: 100%;
         }
+        .logout {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border: none;
+            .icons-bg(-90px -351px);
+        }
     }
     #search {
         input {
-            width: 140px;
+            width: 160px;
             height: 28px;
             line-height: 28px;
             padding-left: 36px;
-            margin-top: 12px;
             border: 1px solid #cfcfcf;
             font-size: 14px;
             .icons-bg(-210px -224px);
-            .border-radius(12px);
+            .border-radius(14px);
         }
     }
 }

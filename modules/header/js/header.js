@@ -52,5 +52,7 @@ $(function() {
         }
     })
 
-    
+    $doc.on('click', '.cancel-create', function() {
+        
+    })
 });
