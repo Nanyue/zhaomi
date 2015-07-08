@@ -15,30 +15,57 @@ $(function() {
     }
 
     // 第一步注册值校验
-    $('#register-form').on('submit', function() {
+    $('#register-form').submit(function() {
 
         var username = $('#username').val();
         var pwd = $('#pwd').val();
         var confirmedPwd = $('#pwd-confirm').val();
 
-        if (!username) {
-            utils.warn('请填写邮箱/用户名!');
-            return false;
-        }
+        $(this).ajaxSubmit({
+            beforeSubmit: function(formData, jqForm, options) {
+                if (!username) {
+                    utils.warn('请填写邮箱/用户名!');
+                    return false;
+                }
 
-        if (!pwd) {
-            utils.warn('请填写密码!');
-            return false;
-        }
+                if (!pwd) {
+                    utils.warn('请填写密码!');
+                    return false;
+                }
 
-        if (pwd !== confirmedPwd) {
-            utils.warn('两次密码输入不相同!');
-            return false;
-        }
+                if (pwd !== confirmedPwd) {
+                    utils.warn('两次密码输入不相同!');
+                    return false;
+                }
+            },
+            dataType: 'json',
+            success: function(res) {
+                var success = res && res.success;
+                var data = res && res.data;
+                
+                if (success) {
+                    if (data.url) {
+                        location.href = data.url;  
+                    } 
+                } else {
+                    for (var key in data) {
+                        $('#' + key).parent().removeClass('focus').addClass('err');
+                        utils.warn(data[key]);
+                        break;
+                    }
+                }
+            }
+        });
 
-        return true;
+        return false;
     });
 
+    $('input').focus(function() {
+        $(this).parent().removeClass('err').addClass('focus');
+    }).blur(function() {
+        $(this).parent().removeClass('focus');
+    })
+    
     // 第二步注册
     $('#sendcode').click(function() {
         var mobile = $('#mobile').val();

@@ -54,4 +54,12 @@ $(function() {
         $actionType.val(actionType);
         $actionTypeDroplist.hide();
     });
+
+    $('input').focus(function() {
+        console.log('focus')
+        $(this).removeClass('err').addClass('focus');
+    }).blur(function() {
+        console.log('err')
+        $(this).removeClass('focus');
+    })
 });

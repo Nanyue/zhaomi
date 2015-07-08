@@ -107,12 +107,19 @@ body {
             input {
                 width: 400px;
                 text-indent: 10px;
+                outline: none;
                 &.time {
                     width: 100px;
                     margin-right: 10px;
                 }
                 &#name {
                     width: 500px;
+                }
+                &.err {
+                    border: 1px solid red;
+                }
+                &.focus {
+                    border: 1px solid green;
                 }
             }
             #datatime-c {
@@ -128,6 +135,13 @@ body {
             #desc {
                 width: 400px;
                 height: 200px;
+                outline: none;
+                &.err {
+                    border: 1px solid red;
+                }
+                &.focus {
+                    border: 1px solid green;
+                }
             }
             #city {
                 height: 30px;

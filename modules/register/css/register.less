@@ -61,8 +61,14 @@ body {
             padding-left: 36px;
             border-bottom: 1px solid white;
             .icons-bg(-220px -397px);
+            &.err {
+                border-bottom: 1px solid red;
+            }
+            &.focus {
+                border-bottom: 1px solid green;
+            }
         }
-        #name-c, #bday-c, #gender-c{
+        #name-c, #bday-c, #gender-c {
             height: 40px;
             line-height: 40px;
             margin-top: 20px;
@@ -81,7 +87,12 @@ body {
             .icons-bg(-226px -592px);   
         }
         #name-c {
-
+            &.err {
+                border-bottom: 1px solid red;
+            }
+            &.focus {
+                border-bottom: 1px solid green;
+            }
         }
         #bday-c {
             input.bday-i {
@@ -115,10 +126,10 @@ body {
                     height: 40px;
                     line-height: 40px;
                     list-style: none;
-                    background-color: #ddd;
+                    background-color: #eee;
                     text-indent: 20px;
                     &:hover {
-                        background-color: #eee;
+                        background-color: #ddd;
                     }
                 }
             }
@@ -134,6 +145,12 @@ body {
                 .icons-bg(-223px -538px);
                 input {
                     width: 100%;
+                }
+                &.err {
+                    border-bottom: 1px solid red;
+                }
+                &.focus {
+                    border-bottom: 1px solid green;
                 }
             }
             #sendcode {
