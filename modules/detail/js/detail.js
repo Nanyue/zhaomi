@@ -28,7 +28,7 @@ $(function() {
 
     $('.share-bonus').click(function() {
         var id = $detailContainer.data('id');
-        var code = $actionCard.data('code');
+        var code = $detailContainer.data('code');
         var shareLink = 'http://zhaomi.biz/action/' + id + '?code=' + code;
 
         shareBox.show({
@@ -47,8 +47,25 @@ $(function() {
                     return false;
                 }
             },
-            success: function() {
-
+            dataType: 'json',
+            data: {
+                answer: JSON.stringify(data)
+            },
+            success: function(res) {
+                var success = res && res.success;
+                var data = res && res.data;
+                
+                if (success) {
+                    if (data.url) {
+                        location.href = data.url;  
+                    } 
+                } else {
+                    for (var key in data) {
+                        $('#' + key).removeClass('focus').addClass('err');
+                        utils.warn(data[key]);
+                        break;
+                    }
+                }
             }
         })
 
@@ -56,7 +73,7 @@ $(function() {
     })
 
 })
-window.collectData = collectData;
+
 function collectData() {
     var data = [];
 
@@ -79,7 +96,8 @@ function collectData() {
 
             if (arr.length) {
                 data.push({
-                    result: arr.join(',')
+                    type: type,
+                    result: arr.length === 1? arr[0] : arr
                 })
             }
             
@@ -88,12 +106,15 @@ function collectData() {
 
             if (question) {
                 data.push({
+                    type: type,
                     result: question
                 })
             }
         } else if (type === UPLOAD) {
             if ($detailItem.find('input').val()) {
                 data.push({
+                    type: type,
+                    name: $detailItem.find('input').attr('name'),
                     result: 'whatever'
                 })
             }

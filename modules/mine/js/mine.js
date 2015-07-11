@@ -2,6 +2,7 @@ require('../../../common/pkgs/button/button');
 require('../css/mine');
 
 var header = require('../../header/js/header');
+var zhaomi = require('../../../lib/common/common');
 var share = require('../../../common/pkgs/share/share');
 
 $(function() {
@@ -37,5 +38,17 @@ $(function() {
         })
         $personalInfo.show();
         $modifiedInfo.hide();  
+    })
+
+    $('.action-card').on('click', '.edit', function() {
+        var action = $(this).data('action');
+        if (action) {
+            window.location.href = action;    
+        }
+    }).on('click', '.duplicate, .delete', function() {
+        var action = $(this).data('action');
+        if (action) {
+            zhaomi.postData(action, {});
+        }
     })
 });
