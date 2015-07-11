@@ -60,7 +60,7 @@
 	        });
 	    }
 
-	    // 第一步注册值校验
+	    // 注册第一步
 	    $('#register-form').submit(function() {
 
 	        var username = $('#username').val();
@@ -116,26 +116,67 @@
 	    $('#sendcode').click(function() {
 	        var mobile = $('#mobile').val();
 
+	        if (!mobile) {
+	            utils.warn('请先填写电话号码！');
+	            return false;
+	        }
+
 	        zhaomi.postData('/sendcode', {
 	            mobile: mobile
 	        }, function() {
 	            utils.warn('已发送验证码!');
 	        })
 	    })
-	    
-	    // $('#register-pre').click(function() {
 
-	    //     zhaomi.postData('//zhaomi.biz/login', {
-	    //         username: username,
-	    //         pwd: pwd,
-	    //         confirmedPwd: confirmedPwd
-	    //     }, function() {
-	    //         // location.href = '//zhaomi.biz/register';
-	    //     })
-	    // });
+	    // 注册第二步
+	    $('#register').submit(function() {
+	        var code = $('#verifycode').val();
+	        var name = $('#name').val();
+	        var gender = $('#gender').val();
+	        var bday = $('#bday').val();
 
-	    $('#register').click(function() {
+	        $(this).ajaxSubmit({
+	            beforeSubmit: function(formData, jqForm, options) {
+	                if (!code) {
+	                    utils.warn('请填写验证码!');
+	                    return false;
+	                }
 
+	                if (!name) {
+	                    utils.warn('请填写用户名/公司名!');
+	                    return false;
+	                }
+
+	                if (!gender) {
+	                    utils.warn('请选择性别!');
+	                    return false;
+	                }
+
+	                if (!bday) {
+	                    utils.warn('请选择生日!');
+	                    return false;
+	                }
+	            },
+	            dataType: 'json',
+	            success: function(res) {
+	                var success = res && res.success;
+	                var data = res && res.data;
+	                
+	                if (success) {
+	                    if (data.url) {
+	                        location.href = data.url;  
+	                    } 
+	                } else {
+	                    for (var key in data) {
+	                        $('#' + key).parent().removeClass('focus').addClass('err');
+	                        utils.warn(data[key]);
+	                        break;
+	                    }
+	                }
+	            }
+	        });
+
+	        return false;
 	    })
 
 	    if ($('.form_datetime').datetimepicker) {

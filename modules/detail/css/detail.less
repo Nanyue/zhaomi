@@ -22,46 +22,57 @@ body {
         .border-radius(10px);
         background-color: white;
         #detail-important {
-            .detail-name {
+            .detail-name-w {
                 float: left;
-                width: 170px;
-                display: inline-block;
+                width: 470px;
                 height: 30px;
-                overflow: hidden;
-                font-size: 30px;
-            }
-            .detail-hot {
-                float: left;
-                padding: 2px;
-                margin-top: 5px;
-                margin-left: 160px;
-                margin-right: 16px;
-                background-color: #ff7a7a;
-                color: white;
-            }
-            .detail-price {
-                float: left;
-                color: #ff4545;
-                font-size: 24px;
-                margin-top: 5px;
-            }
-            .like {
-                float: right;
-                display: inline-block;
-                width: 30px;
-                height: 30px;
-                .icons-bg(-87px -105px);
-                &.selected {
-                    background-position: -87px -17px;
+                .detail-name {
+                    float: left;
+                    width: 170px;
+                    display: inline-block;
+                    height: 30px;
+                    overflow: hidden;
+                    font-size: 30px;
+                }
+                .detail-hot {
+                    float: right;
+                    padding: 2px;
+                    margin-top: 5px;
+                    margin-right: 16px;
+                    background-color: #ff7a7a;
+                    color: white;
+                }
+                .detail-price {
+                    float: right;
+                    color: #ff4545;
+                    font-size: 24px;
+                    margin-top: 5px;
                 }
             }
-            .share {
+            .detail-oper {
                 float: right;
-                display: inline-block;
-                width: 30px;
-                height: 30px;
-                margin-right: 20px;
-                .icons-bg(-28px -17px);
+                width: 400px;
+                margin-left: 84px;
+                .like {
+                    float: right;
+                    display: inline-block;
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                    .icons-bg(-87px -105px);
+                    &.selected {
+                        background-position: -87px -17px;
+                    }
+                }
+                .share {
+                    float: right;
+                    display: inline-block;
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 20px;
+                    cursor: pointer;
+                    .icons-bg(-28px -17px);
+                }
             }
         }
         #detail-host {
@@ -145,7 +156,7 @@ body {
                                     height: 30px;
                                     .icons-bg(-216px -266px);
                                     &.selected {
-                                        background-position: -216px -312px;
+                                        background-position: -217px -313px;
                                     } 
                                 }
                                 .z-checkbox {
@@ -155,7 +166,7 @@ body {
                                     height: 30px;
                                     .icons-bg(-216px -266px);
                                     &.selected {
-                                        background-position: -216px -312px;
+                                        background-position: -217px -313px;
                                     } 
                                 }
                             }
@@ -182,6 +193,7 @@ body {
                 height: 30px;
                 line-height: 30px;
                 border-radius: 15px;
+                border: none;
             }
             .share-bonus {
                 float: right;

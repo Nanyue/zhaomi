@@ -10,7 +10,7 @@ body {
     #banner {
         position: relative; 
         overflow: auto;
-        height: 700px!important;
+        height: 700px;
         z-index: 100;
         ul {
             margin: 0;
@@ -18,46 +18,10 @@ body {
             li { 
                 position: relative;
                 float: left;
+                width: 1190px;
+                height: 700px;
                 img {
                     width: 1190px;
-                }
-                .banner-brief {
-                    position: absolute;
-                    top: 40px;
-                    right: 70px;
-                    width: 410px;
-                    border-bottom: 1px solid #bebebe;
-                    font-family: 'HeiTi SC';
-                    font-size: 18px;
-                    .banner-type {
-                        font-size: 36px;
-                        margin: 0;
-                    }
-                    .banner-name {
-                        font-size: 48px;
-                        margin: 20px 0 10px;
-                    }
-                    .banner-time {
-                        height: 30px;
-                        line-height: 30px;
-                        margin: 8px 0;
-                        padding-left: 36px;
-                        .icons-bg(-216px -90px);
-                    }
-                    .banner-location {
-                        height: 30px;
-                        line-height: 30px;
-                        margin: 8px 0;
-                        padding-left: 36px;
-                        .icons-bg(-216px -15px);
-                    }
-                    .banner-price {
-                        font-size: 40px;
-                        color: #ff4545;
-                        position: absolute;
-                        bottom: 10px;
-                        right: 10px;
-                    }
                 }
             }
         }
@@ -337,55 +301,7 @@ body {
     }
 
 }
-#share-dialog {
-    text-align: center;
-    padding-bottom: 20px;
-    .share-link {
-        display: inline-block;
-        padding-bottom: 6px;
-        border-bottom: 1px solid #eee;
-        text-align: center;
-    }
-    .dialog-txt {
-        text-align: center;
-    }
-    .share-qrcode {
-        display: inline-block;
-        width: 200px;
-        height: 200px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .socials {
-        width: 400px;
-        margin: 10px auto;
-        span {
-            float: left;
-            display: inline-block;
-            width: 72px;
-            height: 72px;
-            margin: 0 16px;
-            cursor: pointer;
-            .icons-bg(-29px -882px);
-            &.last {
-                margin-right: 0;
-            }
-        }
-        #wechat {
-            cursor: default;
-        }
-        #wechat-group {
-            .icons-bg(-25px -772px);
-            cursor: default;
-        }
-        #qq {
-            .icons-bg(-132px -772px);
-        }
-        #sina {
-            .icons-bg(-132px -882px);
-        }
-    }
-}
+
 @media (max-width: 1390px) {
     body {
 

@@ -3,7 +3,8 @@ require('../../../common/pkgs/progress/progress');
 require('../css/create');
 
 var header = require('../../header/js/header');
-var utils = require('../../../lib/common/common');
+var zhaomi = require('../../../lib/common/common');
+var utils = require('../../../common/utils');
 
 var RADIO = 'radio';
 var CHECKBOX = 'checkbox';
@@ -62,10 +63,33 @@ $(function() {
         }
     });
 
-    $('#action-criteria-btns').click(function() {
+    $('#create-action-second').submit(function() {
         var data = collectData();
-console.log(data)
-        // utils.post('url', data);
+
+        $(this).ajaxSubmit({
+            dataType: 'json',
+            data: {
+                criteria: JSON.stringify(data)
+            },
+            success: function(res) {
+                var success = res && res.success;
+                var data = res && res.data;
+                
+                if (success) {
+                    if (data.url) {
+                        location.href = data.url;  
+                    } 
+                } else {
+                    for (var key in data) {
+                        $('#' + key).removeClass('focus').addClass('err');
+                        utils.warn(data[key]);
+                        break;
+                    }
+                }
+            }
+        });
+
+        return false;
     })
 
     // 更新问题序号
@@ -102,6 +126,9 @@ console.log(data)
                 opts = $actionItem.find('.action-answers ul li')
                     .map(function(idx, elem) {
                         return $(elem).find('.criteria-a-input').val();
+                    })
+                    .filter(function(idx, val) {
+                        return val !== '';
                     })
                 opts = $.makeArray(opts);
                 singleQuestion['a'] = opts;

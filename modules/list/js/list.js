@@ -12,12 +12,19 @@ $(function() {
     var $hotWrapper = $('#hot-wrapper');
     var $categoryWrapper = $('#category-wrapper');
     var $actionCard = $('.action-card');
+    var $banner = $('#banner');
 
-    $('#banner').unslider({
+    $banner.unslider({
         speed: 600,
         delay: 3000, 
         dots: true
     });
+    // 伪延迟图片加载
+    $banner.find('img').each(function() {
+        if (!$(this).attr('src')) {
+            $(this).attr('src', $(this).data('src'));
+        }
+    })
 
     $('.share').click(function() {
         var $actionCard = $(this).closest('.action-card');

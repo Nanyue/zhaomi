@@ -1,3 +1,4 @@
+require('./sharebox.less');
 var share = require('../share/share');
 
 module.exports = {

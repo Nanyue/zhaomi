@@ -48,7 +48,7 @@
 	__webpack_require__(30);
 
 	var header = __webpack_require__(13);
-	var share = __webpack_require__(22);
+	var share = __webpack_require__(25);
 
 	$(function() {
 	    $('#apply-list').on('click', '.detail', function() {
@@ -701,7 +701,10 @@
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */
 /***/ function(module, exports) {
 
 	// http://www.jiathis.com/help/html/share-with-jiathis-api
@@ -726,9 +729,6 @@
 	}
 
 /***/ },
-/* 23 */,
-/* 24 */,
-/* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
