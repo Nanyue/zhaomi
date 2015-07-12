@@ -651,6 +651,12 @@
 	    window.alert(msg);
 	}
 
+	exports.compileTpl = function(tpl, data) {
+	    return tpl.replace(/\{(\w+)\}/g, function(all, param) {
+	        return data[param] || '';
+	    })
+	}
+
 	function getUrlParameter() {
 	    var sPageURL = window.location.search.substring(1);
 	    var sURLVariables = sPageURL.split('&');

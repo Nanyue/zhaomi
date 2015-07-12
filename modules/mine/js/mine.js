@@ -3,7 +3,8 @@ require('../css/mine');
 
 var header = require('../../header/js/header');
 var zhaomi = require('../../../lib/common/common');
-var share = require('../../../common/pkgs/share/share');
+// var share = require('../../../common/pkgs/share/share');
+var shareBox = require('../../../common/pkgs/shareBox/shareBox');
 
 $(function() {
     $('#apply-list').on('click', '.detail', function() {
@@ -37,7 +38,7 @@ $(function() {
             }
         })
         $personalInfo.show();
-        $modifiedInfo.hide();  
+        $modifiedInfo.hide(); 
     })
 
     $('.action-card').on('click', '.edit', function() {
@@ -49,6 +50,15 @@ $(function() {
         var action = $(this).data('action');
         if (action) {
             zhaomi.postData(action, {});
+        }
+    }).on('click', '.c-share, .b-share', function() {
+        var $actionCard = $(this).closest('.action-card');
+        var shareLink = $actionCard.data('link');
+
+        if (shareLink) {
+            shareBox.show({
+                shareLink: shareLink
+            })
         }
     })
 });

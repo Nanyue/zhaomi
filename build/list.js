@@ -79,7 +79,7 @@
 	        var shareLink = 'http://zhaomi.biz/action/' + id + '?code=' + code;
 
 	        shareBox.show({
-	            selector: '#share-dialog',
+	            id: 'share-dialog',
 	            shareLink: shareLink
 	        })
 	    });
@@ -709,6 +709,12 @@
 	    window.alert(msg);
 	}
 
+	exports.compileTpl = function(tpl, data) {
+	    return tpl.replace(/\{(\w+)\}/g, function(all, param) {
+	        return data[param] || '';
+	    })
+	}
+
 	function getUrlParameter() {
 	    var sPageURL = window.location.search.substring(1);
 	    var sURLVariables = sPageURL.split('&');
@@ -732,6 +738,7 @@
 
 	__webpack_require__(23);
 	var share = __webpack_require__(25);
+	var utils = __webpack_require__(18);
 
 	module.exports = {
 	    /**
@@ -744,28 +751,44 @@
 	     */
 	    show: function(data) {
 
-	        if (!data || !data.selector || !data.shareLink) {
+	        if (!data || !data.shareLink) {
 	            return;
 	        }
 
-	        var selector = data.selector;
+	        var id = data.id || 'share-dialog';
+	        var idSelector = '#' + id;
+	        var $dialog = $(idSelector);
 	        var shareLink = data.shareLink;
 	        var width = data.width || 500;
+	        var compiledTpl;
 
+	        if (shareLink.indexOf('/') === 0) {
+	            shareLink = 'http://zhaomi.biz' + shareLink;
+	        }
 
-	        $(selector).find('.share-qrcode').empty().qrcode({
+	        compiledTpl = utils.compileTpl(SHAREBOX_TPL, {
+	            id: id,
+	            shareLink: shareLink
+	        })
+
+	        if (!$dialog.length) {
+	            $('body').append($(compiledTpl));
+	            $dialog = $(idSelector);
+	        }
+
+	        $dialog.find('.share-qrcode').empty().qrcode({
 	            text: shareLink,
 	            width: 200,
 	            height: 200
 	        });
 
-	        $(selector).dialog({
+	        $dialog.dialog({
 	            resizable: false,
 	            width: width,
 	            title: '通过链接分享'
-	        });
+	        }); 
 
-	        $(selector).on('click', '.socials span', function() {
+	        $dialog.on('click', '.socials span', function() {
 	            var webid = $(this).data('webid');
 	            share({
 	                webid: webid,
@@ -774,6 +797,19 @@
 	        })
 	    }
 	}
+
+	var SHAREBOX_TPL = '<div id="{id}" class="z-dialog share-dialog">' +
+	            '<span class="share-link">{shareLink}</span>' +
+	            '<p class="dialog-txt">通过二维码分享</p>' +
+	            '<span class="share-qrcode"></span>' +
+	            '<p class="dialog-txt">通过社交网络分享</p>' +
+	            '<div class="socials">' +
+	                '<span id="wechat" title="请用微信扫描上方二维码后分享"></span>' +
+	                '<span id="wechat-group" title="请用微信扫描上方二维码后分享"></span>' +
+	                '<span id="qq" data-webid="cqq"></span>' +
+	                '<span id="sina" data-webid="tsina" class="last"></span>' +
+	            '</div>' +
+	        '</div>';
 
 /***/ },
 /* 23 */
@@ -810,7 +846,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#share-dialog {\n  text-align: center;\n  padding-bottom: 20px;\n}\n#share-dialog .share-link {\n  display: inline-block;\n  padding-bottom: 6px;\n  border-bottom: 1px solid #eee;\n  text-align: center;\n}\n#share-dialog .dialog-txt {\n  text-align: center;\n}\n#share-dialog .share-qrcode {\n  display: inline-block;\n  width: 200px;\n  height: 200px;\n  text-align: center;\n  margin-bottom: 20px;\n}\n#share-dialog .socials {\n  width: 400px;\n  margin: 10px auto;\n}\n#share-dialog .socials span {\n  float: left;\n  display: inline-block;\n  width: 72px;\n  height: 72px;\n  margin: 0 16px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -29px -882px;\n}\n#share-dialog .socials span.last {\n  margin-right: 0;\n}\n#share-dialog .socials #wechat {\n  cursor: default;\n}\n#share-dialog .socials #wechat-group {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -25px -772px;\n  cursor: default;\n}\n#share-dialog .socials #qq {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -132px -772px;\n}\n#share-dialog .socials #sina {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -132px -882px;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#share-dialog {\n  text-align: center;\n  padding-bottom: 20px;\n}\n#share-dialog .share-link {\n  display: inline-block;\n  padding-bottom: 6px;\n  border-bottom: 1px solid #eee;\n  text-align: center;\n}\n#share-dialog .dialog-txt {\n  text-align: center;\n}\n#share-dialog .share-qrcode {\n  display: inline-block;\n  width: 200px;\n  height: 200px;\n  text-align: center;\n  margin-bottom: 20px;\n}\n#share-dialog .socials {\n  width: 400px;\n  margin: 10px auto;\n}\n#share-dialog .socials span {\n  float: left;\n  display: inline-block;\n  width: 72px;\n  height: 72px;\n  margin: 0 16px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -29px -882px;\n}\n#share-dialog .socials span.last {\n  margin-right: 0;\n}\n#share-dialog .socials #wechat {\n  cursor: default;\n}\n#share-dialog .socials #wechat-group {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -25px -772px;\n  cursor: default;\n}\n#share-dialog .socials #qq {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -28px -1101px;\n}\n#share-dialog .socials #sina {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -132px -882px;\n}\n", ""]);
 
 	// exports
 
@@ -875,7 +911,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n}\n#content #banner {\n  position: relative;\n  overflow: auto;\n  height: 700px;\n  z-index: 100;\n}\n#content #banner ul {\n  margin: 0;\n  padding: 0;\n}\n#content #banner ul li {\n  position: relative;\n  float: left;\n  width: 1190px;\n  height: 700px;\n}\n#content #banner ul li img {\n  width: 1190px;\n}\n#content #banner li {\n  list-style: none;\n}\n#content #banner .dots {\n  position: absolute;\n  bottom: 30px;\n  right: 30px;\n  margin: 0;\n}\n#content #banner .dots .dot {\n  float: left;\n  width: 18px;\n  height: 18px;\n  line-height: 18px;\n  border: 1px solid #f2f2f2;\n  background-color: white;\n  margin-left: 6px;\n  text-indent: -9999px;\n  cursor: pointer;\n}\n#content #banner .dots .dot.active {\n  background-color: #ff7300;\n}\n#content #filter {\n  height: 80px;\n  line-height: 80px;\n  text-align: center;\n  background-color: white;\n  font-size: 30px;\n}\n#content #filter #hot-wrapper {\n  position: relative;\n  display: inline-block;\n  z-index: 100;\n}\n#content #filter #hot-wrapper #hot {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #hot-wrapper #hot-droplist {\n  display: none;\n  position: absolute;\n  top: 0;\n  left: -80px;\n  width: 400px;\n  height: 220px;\n  padding: 0 30px 20px 30px;\n  border: 1px solid #ccc;\n  background-color: white;\n}\n#content #filter #hot-wrapper #hot-droplist p {\n  text-align: center;\n  border-bottom: 1px solid #ccc;\n  margin: 0;\n  margin-bottom: 20px;\n}\n#content #filter #hot-wrapper #hot-droplist .droplist-hot {\n  display: inline-block;\n  width: 240px;\n  padding: 0 60px;\n  height: 80px;\n  line-height: 80px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 164px -204px;\n}\n#content #filter #hot-wrapper #hot-droplist ul {\n  margin: 0;\n  padding: 0;\n}\n#content #filter #hot-wrapper #hot-droplist ul li {\n  list-style: none;\n  float: left;\n  height: 50px;\n  line-height: 50px;\n  width: 49%;\n  color: #727272;\n  cursor: pointer;\n}\n#content #filter #hot-wrapper #hot-droplist ul li:hover,\n#content #filter #hot-wrapper #hot-droplist ul li.selected {\n  color: black;\n}\n#content #filter #hot-wrapper:hover {\n  z-index: 101;\n}\n#content #filter #hot-wrapper:hover #hot-droplist {\n  display: block;\n}\n#content #filter #category-wrapper {\n  position: relative;\n  display: inline-block;\n  z-index: 100;\n}\n#content #filter #category-wrapper #category {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #category-wrapper #category-droplist {\n  display: none;\n  position: absolute;\n  top: 0;\n  left: -80px;\n  width: 400px;\n  height: 320px;\n  padding: 0 30px 20px 30px;\n  border: 1px solid #ccc;\n  background-color: white;\n}\n#content #filter #category-wrapper #category-droplist p {\n  text-align: center;\n  border-bottom: 1px solid #ccc;\n  margin: 0;\n  margin-bottom: 20px;\n}\n#content #filter #category-wrapper #category-droplist .droplist-category {\n  display: inline-block;\n  width: 240px;\n  padding: 0 60px;\n  height: 80px;\n  line-height: 80px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 164px -204px;\n}\n#content #filter #category-wrapper #category-droplist ul {\n  margin: 0;\n  padding: 0;\n}\n#content #filter #category-wrapper #category-droplist ul li {\n  list-style: none;\n  float: left;\n  height: 50px;\n  line-height: 50px;\n  width: 33%;\n  color: #727272;\n  cursor: pointer;\n}\n#content #filter #category-wrapper #category-droplist ul li:hover,\n#content #filter #category-wrapper #category-droplist ul li.selected {\n  color: black;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-first {\n  text-align: left;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-second {\n  text-align: center;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-third {\n  text-align: right;\n}\n#content #filter #category-wrapper:hover {\n  z-index: 101;\n}\n#content #filter #category-wrapper:hover #category-droplist {\n  display: block;\n}\n#content #list {\n  padding: 30px 30px 10px 30px;\n}\n#content #list ul {\n  margin: 0;\n  padding: 0;\n}\n#content #list ul li.action-card {\n  position: relative;\n  float: left;\n  width: 32%;\n  margin-right: 2%;\n  margin-bottom: 20px;\n  list-style: none;\n  color: #727272;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #list ul li.action-card img {\n  width: 100%;\n  -webkit-border-radius: 10px 10px 0 0;\n  border-radius: 10px 10px 0 0;\n  background-clip: padding-box;\n}\n#content #list ul li.action-card .brief-info {\n  margin: 10px;\n  border-bottom: 1px solid #f1f1f1;\n}\n#content #list ul li.action-card .brief-info .brief-important .title {\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #list ul li.action-card .brief-info .brief-important .title:hover {\n  color: #ff7300;\n}\n#content #list ul li.action-card .brief-info .brief-important .price {\n  float: right;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #list ul li.action-card .brief-info .brief-important .hot-tag {\n  float: right;\n  padding: 2px;\n  margin-top: 5px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #list ul li.action-card .brief-info .host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #list ul li.action-card .brief-info .criteria {\n  margin: 12px 0;\n}\n#content #list ul li.action-card .brief-info .criteria p {\n  margin: 6px 0;\n}\n#content #list ul li.action-card .items {\n  padding: 0 10px 12px 10px;\n}\n#content #list ul li.action-card .items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #list ul li.action-card .items .location {\n  background-position: -216px -15px;\n}\n#content #list ul li.action-card .items .num {\n  background-position: -216px -51px;\n}\n#content #list ul li.action-card .items .time {\n  background-position: -216px -90px;\n}\n#content #list ul li.action-card .items .extra {\n  background-position: -216px -127px;\n}\n#content #list ul li.action-card.last {\n  margin: 0;\n}\n#content #list ul li.action-card:hover {\n  cursor: pointer;\n  -webkit-box-shadow: 2px 7px 9px 0 #808080;\n  box-shadow: 2px 7px 9px 0 #808080;\n}\n#content #list ul li.action-card .like {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -87px -58px;\n}\n#content #list ul li.action-card .like.selected {\n  background-position: -87px -15px;\n}\n#content #list ul li.action-card .share {\n  position: absolute;\n  top: 10px;\n  right: 70px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #commercial img {\n  width: 100%;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n}\n#content #banner {\n  position: relative;\n  overflow: auto;\n  height: 700px;\n  z-index: 100;\n}\n#content #banner ul {\n  margin: 0;\n  padding: 0;\n}\n#content #banner ul li {\n  position: relative;\n  float: left;\n  width: 1190px;\n  height: 700px;\n}\n#content #banner ul li img {\n  width: 1190px;\n}\n#content #banner li {\n  list-style: none;\n}\n#content #banner .dots {\n  position: absolute;\n  bottom: 30px;\n  right: 30px;\n  margin: 0;\n}\n#content #banner .dots .dot {\n  float: left;\n  width: 18px;\n  height: 18px;\n  line-height: 18px;\n  border: 1px solid #f2f2f2;\n  background-color: white;\n  margin-left: 6px;\n  text-indent: -9999px;\n  cursor: pointer;\n}\n#content #banner .dots .dot.active {\n  background-color: #ff7300;\n}\n#content #filter {\n  height: 80px;\n  line-height: 80px;\n  text-align: center;\n  background-color: white;\n  font-size: 30px;\n}\n#content #filter #hot-wrapper {\n  position: relative;\n  display: inline-block;\n  z-index: 100;\n}\n#content #filter #hot-wrapper #hot {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #hot-wrapper #hot-droplist {\n  display: none;\n  position: absolute;\n  top: 0;\n  left: -80px;\n  width: 400px;\n  height: 220px;\n  padding: 0 30px 20px 30px;\n  border: 1px solid #ccc;\n  background-color: white;\n}\n#content #filter #hot-wrapper #hot-droplist p {\n  text-align: center;\n  border-bottom: 1px solid #ccc;\n  margin: 0;\n  margin-bottom: 20px;\n}\n#content #filter #hot-wrapper #hot-droplist .droplist-hot {\n  display: inline-block;\n  width: 240px;\n  padding: 0 60px;\n  height: 80px;\n  line-height: 80px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 164px -204px;\n}\n#content #filter #hot-wrapper #hot-droplist ul {\n  margin: 0;\n  padding: 0;\n}\n#content #filter #hot-wrapper #hot-droplist ul li {\n  list-style: none;\n  float: left;\n  height: 50px;\n  line-height: 50px;\n  width: 49%;\n  color: #727272;\n  cursor: pointer;\n}\n#content #filter #hot-wrapper #hot-droplist ul li:hover,\n#content #filter #hot-wrapper #hot-droplist ul li.selected {\n  color: black;\n}\n#content #filter #hot-wrapper:hover {\n  z-index: 101;\n}\n#content #filter #hot-wrapper:hover #hot-droplist {\n  display: block;\n}\n#content #filter #category-wrapper {\n  position: relative;\n  display: inline-block;\n  z-index: 100;\n}\n#content #filter #category-wrapper #category {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #category-wrapper #category-droplist {\n  display: none;\n  position: absolute;\n  top: 0;\n  left: -80px;\n  width: 400px;\n  height: 320px;\n  padding: 0 30px 20px 30px;\n  border: 1px solid #ccc;\n  background-color: white;\n}\n#content #filter #category-wrapper #category-droplist p {\n  text-align: center;\n  border-bottom: 1px solid #ccc;\n  margin: 0;\n  margin-bottom: 20px;\n}\n#content #filter #category-wrapper #category-droplist .droplist-category {\n  display: inline-block;\n  width: 240px;\n  padding: 0 60px;\n  height: 80px;\n  line-height: 80px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 164px -204px;\n}\n#content #filter #category-wrapper #category-droplist ul {\n  margin: 0;\n  padding: 0;\n}\n#content #filter #category-wrapper #category-droplist ul li {\n  list-style: none;\n  float: left;\n  height: 50px;\n  line-height: 50px;\n  width: 33%;\n  color: #727272;\n  cursor: pointer;\n}\n#content #filter #category-wrapper #category-droplist ul li:hover,\n#content #filter #category-wrapper #category-droplist ul li.selected {\n  color: black;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-first {\n  text-align: left;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-second {\n  text-align: center;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-third {\n  text-align: right;\n}\n#content #filter #category-wrapper:hover {\n  z-index: 101;\n}\n#content #filter #category-wrapper:hover #category-droplist {\n  display: block;\n}\n#content #list {\n  padding: 30px 30px 10px 30px;\n}\n#content #list ul {\n  margin: 0;\n  padding: 0;\n}\n#content #list ul li.action-card {\n  position: relative;\n  float: left;\n  width: 32%;\n  margin-right: 2%;\n  margin-bottom: 20px;\n  list-style: none;\n  color: #727272;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #list ul li.action-card .pic {\n  width: 308px;\n  height: 226px;\n  overflow: hidden;\n  display: table-cell;\n  vertical-align: middle;\n  -webkit-border-radius: 10px 10px 0 0;\n  border-radius: 10px 10px 0 0;\n  background-clip: padding-box;\n}\n#content #list ul li.action-card img {\n  width: 100%;\n}\n#content #list ul li.action-card .brief-info {\n  margin: 10px;\n  border-bottom: 1px solid #f1f1f1;\n}\n#content #list ul li.action-card .brief-info .brief-important .title {\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #list ul li.action-card .brief-info .brief-important .title:hover {\n  color: #ff7300;\n}\n#content #list ul li.action-card .brief-info .brief-important .price {\n  float: right;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #list ul li.action-card .brief-info .brief-important .hot-tag {\n  float: right;\n  padding: 2px;\n  margin-top: 5px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #list ul li.action-card .brief-info .host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #list ul li.action-card .brief-info .criteria {\n  margin: 12px 0;\n}\n#content #list ul li.action-card .brief-info .criteria p {\n  margin: 6px 0;\n}\n#content #list ul li.action-card .items {\n  padding: 0 10px 12px 10px;\n}\n#content #list ul li.action-card .items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #list ul li.action-card .items .location {\n  background-position: -216px -15px;\n}\n#content #list ul li.action-card .items .num {\n  background-position: -216px -51px;\n}\n#content #list ul li.action-card .items .time {\n  background-position: -216px -90px;\n}\n#content #list ul li.action-card .items .extra {\n  background-position: -216px -127px;\n}\n#content #list ul li.action-card.last {\n  margin: 0;\n}\n#content #list ul li.action-card:hover {\n  cursor: pointer;\n  -webkit-box-shadow: 2px 7px 9px 0 #808080;\n  box-shadow: 2px 7px 9px 0 #808080;\n}\n#content #list ul li.action-card .like {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -87px -58px;\n}\n#content #list ul li.action-card .like.selected {\n  background-position: -87px -15px;\n}\n#content #list ul li.action-card .share {\n  position: absolute;\n  top: 10px;\n  right: 70px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #commercial img {\n  width: 100%;\n}\n", ""]);
 
 	// exports
 

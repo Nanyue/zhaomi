@@ -52,6 +52,8 @@
 	var zhaomi = __webpack_require__(19);
 	var utils = __webpack_require__(18);
 
+	var compileTpl = utils.compileTpl;
+
 	var RADIO = 'radio';
 	var CHECKBOX = 'checkbox';
 	var QUESTION = 'question';
@@ -143,12 +145,6 @@
 	        var i = 1;
 	        $('.action-item').each(function(idx, elem) {
 	            $(elem).find('.criteria-seqno').text((i++) + '、');
-	        })
-	    }
-
-	    function compileTpl(tpl, data) {
-	        return tpl.replace(/\{(\w+)\}/g, function(all, param) {
-	            return data[param] || '';
 	        })
 	    }
 
@@ -946,6 +942,12 @@
 
 	exports.warn = function(msg) {
 	    window.alert(msg);
+	}
+
+	exports.compileTpl = function(tpl, data) {
+	    return tpl.replace(/\{(\w+)\}/g, function(all, param) {
+	        return data[param] || '';
+	    })
 	}
 
 	function getUrlParameter() {

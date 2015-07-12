@@ -6,6 +6,8 @@ var header = require('../../header/js/header');
 var zhaomi = require('../../../lib/common/common');
 var utils = require('../../../common/utils');
 
+var compileTpl = utils.compileTpl;
+
 var RADIO = 'radio';
 var CHECKBOX = 'checkbox';
 var QUESTION = 'question';
@@ -97,12 +99,6 @@ $(function() {
         var i = 1;
         $('.action-item').each(function(idx, elem) {
             $(elem).find('.criteria-seqno').text((i++) + '、');
-        })
-    }
-
-    function compileTpl(tpl, data) {
-        return tpl.replace(/\{(\w+)\}/g, function(all, param) {
-            return data[param] || '';
         })
     }
 

@@ -33,7 +33,7 @@ $(function() {
         var shareLink = 'http://zhaomi.biz/action/' + id + '?code=' + code;
 
         shareBox.show({
-            selector: '#share-dialog',
+            id: 'share-dialog',
             shareLink: shareLink
         })
     });

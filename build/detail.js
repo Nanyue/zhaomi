@@ -767,6 +767,12 @@
 	    window.alert(msg);
 	}
 
+	exports.compileTpl = function(tpl, data) {
+	    return tpl.replace(/\{(\w+)\}/g, function(all, param) {
+	        return data[param] || '';
+	    })
+	}
+
 	function getUrlParameter() {
 	    var sPageURL = window.location.search.substring(1);
 	    var sURLVariables = sPageURL.split('&');
@@ -828,6 +834,7 @@
 
 	__webpack_require__(23);
 	var share = __webpack_require__(25);
+	var utils = __webpack_require__(18);
 
 	module.exports = {
 	    /**
@@ -840,28 +847,44 @@
 	     */
 	    show: function(data) {
 
-	        if (!data || !data.selector || !data.shareLink) {
+	        if (!data || !data.shareLink) {
 	            return;
 	        }
 
-	        var selector = data.selector;
+	        var id = data.id || 'share-dialog';
+	        var idSelector = '#' + id;
+	        var $dialog = $(idSelector);
 	        var shareLink = data.shareLink;
 	        var width = data.width || 500;
+	        var compiledTpl;
 
+	        if (shareLink.indexOf('/') === 0) {
+	            shareLink = 'http://zhaomi.biz' + shareLink;
+	        }
 
-	        $(selector).find('.share-qrcode').empty().qrcode({
+	        compiledTpl = utils.compileTpl(SHAREBOX_TPL, {
+	            id: id,
+	            shareLink: shareLink
+	        })
+
+	        if (!$dialog.length) {
+	            $('body').append($(compiledTpl));
+	            $dialog = $(idSelector);
+	        }
+
+	        $dialog.find('.share-qrcode').empty().qrcode({
 	            text: shareLink,
 	            width: 200,
 	            height: 200
 	        });
 
-	        $(selector).dialog({
+	        $dialog.dialog({
 	            resizable: false,
 	            width: width,
 	            title: '通过链接分享'
-	        });
+	        }); 
 
-	        $(selector).on('click', '.socials span', function() {
+	        $dialog.on('click', '.socials span', function() {
 	            var webid = $(this).data('webid');
 	            share({
 	                webid: webid,
@@ -870,6 +893,19 @@
 	        })
 	    }
 	}
+
+	var SHAREBOX_TPL = '<div id="{id}" class="z-dialog share-dialog">' +
+	            '<span class="share-link">{shareLink}</span>' +
+	            '<p class="dialog-txt">通过二维码分享</p>' +
+	            '<span class="share-qrcode"></span>' +
+	            '<p class="dialog-txt">通过社交网络分享</p>' +
+	            '<div class="socials">' +
+	                '<span id="wechat" title="请用微信扫描上方二维码后分享"></span>' +
+	                '<span id="wechat-group" title="请用微信扫描上方二维码后分享"></span>' +
+	                '<span id="qq" data-webid="cqq"></span>' +
+	                '<span id="sina" data-webid="tsina" class="last"></span>' +
+	            '</div>' +
+	        '</div>';
 
 /***/ },
 /* 23 */
@@ -906,7 +942,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#share-dialog {\n  text-align: center;\n  padding-bottom: 20px;\n}\n#share-dialog .share-link {\n  display: inline-block;\n  padding-bottom: 6px;\n  border-bottom: 1px solid #eee;\n  text-align: center;\n}\n#share-dialog .dialog-txt {\n  text-align: center;\n}\n#share-dialog .share-qrcode {\n  display: inline-block;\n  width: 200px;\n  height: 200px;\n  text-align: center;\n  margin-bottom: 20px;\n}\n#share-dialog .socials {\n  width: 400px;\n  margin: 10px auto;\n}\n#share-dialog .socials span {\n  float: left;\n  display: inline-block;\n  width: 72px;\n  height: 72px;\n  margin: 0 16px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -29px -882px;\n}\n#share-dialog .socials span.last {\n  margin-right: 0;\n}\n#share-dialog .socials #wechat {\n  cursor: default;\n}\n#share-dialog .socials #wechat-group {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -25px -772px;\n  cursor: default;\n}\n#share-dialog .socials #qq {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -132px -772px;\n}\n#share-dialog .socials #sina {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -132px -882px;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#share-dialog {\n  text-align: center;\n  padding-bottom: 20px;\n}\n#share-dialog .share-link {\n  display: inline-block;\n  padding-bottom: 6px;\n  border-bottom: 1px solid #eee;\n  text-align: center;\n}\n#share-dialog .dialog-txt {\n  text-align: center;\n}\n#share-dialog .share-qrcode {\n  display: inline-block;\n  width: 200px;\n  height: 200px;\n  text-align: center;\n  margin-bottom: 20px;\n}\n#share-dialog .socials {\n  width: 400px;\n  margin: 10px auto;\n}\n#share-dialog .socials span {\n  float: left;\n  display: inline-block;\n  width: 72px;\n  height: 72px;\n  margin: 0 16px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -29px -882px;\n}\n#share-dialog .socials span.last {\n  margin-right: 0;\n}\n#share-dialog .socials #wechat {\n  cursor: default;\n}\n#share-dialog .socials #wechat-group {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -25px -772px;\n  cursor: default;\n}\n#share-dialog .socials #qq {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -28px -1101px;\n}\n#share-dialog .socials #sina {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -132px -882px;\n}\n", ""]);
 
 	// exports
 

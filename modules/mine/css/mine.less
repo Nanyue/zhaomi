@@ -421,10 +421,10 @@ body {
                         overflow: hidden;
                         display: table-cell;
                         vertical-align: middle;
+                        .border-radius(10px 10px 0 0);
                     }
                     img {
                         width: 100%;
-                        .border-radius(10px 10px 0 0);
                     }
                     .brief-info {
                         margin: 10px;
@@ -533,15 +533,31 @@ body {
                                 border: none;
                                 .border-radius(18px);
                             }
+                            a {
+                                margin-left: 6px;
+                                color: #B8B8B8;
+                                font-size: 12px;
+                            }
                             .start-action, .stop-action {
                                 font-size: 12px;
                                 color: #b8b8b8;
+                            }
+                            .red {
+                                margin-left: 5em;
+                                background-color: #F56467;
+                            }
+                            .green {
+                                margin-left: 5em;
+                                background-color: #7ED321;
+                            }
+                            .no-shift {
+                                margin-left: 0;
                             }
                             .starting, .passed, .applying {
                                 // margin-left: 5em;
                                 background-color: #7ED321;
                             }
-                            .finished, .notstarted, .rejected {
+                            .notstarted, .rejected {
                                 // margin-left: 5em;
                                 background-color: #F56467;
                             }

@@ -3,8 +3,11 @@
 <head>
     <title>我发起的活动页面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="//zhaomi.biz/lib/jqueryui/jquery-ui.css"/>
     <script type="text/javascript" src="//zhaomi.biz/lib/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="//zhaomi.biz/lib/jquery-form/jquery.form.js"></script>
+    <script type="text/javascript" src="//zhaomi.biz/lib/jqueryui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="//zhaomi.biz/lib/jquery-qrcode/jquery.qrcode.js"></script>
     <script type="text/javascript" src="//zhaomi.biz/build/mine.js"></script>
 </head>
 <body>
@@ -64,7 +67,7 @@
         </div>
         <div id="list">
             <ul class="fn-clr">
-                <li class="action-card">
+                <li class="action-card" data-link="/action/123456?code=1">
                     <div class="pic">
                         <img src="//zhaomi.biz/assets/imgs/action-pic.png">
                     </div>
@@ -87,7 +90,10 @@
                         <p class="extra fn-overflow">30m</p>
                     </div>
                     <div class="operation">
-                        <div class="main"><button class="z-btn starting">已经开始</button></div>
+                        <div class="main">
+                            <button class="z-btn green">报名中</button>
+                            <a href="">点击截止报名</a>
+                        </div>
                         <div class="sub fn-clr">
                             <span class="edit"></span>
                             <span class="duplicate"></span>
@@ -121,7 +127,10 @@
                         <p class="extra fn-overflow">30m</p>
                     </div>
                     <div class="operation">
-                        <div class="main"><button class="z-btn notstarted">尚未开始</button></div>
+                        <div class="main">
+                            <button class="z-btn red">尚未发布</button>
+                            <a href="">点击发布</a>
+                        </div>
                         <div class="sub fn-clr">
                             <span class="edit"></span>
                             <span class="duplicate"></span>
@@ -155,7 +164,9 @@
                         <p class="extra fn-overflow">30m</p>
                     </div>
                     <div class="operation">
-                        <div class="main"><button class="z-btn finished">已经结束</button></div>
+                        <div class="main">
+                            <button class="z-btn red no-shift">已经结束</button>
+                        </div>
                         <div class="sub fn-clr">
                             <span class="edit"></span>
                             <span class="duplicate"></span>
