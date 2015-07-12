@@ -42,9 +42,9 @@ $(function() {
     })
 
     $questions.on('mouseenter', '.criteria-q, ul li', function() {
-        $(this).find('.criteria-del').show();
+        $(this).find('.criteria-del').addClass('show');
     }).on('mouseleave', '.criteria-q, ul li', function() {
-        $(this).find('.criteria-del').hide();
+        $(this).find('.criteria-del').removeClass('show');
     }).on('click', '.criteria-del', function() {
         // 删除问题
         if ($(this).parent('.criteria-q').length) {

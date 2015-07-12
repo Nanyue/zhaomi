@@ -383,13 +383,16 @@ body {
                             }
                         }
                         .criteria-del {
-                            display: none;
+                            visibility: hidden;
                             width: 30px;
                             height: 30px;
                             line-height: 30px;
                             float: left;
                             cursor: pointer;
                             .icons-bg(-31px -627px);
+                            &.show {
+                                visibility: visible;
+                            }
                         }
                         .criteria-add {
                             width: 32px;
@@ -438,7 +441,7 @@ body {
                                 float: left;
                                 height: 30px;
                                 line-height: 30px;
-                                margin-right: 50px;
+                                margin-right: 15px;
                                 margin-bottom: 10px;
                                 list-style: none;
                                 .z-radio {

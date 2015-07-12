@@ -60,5 +60,15 @@ $(function() {
                 shareLink: shareLink
             })
         }
-    })
+    });
+
+    $('#personal-info').on('click', '.recommend', function() {
+        var shareLink = $(this).data('link');
+
+        if (shareLink) {
+            shareBox.show({
+                shareLink: shareLink
+            })
+        }
+    });
 });

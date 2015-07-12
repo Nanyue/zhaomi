@@ -39,6 +39,7 @@ module.exports = {
         }
 
         $dialog.find('.share-qrcode').empty().qrcode({
+            render: 'table',
             text: shareLink,
             width: 200,
             height: 200
