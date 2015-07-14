@@ -45,11 +45,9 @@ $(function() {
                 var data = res && res.data;
                 
                 if (success) {
-                    // $saveDialog.dialog({
-                    //     resizable: false,
-                    //     width: 600,
-                    //     title: ''
-                    // });
+                    if (data.url) {
+                        location.href = data.url;  
+                    } 
                 } else {
                     for (var key in data) {
                         $('#' + key).removeClass('focus').addClass('err');

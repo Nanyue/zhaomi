@@ -5,8 +5,11 @@ var header = require('../../header/js/header');
 var zhaomi = require('../../../lib/common/common');
 // var share = require('../../../common/pkgs/share/share');
 var shareBox = require('../../../common/pkgs/shareBox/shareBox');
+var applyList = require('./apply-list');
 
 $(function() {
+    applyList.init();
+
     $('#apply-list').on('click', '.detail', function() {
         var $content = $(this).closest('.apply-item').find('.detail-content');
 
@@ -49,7 +52,16 @@ $(function() {
     }).on('click', '.duplicate, .delete', function() {
         var action = $(this).data('action');
         if (action) {
-            zhaomi.postData(action, {});
+            zhaomi.postData(action, {}, function(res) {
+                var success = res && res.success;
+                var data = res && res.data;
+                
+                if (success) {
+                    if (data.url) {
+                        location.href = data.url;  
+                    } 
+                }
+            });
         }
     }).on('click', '.c-share, .b-share', function() {
         var $actionCard = $(this).closest('.action-card');

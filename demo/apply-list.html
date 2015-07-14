@@ -11,8 +11,8 @@
 <div id="content">
     <div id="header">
         <a href="//zhaomi.biz" id="logo">找米</a>
-        <div id="reg" class="action"><button class="z-btn">注册/登陆</button></div>
-        <div id="pub" class="action"><button class="z-btn">发布活动</button></div>
+        <div id="reg" class="action"><a class="z-btn">注册/登陆</a></div>
+        <div id="pub" class="action"><a class="z-btn">发布活动</a></div>
         <div id="search" class="action"><input placeholder="在此输入搜索"></input></div>
     </div>
     <div id="mine-bg">
@@ -40,15 +40,15 @@
             <span class="action-cnt">7/14</span>
         </div>
         <div id="apply-list">
-            <div class="apply-item">
+            <div class="apply-item" data-action="123456" data-target="123">
                 <div class="apply-item-content fn-clr">
                     <span class="portrait">
                         <img src="/assets/imgs/portrait.png" alt="">
                     </span>
                     <span class="name">龚子仪</span>
                     <span class="detail">详情</span>
-                    <button class="z-btn approve">通过</button>
-                    <button class="z-btn reject">拒绝</button>
+                    <button class="z-btn green" data-optype="approve">通过</button>
+                    <button class="z-btn red" data-optype="deny">拒绝</button>
                 </div>
                 <div class="detail-content">
                     <div class="personal-info">

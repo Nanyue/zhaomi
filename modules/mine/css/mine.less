@@ -260,7 +260,7 @@ body {
                     display: inline-block;
                     width: 37px;
                     height: 37px;
-                    .border-radius(14px);
+                    .border-radius(37px);
                     background-color: #eee;
                     img {
                         width: 100%;
@@ -322,15 +322,12 @@ body {
                     line-height: 30px;
                     margin-left: 12px;
                     .border-radius(15px);
-                    &.approve, &.completed {
+                    &.green, &.completed {
                         color: white;
                         border: none;
                         background-color: #7ed321;
                     }
-                    &.reject {
-
-                    }
-                    &.rejected {
+                    &.red {
                         color: white;
                         border: none;
                         background-color: #f56467;
@@ -428,7 +425,7 @@ body {
                         width: 308px;
                         height: 226px;
                         overflow: hidden;
-                        display: table-cell;
+                        /* display: table-cell; */
                         vertical-align: middle;
                         background-color: #eee;
                         .border-radius(10px 10px 0 0);
@@ -456,7 +453,7 @@ body {
                             .hot-tag {
                                 float: right;
                                 padding: 2px;
-                                margin-top: 5px;
+                                margin-top: 3px;
                                 margin-right: 10px;
                                 background-color: #ff7a7a;
                                 color: white;
