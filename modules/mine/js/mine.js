@@ -72,6 +72,10 @@ $(function() {
                 shareLink: shareLink
             })
         }
+    }).on('click', '.publish', function() {
+        zhaomi.postData();
+    }).on('click', '.apply-forbidden', function() {
+        zhaomi.postData();
     });
 
     $('#personal-info').on('click', '.recommend', function() {

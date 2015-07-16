@@ -16,7 +16,9 @@ var UPLOAD = 'upload';
 $(function() {
 
     var $questions = $('#action-questions');
-    var seqNo = 0;
+    // 以已存在的问题条目数作为初始化值，而不是0
+    // 为了解决在编辑、复制问卷时，因页面已存在问题从而导致序号错误
+    var seqNo = $('.action-item').length;
 
     // 增加问题
     $('#criteria-operation').on('click', 'ul li', function() {
@@ -101,9 +103,14 @@ $(function() {
             $(elem).find('.criteria-seqno').text((i++) + '、');
         })
     }
-
+// window.xxx = collectData;
     function collectData() {
-        var data = [];
+        var data = {
+            radio: [],
+            checkbox: [],
+            question: [],
+            upload: []
+        };
 
         $('.action-item').each(function(idx, elem) {
             var q, type, opts = [];
@@ -130,10 +137,12 @@ $(function() {
                 singleQuestion['a'] = opts;
             }
             
-            data.push(singleQuestion);
+            // if (lastIndexOfType[type])
+            data[type].push(singleQuestion);
         })
 
-        return data;
+        return data.radio.concat(data.checkbox)
+                .concat(data.question).concat(data.upload);
     }
 
     var RADIO_TPL = '<div class="action-item" data-type="radio">' +
@@ -174,7 +183,7 @@ $(function() {
     var CHECKBOX_TPL = '<div class="action-item" data-type="checkbox">' +
                             '<div class="criteria-q fn-clr">' +
                                 '<span class="criteria-seqno">{seqNo}、</span>' +
-                                '<input class="criteria-q-input" placeholder="在这里填写你的单选问题~"></input>' +
+                                '<input class="criteria-q-input" placeholder="在这里填写你的多选问题~"></input>' +
                                 '<span class="criteria-del"></span>' +
                             '</div>' +
                             '<div class="action-answers">' +

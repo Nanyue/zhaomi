@@ -428,10 +428,11 @@ body {
                         /* display: table-cell; */
                         vertical-align: middle;
                         background-color: #eee;
+                        text-align: center;
                         .border-radius(10px 10px 0 0);
                     }
                     img {
-                        width: 100%;
+                        height: 100%;
                     }
                     .brief-info {
                         margin: 10px;
@@ -443,6 +444,9 @@ body {
                                 height: 30px;
                                 overflow: hidden;
                                 font-size: 30px;
+                                &:hover {
+                                    color: #ff7300;
+                                }
                             }
                             .price {
                                 float: right;
@@ -465,6 +469,7 @@ body {
                             color: #b8b8b8;
                         }
                         .criteria {
+                            height: 38px;
                             margin: 12px 0;
                             p {
                                 margin: 6px 0;
@@ -606,7 +611,7 @@ body {
                             .view {
                                 color: #727272;
                                 border: 1px solid #727272;
-                                padding: 0 4px;
+                                padding: 0 14px;
                             }
                         }
                     }

@@ -39,7 +39,13 @@ $(function() {
     });
 
     $actionCard.on('click', '.title', function() {
-        window.open('/demo/detail.html', '_blank');
+        var $actionCard = $(this).closest('.action-card');
+        var shareLink = $actionCard.data('link');
+        var detailLink = $actionCard.data('detail');
+
+        if (shareLink || detailLink) {
+            window.open(shareLink || detailLink, '_blank');
+        }
     })
 
     // 处理过滤找米热门
