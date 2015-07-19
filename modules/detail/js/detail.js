@@ -13,8 +13,9 @@ var UPLOAD = 'upload';
 $(function() {
 
     var $detailContainer = $('#detail-container');
+    var $detailQuestions = $detailContainer.find('#detail-questions');
 
-    $('#detail-questions').on('click', '.detail-answers li', function() {
+    $detailQuestions.on('click', '.detail-answers li', function() {
         var $detailItem = $(this).closest('.detail-item');
         var type = $detailItem.data('type');
 
@@ -26,7 +27,8 @@ $(function() {
         }
     })
 
-    $('.share-bonus').click(function() {
+    $detailContainer.on('click', '.share, .share-bonus', function(e) {
+        console.log(1)
         var id = $detailContainer.data('id');
         var code = $detailContainer.data('code');
         var shareLink = 'http://zhao-mi.net/action/' + id + '?code=' + code;

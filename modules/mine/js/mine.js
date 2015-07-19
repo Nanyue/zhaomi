@@ -4,6 +4,7 @@ require('../css/mine');
 var header = require('../../header/js/header');
 var zhaomi = require('../../../lib/common/common');
 var shareBox = require('../../../common/pkgs/shareBox/shareBox');
+var utils = require('../../../common/utils');
 var applyList = require('./apply-list');
 var personalMod = require('./personal-info');
 
@@ -11,6 +12,7 @@ $(function() {
     applyList.init();
     personalMod.init();
 
+    var $list = $('#list');
     // 展示报名列表中的申请人详细信息
     $('#apply-list').on('click', '.detail', function() {
         var $content = $(this).closest('.apply-item').find('.detail-content');
@@ -25,12 +27,20 @@ $(function() {
     })
 
     // 活动信息中的各种操作
-    $('.action-card').on('click', '.edit', function() {
+    $list.on('click', '.action-card .title', function() {
+        var $actionCard = $(this).closest('.action-card');
+        var shareLink = $actionCard.data('link');
+        var detailLink = $actionCard.data('detail');
+
+        if (shareLink || detailLink) {
+            window.open(shareLink || detailLink, '_blank');
+        }
+    }).on('click', '.action-card .edit', function() {
         var action = $(this).data('action');
         if (action) {
             window.location.href = action;    
         }
-    }).on('click', '.duplicate, .delete', function() {
+    }).on('click', '.action-card .duplicate, .action-card .delete', function() {
         var action = $(this).data('action');
         if (action) {
             zhaomi.postData(action, {}, function(res) {
@@ -44,7 +54,7 @@ $(function() {
                 }
             });
         }
-    }).on('click', '.c-share, .b-share, .share', function() {
+    }).on('click', '.action-card .c-share, .action-card .b-share, .action-card .share', function() {
         var $actionCard = $(this).closest('.action-card');
         var shareLink = $actionCard.data('link');
 
@@ -53,7 +63,7 @@ $(function() {
                 shareLink: shareLink
             })
         }
-    }).on('click', '.like', function() {
+    }).on('click', '.action-card .like', function() {
         var $like = $(this);
         var $actionCard = $(this).closest('.action-card');
         var actionId = $actionCard.data('id');
@@ -67,7 +77,7 @@ $(function() {
                 $like.toggleClass('selected');
             }
         })
-    }).on('click', '.publish', function() {
+    }).on('click', '.action-card .publish', function() {
         var $actionCard = $(this).closest('.action-card');
         var actionId = $actionCard.data('id');
 
@@ -83,7 +93,7 @@ $(function() {
             });    
         }
         
-    }).on('click', '.apply-forbidden', function() {
+    }).on('click', '.action-card .apply-forbidden', function() {
         var $actionCard = $(this).closest('.action-card');
         var actionId = $actionCard.data('id');
 
@@ -98,7 +108,7 @@ $(function() {
                 }
             });    
         }
-    }).on('click', '.apply-resume', function() {
+    }).on('click', '.action-card .apply-resume', function() {
         var $actionCard = $(this).closest('.action-card');
         var actionId = $actionCard.data('id');
 
@@ -113,7 +123,7 @@ $(function() {
                 }
             });    
         }
-    }).on('click', '.unapply', function() {
+    }).on('click', '.action-card .unapply', function() {
         var $actionCard = $(this).closest('.action-card');
         var actionId = $actionCard.data('id');
 
@@ -141,18 +151,35 @@ $(function() {
         }
     });
 
+    var fullDataReturned = true;
+    var from = 12, size = 12;
+
     utils.loadMore(function() {
+
+        if (!fullDataReturned) {
+            return;
+        }
+
         $.ajax({
-            url: location.href,
+            url: utils.getJSONPUrl(from, size),
             dataType: 'jsonp',
-            success: function(html) {
-                $('body').append('<p>加载更多</p>')        
+            success: function(data) {
+                data = data || {};
+                if (data.size === size) {
+                    fullDataReturned = true;
+                    from = from + size;
+                } else {
+                    fullDataReturned = false;
+                }
+                
+                $('#list ul').append(data.html);
+                
             },
-            error: function() {
-                console.log('失败')
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
             }
-        })
-        
+        });
+
     })
 
 });

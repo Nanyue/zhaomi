@@ -12,6 +12,7 @@ $(function() {
     var $doc = $(document);
     var $hotWrapper = $('#hot-wrapper');
     var $categoryWrapper = $('#category-wrapper');
+    var $container = $('#content');
     var $actionCard = $('.action-card');
     var $banner = $('#banner');
 
@@ -31,7 +32,7 @@ $(function() {
         
     });
 
-    $actionCard.on('click', '.title', function() {
+    $container.on('click', '.action-card .title', function() {
         var $actionCard = $(this).closest('.action-card');
         var shareLink = $actionCard.data('link');
         var detailLink = $actionCard.data('detail');
@@ -39,7 +40,7 @@ $(function() {
         if (shareLink || detailLink) {
             window.open(shareLink || detailLink, '_blank');
         }
-    }).on('click', '.like', function() {
+    }).on('click', '.action-card .like', function() {
         var $like = $(this);
         var $actionCard = $(this).closest('.action-card');
         var actionId = $actionCard.data('id');
@@ -53,7 +54,7 @@ $(function() {
                 $like.toggleClass('selected');
             }
         })
-    }).on('click', '.share', function() {
+    }).on('click', '.action-card .share', function() {
         var $actionCard = $(this).closest('.action-card');
         var shareLink = $actionCard.data('link');
 
@@ -77,17 +78,40 @@ $(function() {
         });
     })
 
+    var fullDataReturned = true;
+    var from = 12, size = 12;
+
     utils.loadMore(function() {
+
+        var controller = this;
+        if (!fullDataReturned) {
+            return;
+        }
+
         $.ajax({
-            url: location.href,
+            url: utils.getJSONPUrl(from, size),
             dataType: 'jsonp',
-            success: function(html) {
-                $('body').append('<p>加载更多</p>')        
+            success: function(data) {
+                // 清除timeout才能进行下一次请求
+                controller.clearTimeout();
+                data = data || {};
+                if (data.size === size) {
+                    fullDataReturned = true;
+                    from = from + size;
+                } else {
+                    fullDataReturned = false;
+                }
+                if (!$('#more-list').length) {
+                    $('#content').append('<div id="more-list" class="list"><ul></ul></div>')
+                }
+                $('#more-list ul').append(data.html);
+                
             },
-            error: function() {
-                $('body').append('<p>加载失败</p>') 
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
             }
-        })
-        
+        });
+
     })
+    
 });

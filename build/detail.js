@@ -59,8 +59,9 @@
 	$(function() {
 
 	    var $detailContainer = $('#detail-container');
+	    var $detailQuestions = $detailContainer.find('#detail-questions');
 
-	    $('#detail-questions').on('click', '.detail-answers li', function() {
+	    $detailQuestions.on('click', '.detail-answers li', function() {
 	        var $detailItem = $(this).closest('.detail-item');
 	        var type = $detailItem.data('type');
 
@@ -72,7 +73,8 @@
 	        }
 	    })
 
-	    $('.share-bonus').click(function() {
+	    $detailContainer.on('click', '.share, .share-bonus', function(e) {
+	        console.log(1)
 	        var id = $detailContainer.data('id');
 	        var code = $detailContainer.data('code');
 	        var shareLink = 'http://zhao-mi.net/action/' + id + '?code=' + code;
@@ -82,6 +84,11 @@
 	            shareLink: shareLink
 	        })
 	    })
+
+	    $('.share-bonus').click(function() {
+	        
+	    })
+
 
 	    $('#apply-form').submit(function() {
 	        var data = collectData();
@@ -610,7 +617,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#header {\n  height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  width: 32px;\n  height: 32px;\n  background: url(//zhao-mi.net/assets/imgs/logo.png) no-repeat 0 0;\n  margin-left: 12px;\n  margin-top: 8px;\n  font-size: 34px;\n  color: #5e5e5e;\n  line-height: 1;\n  text-indent: -9999em;\n}\n#header #area {\n  position: relative;\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  z-index: 200;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n  display: inline-block;\n  width: 60px;\n  height: 48px;\n  line-height: 48px;\n}\n#header #area #area-droplist {\n  display: none;\n  position: absolute;\n  top: 48px;\n  left: 0;\n  width: 400px;\n  height: 32px;\n  line-height: 32px;\n  padding-top: 8px;\n}\n#header #area #area-droplist .prov,\n#header #area #area-droplist .city {\n  float: left;\n  height: 32px;\n  line-height: 24px;\n}\n#header #area #area-droplist span {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n#header #area #area-droplist span.city-txt {\n  width: 60px;\n}\n#header .action {\n  float: right;\n  margin-top: 12px;\n  margin-right: 12px;\n}\n#header .action a {\n  height: 28px;\n  line-height: 26px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub a {\n  padding-left: 30px;\n  padding-right: 12px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #pub.cancel-create {\n  background-color: #888;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub.cancel-create a {\n  color: white;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -88px -355px;\n}\n#header #msg a {\n  padding-left: 40px;\n  padding-right: 12px;\n  min-width: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -222px -827px;\n}\n#header #personal-info {\n  width: 32px;\n  height: 32px;\n  margin-top: 8px;\n  background-color: #888;\n  cursor: pointer;\n  overflow: hidden;\n  -webkit-border-radius: 40px;\n  border-radius: 40px;\n  background-clip: padding-box;\n}\n#header #personal-info img {\n  width: 100%;\n}\n#header #personal-info .logout {\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  border: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -90px -352px;\n}\n#header #search input {\n  width: 160px;\n  height: 28px;\n  line-height: 28px;\n  padding-left: 36px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  outline: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #search input:focus {\n  box-shadow: 0 0 3px 1px rgba(82, 168, 236, 0.8);\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#header {\n  height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  width: 32px;\n  height: 32px;\n  background: url(//zhao-mi.net/assets/imgs/logo.png) no-repeat 0 0;\n  margin-left: 12px;\n  margin-top: 8px;\n  font-size: 34px;\n  color: #5e5e5e;\n  line-height: 1;\n  text-indent: -9999em;\n}\n#header #area {\n  position: relative;\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  z-index: 200;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n  display: inline-block;\n  width: 60px;\n  height: 48px;\n  line-height: 48px;\n}\n#header #area #area-droplist {\n  display: none;\n  position: absolute;\n  top: 48px;\n  left: 0;\n  width: 400px;\n  height: 32px;\n  line-height: 32px;\n  padding-top: 8px;\n}\n#header #area #area-droplist .prov,\n#header #area #area-droplist .city {\n  float: left;\n  height: 32px;\n  line-height: 24px;\n}\n#header #area #area-droplist span {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n#header #area #area-droplist span.city-txt {\n  width: 60px;\n}\n#header .action {\n  float: right;\n  margin-top: 12px;\n  margin-right: 12px;\n}\n#header .action a {\n  height: 28px;\n  line-height: 26px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub a {\n  padding-left: 30px;\n  padding-right: 12px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #pub.cancel-create {\n  background-color: #888;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub.cancel-create a {\n  color: white;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -88px -355px;\n}\n#header #msg {\n  position: relative;\n  overflow: visible;\n}\n#header #msg span {\n  display: inline-block;\n  position: absolute;\n  top: -10px;\n  right: -10px;\n  text-align: center;\n  width: 20px;\n  height: 20px;\n  line-height: 24px;\n  background-color: #FF7A7A;\n  -webkit-border-radius: 25px;\n  border-radius: 25px;\n  color: white;\n  font-size: 12px;\n  -webkit-border-radius: 15px;\n  border-radius: 15px;\n  background-clip: padding-box;\n}\n#header #msg a {\n  padding-left: 40px;\n  padding-right: 12px;\n  min-width: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -222px -827px;\n}\n#header #personal-info {\n  width: 32px;\n  height: 32px;\n  margin-top: 8px;\n  background-color: #888;\n  cursor: pointer;\n  overflow: hidden;\n  -webkit-border-radius: 40px;\n  border-radius: 40px;\n  background-clip: padding-box;\n}\n#header #personal-info img {\n  width: 100%;\n}\n#header #personal-info .logout {\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  border: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -90px -352px;\n}\n#header #search input {\n  width: 160px;\n  height: 28px;\n  line-height: 28px;\n  padding-left: 36px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  outline: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #search input:focus {\n  box-shadow: 0 0 3px 1px rgba(82, 168, 236, 0.8);\n}\n", ""]);
 
 	// exports
 
@@ -778,17 +785,21 @@
 
 	exports.loadMore = function(callback) {
 
-	    var timeoutId;
+	    var controller = {
+	        timeoutId: '',
+	        clearTimeout: function() {
+	            this.timeoutId = '';
+	        }   
+	    };
 	    // 处理加载更多
 	    $win.scroll(function() {
 	        var LOADING_GAP = 200;
 	        if ($doc.height() < $doc.scrollTop() + $win.height() + LOADING_GAP) {
-	            if (timeoutId) {
+	            if (controller.timeoutId) {
 	                return;
 	            }
-	            timeoutId = setTimeout(function() {
-	                callback();
-	                timeoutId = null;
+	            controller.timeoutId = setTimeout(function() {
+	                callback.call(controller);
 	            }, 300);
 	        }
 	    })
@@ -806,6 +817,25 @@
 	        }
 	    }
 	    return ret;
+	}
+
+	exports.getJSONPUrl = function(from, size) {
+	            
+	    var params = this.getUrlParameter();
+	    var newParams = {
+	        from: from,
+	        size: size
+	    };
+	    var queryStr = $.param($.extend({}, params, newParams))
+	    
+	    var rPrefix = /(https?:\/\/[^?]+)/;
+	    var matches, prefix;
+
+	    if (matches = rPrefix.exec(location.href)) {
+	        prefix = matches[1];
+	    }
+
+	    return prefix + '?' + queryStr;
 	}
 
 /***/ },

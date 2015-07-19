@@ -58,6 +58,7 @@
 	    var $doc = $(document);
 	    var $hotWrapper = $('#hot-wrapper');
 	    var $categoryWrapper = $('#category-wrapper');
+	    var $container = $('#content');
 	    var $actionCard = $('.action-card');
 	    var $banner = $('#banner');
 
@@ -77,7 +78,7 @@
 	        
 	    });
 
-	    $actionCard.on('click', '.title', function() {
+	    $container.on('click', '.action-card .title', function() {
 	        var $actionCard = $(this).closest('.action-card');
 	        var shareLink = $actionCard.data('link');
 	        var detailLink = $actionCard.data('detail');
@@ -85,7 +86,7 @@
 	        if (shareLink || detailLink) {
 	            window.open(shareLink || detailLink, '_blank');
 	        }
-	    }).on('click', '.like', function() {
+	    }).on('click', '.action-card .like', function() {
 	        var $like = $(this);
 	        var $actionCard = $(this).closest('.action-card');
 	        var actionId = $actionCard.data('id');
@@ -99,7 +100,7 @@
 	                $like.toggleClass('selected');
 	            }
 	        })
-	    }).on('click', '.share', function() {
+	    }).on('click', '.action-card .share', function() {
 	        var $actionCard = $(this).closest('.action-card');
 	        var shareLink = $actionCard.data('link');
 
@@ -123,19 +124,42 @@
 	        });
 	    })
 
+	    var fullDataReturned = true;
+	    var from = 12, size = 12;
+
 	    utils.loadMore(function() {
+
+	        var controller = this;
+	        if (!fullDataReturned) {
+	            return;
+	        }
+
 	        $.ajax({
-	            url: location.href,
+	            url: utils.getJSONPUrl(from, size),
 	            dataType: 'jsonp',
-	            success: function(html) {
-	                $('body').append('<p>加载更多</p>')        
+	            success: function(data) {
+	                // 清除timeout才能进行下一次请求
+	                controller.clearTimeout();
+	                data = data || {};
+	                if (data.size === size) {
+	                    fullDataReturned = true;
+	                    from = from + size;
+	                } else {
+	                    fullDataReturned = false;
+	                }
+	                if (!$('#more-list').length) {
+	                    $('#content').append('<div id="more-list" class="list"><ul></ul></div>')
+	                }
+	                $('#more-list ul').append(data.html);
+	                
 	            },
-	            error: function() {
-	                $('body').append('<p>加载失败</p>') 
+	            error: function(jqXHR, textStatus, errorThrown) {
+	                console.log(errorThrown)
 	            }
-	        })
-	        
+	        });
+
 	    })
+	    
 	});
 
 /***/ },
@@ -578,7 +602,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#header {\n  height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  width: 32px;\n  height: 32px;\n  background: url(//zhao-mi.net/assets/imgs/logo.png) no-repeat 0 0;\n  margin-left: 12px;\n  margin-top: 8px;\n  font-size: 34px;\n  color: #5e5e5e;\n  line-height: 1;\n  text-indent: -9999em;\n}\n#header #area {\n  position: relative;\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  z-index: 200;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n  display: inline-block;\n  width: 60px;\n  height: 48px;\n  line-height: 48px;\n}\n#header #area #area-droplist {\n  display: none;\n  position: absolute;\n  top: 48px;\n  left: 0;\n  width: 400px;\n  height: 32px;\n  line-height: 32px;\n  padding-top: 8px;\n}\n#header #area #area-droplist .prov,\n#header #area #area-droplist .city {\n  float: left;\n  height: 32px;\n  line-height: 24px;\n}\n#header #area #area-droplist span {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n#header #area #area-droplist span.city-txt {\n  width: 60px;\n}\n#header .action {\n  float: right;\n  margin-top: 12px;\n  margin-right: 12px;\n}\n#header .action a {\n  height: 28px;\n  line-height: 26px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub a {\n  padding-left: 30px;\n  padding-right: 12px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #pub.cancel-create {\n  background-color: #888;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub.cancel-create a {\n  color: white;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -88px -355px;\n}\n#header #msg a {\n  padding-left: 40px;\n  padding-right: 12px;\n  min-width: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -222px -827px;\n}\n#header #personal-info {\n  width: 32px;\n  height: 32px;\n  margin-top: 8px;\n  background-color: #888;\n  cursor: pointer;\n  overflow: hidden;\n  -webkit-border-radius: 40px;\n  border-radius: 40px;\n  background-clip: padding-box;\n}\n#header #personal-info img {\n  width: 100%;\n}\n#header #personal-info .logout {\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  border: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -90px -352px;\n}\n#header #search input {\n  width: 160px;\n  height: 28px;\n  line-height: 28px;\n  padding-left: 36px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  outline: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #search input:focus {\n  box-shadow: 0 0 3px 1px rgba(82, 168, 236, 0.8);\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#header {\n  height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  width: 32px;\n  height: 32px;\n  background: url(//zhao-mi.net/assets/imgs/logo.png) no-repeat 0 0;\n  margin-left: 12px;\n  margin-top: 8px;\n  font-size: 34px;\n  color: #5e5e5e;\n  line-height: 1;\n  text-indent: -9999em;\n}\n#header #area {\n  position: relative;\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  z-index: 200;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n  display: inline-block;\n  width: 60px;\n  height: 48px;\n  line-height: 48px;\n}\n#header #area #area-droplist {\n  display: none;\n  position: absolute;\n  top: 48px;\n  left: 0;\n  width: 400px;\n  height: 32px;\n  line-height: 32px;\n  padding-top: 8px;\n}\n#header #area #area-droplist .prov,\n#header #area #area-droplist .city {\n  float: left;\n  height: 32px;\n  line-height: 24px;\n}\n#header #area #area-droplist span {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n#header #area #area-droplist span.city-txt {\n  width: 60px;\n}\n#header .action {\n  float: right;\n  margin-top: 12px;\n  margin-right: 12px;\n}\n#header .action a {\n  height: 28px;\n  line-height: 26px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub a {\n  padding-left: 30px;\n  padding-right: 12px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #pub.cancel-create {\n  background-color: #888;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub.cancel-create a {\n  color: white;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -88px -355px;\n}\n#header #msg {\n  position: relative;\n  overflow: visible;\n}\n#header #msg span {\n  display: inline-block;\n  position: absolute;\n  top: -10px;\n  right: -10px;\n  text-align: center;\n  width: 20px;\n  height: 20px;\n  line-height: 24px;\n  background-color: #FF7A7A;\n  -webkit-border-radius: 25px;\n  border-radius: 25px;\n  color: white;\n  font-size: 12px;\n  -webkit-border-radius: 15px;\n  border-radius: 15px;\n  background-clip: padding-box;\n}\n#header #msg a {\n  padding-left: 40px;\n  padding-right: 12px;\n  min-width: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -222px -827px;\n}\n#header #personal-info {\n  width: 32px;\n  height: 32px;\n  margin-top: 8px;\n  background-color: #888;\n  cursor: pointer;\n  overflow: hidden;\n  -webkit-border-radius: 40px;\n  border-radius: 40px;\n  background-clip: padding-box;\n}\n#header #personal-info img {\n  width: 100%;\n}\n#header #personal-info .logout {\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  border: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -90px -352px;\n}\n#header #search input {\n  width: 160px;\n  height: 28px;\n  line-height: 28px;\n  padding-left: 36px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  outline: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #search input:focus {\n  box-shadow: 0 0 3px 1px rgba(82, 168, 236, 0.8);\n}\n", ""]);
 
 	// exports
 
@@ -746,17 +770,21 @@
 
 	exports.loadMore = function(callback) {
 
-	    var timeoutId;
+	    var controller = {
+	        timeoutId: '',
+	        clearTimeout: function() {
+	            this.timeoutId = '';
+	        }   
+	    };
 	    // 处理加载更多
 	    $win.scroll(function() {
 	        var LOADING_GAP = 200;
 	        if ($doc.height() < $doc.scrollTop() + $win.height() + LOADING_GAP) {
-	            if (timeoutId) {
+	            if (controller.timeoutId) {
 	                return;
 	            }
-	            timeoutId = setTimeout(function() {
-	                callback();
-	                timeoutId = null;
+	            controller.timeoutId = setTimeout(function() {
+	                callback.call(controller);
 	            }, 300);
 	        }
 	    })
@@ -774,6 +802,25 @@
 	        }
 	    }
 	    return ret;
+	}
+
+	exports.getJSONPUrl = function(from, size) {
+	            
+	    var params = this.getUrlParameter();
+	    var newParams = {
+	        from: from,
+	        size: size
+	    };
+	    var queryStr = $.param($.extend({}, params, newParams))
+	    
+	    var rPrefix = /(https?:\/\/[^?]+)/;
+	    var matches, prefix;
+
+	    if (matches = rPrefix.exec(location.href)) {
+	        prefix = matches[1];
+	    }
+
+	    return prefix + '?' + queryStr;
 	}
 
 /***/ },
@@ -989,7 +1036,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n}\n#content #banner {\n  position: relative;\n  overflow: auto;\n  height: 700px;\n  z-index: 100;\n}\n#content #banner ul {\n  margin: 0;\n  padding: 0;\n}\n#content #banner ul li {\n  position: relative;\n  float: left;\n  width: 1190px;\n  height: 700px;\n}\n#content #banner ul li img {\n  width: 1190px;\n}\n#content #banner li {\n  list-style: none;\n}\n#content #banner .dots {\n  position: absolute;\n  bottom: 30px;\n  right: 30px;\n  margin: 0;\n}\n#content #banner .dots .dot {\n  float: left;\n  width: 18px;\n  height: 18px;\n  line-height: 18px;\n  border: 1px solid #f2f2f2;\n  background-color: white;\n  margin-left: 6px;\n  text-indent: -9999px;\n  cursor: pointer;\n}\n#content #banner .dots .dot.active {\n  background-color: #ff7300;\n}\n#content #filter {\n  height: 80px;\n  line-height: 80px;\n  text-align: center;\n  background-color: white;\n  font-size: 30px;\n}\n#content #filter #hot-wrapper {\n  position: relative;\n  display: inline-block;\n  z-index: 100;\n}\n#content #filter #hot-wrapper #hot {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #hot-wrapper #hot-droplist {\n  display: none;\n  position: absolute;\n  top: 0;\n  left: -80px;\n  width: 400px;\n  height: 220px;\n  padding: 0 30px 20px 30px;\n  border: 1px solid #ccc;\n  background-color: white;\n}\n#content #filter #hot-wrapper #hot-droplist p {\n  text-align: center;\n  border-bottom: 1px solid #ccc;\n  margin: 0;\n  margin-bottom: 20px;\n}\n#content #filter #hot-wrapper #hot-droplist .droplist-hot {\n  display: inline-block;\n  width: 240px;\n  padding: 0 60px;\n  height: 80px;\n  line-height: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 164px -204px;\n}\n#content #filter #hot-wrapper #hot-droplist ul {\n  margin: 0;\n  padding: 0;\n}\n#content #filter #hot-wrapper #hot-droplist ul li {\n  list-style: none;\n  float: left;\n  height: 50px;\n  line-height: 50px;\n  width: 49%;\n  color: #727272;\n  cursor: pointer;\n}\n#content #filter #hot-wrapper #hot-droplist ul li:hover,\n#content #filter #hot-wrapper #hot-droplist ul li.selected {\n  color: black;\n}\n#content #filter #hot-wrapper:hover {\n  z-index: 101;\n}\n#content #filter #hot-wrapper:hover #hot-droplist {\n  display: block;\n}\n#content #filter #category-wrapper {\n  position: relative;\n  display: inline-block;\n  z-index: 100;\n}\n#content #filter #category-wrapper #category {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #category-wrapper #category-droplist {\n  display: none;\n  position: absolute;\n  top: 0;\n  left: -80px;\n  width: 400px;\n  height: 320px;\n  padding: 0 30px 20px 30px;\n  border: 1px solid #ccc;\n  background-color: white;\n}\n#content #filter #category-wrapper #category-droplist p {\n  text-align: center;\n  border-bottom: 1px solid #ccc;\n  margin: 0;\n  margin-bottom: 20px;\n}\n#content #filter #category-wrapper #category-droplist .droplist-category {\n  display: inline-block;\n  width: 240px;\n  padding: 0 60px;\n  height: 80px;\n  line-height: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 164px -204px;\n}\n#content #filter #category-wrapper #category-droplist ul {\n  margin: 0;\n  padding: 0;\n}\n#content #filter #category-wrapper #category-droplist ul li {\n  list-style: none;\n  float: left;\n  height: 50px;\n  line-height: 50px;\n  width: 33%;\n  color: #727272;\n  cursor: pointer;\n}\n#content #filter #category-wrapper #category-droplist ul li:hover,\n#content #filter #category-wrapper #category-droplist ul li.selected {\n  color: black;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-first {\n  text-align: left;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-second {\n  text-align: center;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-third {\n  text-align: right;\n}\n#content #filter #category-wrapper:hover {\n  z-index: 101;\n}\n#content #filter #category-wrapper:hover #category-droplist {\n  display: block;\n}\n#content #list {\n  padding: 30px 30px 10px 30px;\n}\n#content #list ul {\n  margin: 0;\n  padding: 0;\n}\n#content #list ul li.action-card {\n  position: relative;\n  float: left;\n  width: 361px;\n  margin-right: 2%;\n  margin-bottom: 20px;\n  list-style: none;\n  color: #727272;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #list ul li.action-card .pic {\n  width: 361px;\n  height: 256px;\n  overflow: hidden;\n  /* display: table-cell; */\n  vertical-align: middle;\n  background-color: #eee;\n  text-align: center;\n  -webkit-border-radius: 10px 10px 0 0;\n  border-radius: 10px 10px 0 0;\n  background-clip: padding-box;\n}\n#content #list ul li.action-card img {\n  height: 100%;\n}\n#content #list ul li.action-card .brief-info {\n  margin: 10px;\n  border-bottom: 1px solid #f1f1f1;\n}\n#content #list ul li.action-card .brief-info .brief-important .title {\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #list ul li.action-card .brief-info .brief-important .title:hover {\n  color: #ff7300;\n}\n#content #list ul li.action-card .brief-info .brief-important .price {\n  float: right;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content #list ul li.action-card .brief-info .brief-important .hot-tag {\n  float: right;\n  padding: 2px;\n  margin-top: 5px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #list ul li.action-card .brief-info .host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #list ul li.action-card .brief-info .criteria {\n  height: 38px;\n  margin: 12px 0;\n}\n#content #list ul li.action-card .brief-info .criteria p {\n  margin: 6px 0;\n}\n#content #list ul li.action-card .items {\n  padding: 0 10px 12px 10px;\n}\n#content #list ul li.action-card .items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #list ul li.action-card .items .location {\n  background-position: -216px -15px;\n}\n#content #list ul li.action-card .items .num {\n  background-position: -216px -51px;\n}\n#content #list ul li.action-card .items .time {\n  background-position: -216px -90px;\n}\n#content #list ul li.action-card .items .extra {\n  background-position: -216px -127px;\n}\n#content #list ul li.action-card.last {\n  margin: 0;\n}\n#content #list ul li.action-card:hover {\n  cursor: pointer;\n  -webkit-box-shadow: 2px 7px 9px 0 #808080;\n  box-shadow: 2px 7px 9px 0 #808080;\n}\n#content #list ul li.action-card .like {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -87px -58px;\n}\n#content #list ul li.action-card .like.selected {\n  background-position: -87px -15px;\n}\n#content #list ul li.action-card .share {\n  position: absolute;\n  top: 10px;\n  right: 70px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #commercial img {\n  width: 100%;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n}\n#content #banner {\n  position: relative;\n  overflow: auto;\n  height: 700px;\n  z-index: 100;\n}\n#content #banner ul {\n  margin: 0;\n  padding: 0;\n}\n#content #banner ul li {\n  position: relative;\n  float: left;\n  width: 1190px;\n  height: 700px;\n}\n#content #banner ul li img {\n  width: 1190px;\n}\n#content #banner li {\n  list-style: none;\n}\n#content #banner .dots {\n  position: absolute;\n  bottom: 30px;\n  right: 30px;\n  margin: 0;\n}\n#content #banner .dots .dot {\n  float: left;\n  width: 18px;\n  height: 18px;\n  line-height: 18px;\n  border: 1px solid #f2f2f2;\n  background-color: white;\n  margin-left: 6px;\n  text-indent: -9999px;\n  cursor: pointer;\n}\n#content #banner .dots .dot.active {\n  background-color: #ff7300;\n}\n#content #filter {\n  height: 80px;\n  line-height: 80px;\n  text-align: center;\n  background-color: white;\n  font-size: 30px;\n}\n#content #filter #hot-wrapper {\n  position: relative;\n  display: inline-block;\n  z-index: 100;\n}\n#content #filter #hot-wrapper #hot {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #hot-wrapper #hot-droplist {\n  display: none;\n  position: absolute;\n  top: 0;\n  left: -80px;\n  width: 400px;\n  height: 220px;\n  padding: 0 30px 20px 30px;\n  border: 1px solid #ccc;\n  background-color: white;\n}\n#content #filter #hot-wrapper #hot-droplist p {\n  text-align: center;\n  border-bottom: 1px solid #ccc;\n  margin: 0;\n  margin-bottom: 20px;\n}\n#content #filter #hot-wrapper #hot-droplist .droplist-hot {\n  display: inline-block;\n  width: 240px;\n  padding: 0 60px;\n  height: 80px;\n  line-height: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 164px -204px;\n}\n#content #filter #hot-wrapper #hot-droplist ul {\n  margin: 0;\n  padding: 0;\n}\n#content #filter #hot-wrapper #hot-droplist ul li {\n  list-style: none;\n  float: left;\n  height: 50px;\n  line-height: 50px;\n  width: 49%;\n  color: #727272;\n  cursor: pointer;\n}\n#content #filter #hot-wrapper #hot-droplist ul li:hover,\n#content #filter #hot-wrapper #hot-droplist ul li.selected {\n  color: black;\n}\n#content #filter #hot-wrapper:hover {\n  z-index: 101;\n}\n#content #filter #hot-wrapper:hover #hot-droplist {\n  display: block;\n}\n#content #filter #category-wrapper {\n  position: relative;\n  display: inline-block;\n  z-index: 100;\n}\n#content #filter #category-wrapper #category {\n  padding: 0 60px;\n  display: inline-block;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 164px -144px;\n}\n#content #filter #category-wrapper #category-droplist {\n  display: none;\n  position: absolute;\n  top: 0;\n  left: -80px;\n  width: 400px;\n  height: 320px;\n  padding: 0 30px 20px 30px;\n  border: 1px solid #ccc;\n  background-color: white;\n}\n#content #filter #category-wrapper #category-droplist p {\n  text-align: center;\n  border-bottom: 1px solid #ccc;\n  margin: 0;\n  margin-bottom: 20px;\n}\n#content #filter #category-wrapper #category-droplist .droplist-category {\n  display: inline-block;\n  width: 240px;\n  padding: 0 60px;\n  height: 80px;\n  line-height: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 164px -204px;\n}\n#content #filter #category-wrapper #category-droplist ul {\n  margin: 0;\n  padding: 0;\n}\n#content #filter #category-wrapper #category-droplist ul li {\n  list-style: none;\n  float: left;\n  height: 50px;\n  line-height: 50px;\n  width: 33%;\n  color: #727272;\n  cursor: pointer;\n}\n#content #filter #category-wrapper #category-droplist ul li:hover,\n#content #filter #category-wrapper #category-droplist ul li.selected {\n  color: black;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-first {\n  text-align: left;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-second {\n  text-align: center;\n}\n#content #filter #category-wrapper #category-droplist ul li.row-third {\n  text-align: right;\n}\n#content #filter #category-wrapper:hover {\n  z-index: 101;\n}\n#content #filter #category-wrapper:hover #category-droplist {\n  display: block;\n}\n#content .list {\n  padding: 30px 30px 10px 30px;\n}\n#content .list ul {\n  margin: 0;\n  padding: 0;\n}\n#content .list ul li.action-card {\n  position: relative;\n  float: left;\n  width: 361px;\n  margin-right: 2%;\n  margin-bottom: 20px;\n  list-style: none;\n  color: #727272;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content .list ul li.action-card .pic {\n  width: 361px;\n  height: 256px;\n  overflow: hidden;\n  /* display: table-cell; */\n  vertical-align: middle;\n  background-color: #eee;\n  text-align: center;\n  -webkit-border-radius: 10px 10px 0 0;\n  border-radius: 10px 10px 0 0;\n  background-clip: padding-box;\n}\n#content .list ul li.action-card img {\n  height: 100%;\n}\n#content .list ul li.action-card .brief-info {\n  margin: 10px;\n  border-bottom: 1px solid #f1f1f1;\n}\n#content .list ul li.action-card .brief-info .brief-important .title {\n  width: 170px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content .list ul li.action-card .brief-info .brief-important .title:hover {\n  color: #ff7300;\n}\n#content .list ul li.action-card .brief-info .brief-important .price {\n  float: right;\n  color: #ff4545;\n  font-size: 24px;\n  margin-top: 5px;\n}\n#content .list ul li.action-card .brief-info .brief-important .hot-tag {\n  float: right;\n  padding: 2px;\n  margin-top: 5px;\n  margin-right: 16px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content .list ul li.action-card .brief-info .host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content .list ul li.action-card .brief-info .criteria {\n  height: 38px;\n  margin: 12px 0;\n}\n#content .list ul li.action-card .brief-info .criteria p {\n  margin: 6px 0;\n}\n#content .list ul li.action-card .items {\n  padding: 0 10px 12px 10px;\n}\n#content .list ul li.action-card .items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content .list ul li.action-card .items .location {\n  background-position: -216px -15px;\n}\n#content .list ul li.action-card .items .num {\n  background-position: -216px -51px;\n}\n#content .list ul li.action-card .items .time {\n  background-position: -216px -90px;\n}\n#content .list ul li.action-card .items .extra {\n  background-position: -216px -127px;\n}\n#content .list ul li.action-card.last {\n  margin: 0;\n}\n#content .list ul li.action-card:hover {\n  cursor: pointer;\n  -webkit-box-shadow: 2px 7px 9px 0 #808080;\n  box-shadow: 2px 7px 9px 0 #808080;\n}\n#content .list ul li.action-card .like {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -87px -58px;\n}\n#content .list ul li.action-card .like.selected {\n  background-position: -87px -15px;\n}\n#content .list ul li.action-card .share {\n  position: absolute;\n  top: 10px;\n  right: 70px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #commercial {\n  width: 100%;\n  height: 300px;\n  overflow: hidden;\n}\n#content #commercial img {\n  width: 100%;\n}\n", ""]);
 
 	// exports
 

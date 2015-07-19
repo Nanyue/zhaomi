@@ -487,17 +487,21 @@
 
 	exports.loadMore = function(callback) {
 
-	    var timeoutId;
+	    var controller = {
+	        timeoutId: '',
+	        clearTimeout: function() {
+	            this.timeoutId = '';
+	        }   
+	    };
 	    // 处理加载更多
 	    $win.scroll(function() {
 	        var LOADING_GAP = 200;
 	        if ($doc.height() < $doc.scrollTop() + $win.height() + LOADING_GAP) {
-	            if (timeoutId) {
+	            if (controller.timeoutId) {
 	                return;
 	            }
-	            timeoutId = setTimeout(function() {
-	                callback();
-	                timeoutId = null;
+	            controller.timeoutId = setTimeout(function() {
+	                callback.call(controller);
 	            }, 300);
 	        }
 	    })
@@ -515,6 +519,25 @@
 	        }
 	    }
 	    return ret;
+	}
+
+	exports.getJSONPUrl = function(from, size) {
+	            
+	    var params = this.getUrlParameter();
+	    var newParams = {
+	        from: from,
+	        size: size
+	    };
+	    var queryStr = $.param($.extend({}, params, newParams))
+	    
+	    var rPrefix = /(https?:\/\/[^?]+)/;
+	    var matches, prefix;
+
+	    if (matches = rPrefix.exec(location.href)) {
+	        prefix = matches[1];
+	    }
+
+	    return prefix + '?' + queryStr;
 	}
 
 /***/ },
