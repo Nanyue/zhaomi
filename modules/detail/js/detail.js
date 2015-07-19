@@ -29,7 +29,7 @@ $(function() {
     $('.share-bonus').click(function() {
         var id = $detailContainer.data('id');
         var code = $detailContainer.data('code');
-        var shareLink = 'http://zhaomi.biz/action/' + id + '?code=' + code;
+        var shareLink = 'http://zhao-mi.net/action/' + id + '?code=' + code;
 
         shareBox.show({
             selector: '#share-dialog',

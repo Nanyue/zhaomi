@@ -157,14 +157,16 @@ $(function() {
                     return false;
                 }
 
-                if (!poster) {
-                    utils.warn('请选择活动海报!');
-                    return false;
-                }
+                if (/create/.test(location.href)) {
+                    if (!poster) {
+                        utils.warn('请选择活动海报!');
+                        return false;
+                    }
 
-                if (!/\.(jpg|png)$/.test(poster)) {
-                    utils.warn('活动海报海报仅支持png/jpg格式的文件!');
-                    return false;
+                    if (!/\.(jpg|png)$/.test(poster)) {
+                        utils.warn('活动海报海报仅支持png/jpg格式的文件!');
+                        return false;
+                    }
                 }
             },
             dataType: 'json',

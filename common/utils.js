@@ -1,6 +1,6 @@
 // 根据传入参数拼装url，并跳转到该url
-exports.goTo = function(params) {
-    var oldParams = getUrlParameter();
+exports.goTo = function(params, without) {
+    var oldParams = without ? {} : this.getUrlParameter();
     var newParams = _.extend({}, oldParams, params);
 
     location.href = '/search?' + $.param(newParams);
@@ -28,7 +28,28 @@ exports.compileTpl = function(tpl, data) {
     })
 }
 
-function getUrlParameter() {
+var $doc = $(document);
+var $win = $(window);
+
+exports.loadMore = function(callback) {
+
+    var timeoutId;
+    // 处理加载更多
+    $win.scroll(function() {
+        var LOADING_GAP = 200;
+        if ($doc.height() < $doc.scrollTop() + $win.height() + LOADING_GAP) {
+            if (timeoutId) {
+                return;
+            }
+            timeoutId = setTimeout(function() {
+                callback();
+                timeoutId = null;
+            }, 300);
+        }
+    })
+}
+
+exports.getUrlParameter = function() {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
     var pairs;

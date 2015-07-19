@@ -25,7 +25,7 @@ module.exports = {
         var compiledTpl;
 
         if (shareLink.indexOf('/') === 0) {
-            shareLink = 'http://zhaomi.biz' + shareLink;
+            shareLink = 'http://zhao-mi.net' + shareLink;
         }
 
         compiledTpl = utils.compileTpl(SHAREBOX_TPL, {

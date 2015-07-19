@@ -49,13 +49,15 @@
 
 	var header = __webpack_require__(13);
 	var zhaomi = __webpack_require__(19);
-	// var share = require('../../../common/pkgs/share/share');
 	var shareBox = __webpack_require__(22);
 	var applyList = __webpack_require__(34);
+	var personalMod = __webpack_require__(35);
 
 	$(function() {
 	    applyList.init();
+	    personalMod.init();
 
+	    // 展示报名列表中的申请人详细信息
 	    $('#apply-list').on('click', '.detail', function() {
 	        var $content = $(this).closest('.apply-item').find('.detail-content');
 
@@ -68,28 +70,7 @@
 	        }   
 	    })
 
-	    var $personalInfo = $('#personal-info');
-	    var $modifiedInfo = $('#personal-info-modify');
-	    $personalInfo.on('click', '.edit', function() {
-	        $personalInfo.hide();
-	        $modifiedInfo.show();
-	    })
-
-	    $modifiedInfo.on('click', '.save-info', function() {
-	        // 提交数据
-	        $('#personal-info-form').ajaxForm({
-	            beforeSubmit: function() {
-	                console.log('ajaxForm')
-	                // return false;
-	            },
-	            success: function(data) {
-
-	            }
-	        })
-	        $personalInfo.show();
-	        $modifiedInfo.hide(); 
-	    })
-
+	    // 活动信息中的各种操作
 	    $('.action-card').on('click', '.edit', function() {
 	        var action = $(this).data('action');
 	        if (action) {
@@ -109,7 +90,7 @@
 	                }
 	            });
 	        }
-	    }).on('click', '.c-share, .b-share', function() {
+	    }).on('click', '.c-share, .b-share, .share', function() {
 	        var $actionCard = $(this).closest('.action-card');
 	        var shareLink = $actionCard.data('link');
 
@@ -118,12 +99,84 @@
 	                shareLink: shareLink
 	            })
 	        }
+	    }).on('click', '.like', function() {
+	        var $like = $(this);
+	        var $actionCard = $(this).closest('.action-card');
+	        var actionId = $actionCard.data('id');
+	        
+	        zhaomi.postData('/action/like', {
+	            id: actionId
+	        }, function(res) {
+	            var success = res && res.success;
+
+	            if (success) {
+	                $like.toggleClass('selected');
+	            }
+	        })
 	    }).on('click', '.publish', function() {
-	        zhaomi.postData();
+	        var $actionCard = $(this).closest('.action-card');
+	        var actionId = $actionCard.data('id');
+
+	        if (actionId) {
+	            zhaomi.postData('/action/' + actionId + '/publish', {
+	                from: 'start'
+	            }, function(res) {
+	                var success = res && res.success;
+
+	                if (success) {
+	                    location.href = '/mine/start';
+	                }
+	            });    
+	        }
+	        
 	    }).on('click', '.apply-forbidden', function() {
-	        zhaomi.postData();
+	        var $actionCard = $(this).closest('.action-card');
+	        var actionId = $actionCard.data('id');
+
+	        if (actionId) {
+	            zhaomi.postData('/action/' + actionId + '/stop', {
+	                
+	            }, function(res) {
+	                var success = res && res.success;
+
+	                if (success) {
+	                    location.href = '/mine/start';
+	                }
+	            });    
+	        }
+	    }).on('click', '.apply-resume', function() {
+	        var $actionCard = $(this).closest('.action-card');
+	        var actionId = $actionCard.data('id');
+
+	        if (actionId) {
+	            zhaomi.postData('/action/' + actionId + '/start', {
+	                
+	            }, function(res) {
+	                var success = res && res.success;
+
+	                if (success) {
+	                    location.href = '/mine/start';
+	                }
+	            });    
+	        }
+	    }).on('click', '.unapply', function() {
+	        var $actionCard = $(this).closest('.action-card');
+	        var actionId = $actionCard.data('id');
+
+	        if (actionId) {
+	            zhaomi.postData('/action/' + actionId + '/unapply', {
+	                
+	            }, function(res) {
+	                var success = res && res.success;
+
+	                if (success) {
+	                    location.href = '/mine/apply';
+	                }
+	            });    
+	        }
 	    });
 
+	    // 推荐注册
 	    $('#personal-info').on('click', '.recommend', function() {
 	        var shareLink = $(this).data('link');
 
@@ -133,6 +186,21 @@
 	            })
 	        }
 	    });
+
+	    utils.loadMore(function() {
+	        $.ajax({
+	            url: location.href,
+	            dataType: 'jsonp',
+	            success: function(html) {
+	                $('body').append('<p>加载更多</p>')        
+	            },
+	            error: function() {
+	                console.log('失败')
+	            }
+	        })
+	        
+	    })
+
 	});
 
 /***/ },
@@ -530,7 +598,7 @@
 	            if (q) {
 	                utils.goTo({
 	                    q: q
-	                })
+	                }, true)
 	            }
 	        }
 	    })
@@ -575,7 +643,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#header {\n  height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  width: 32px;\n  height: 32px;\n  background: url(//zhaomi.biz/assets/imgs/logo.png) no-repeat 0 0;\n  margin-left: 12px;\n  margin-top: 8px;\n  font-size: 34px;\n  color: #5e5e5e;\n  line-height: 1;\n  text-indent: -9999em;\n}\n#header #area {\n  position: relative;\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  z-index: 200;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n  display: inline-block;\n  width: 60px;\n  height: 48px;\n  line-height: 48px;\n}\n#header #area #area-droplist {\n  display: none;\n  position: absolute;\n  top: 48px;\n  left: 0;\n  width: 400px;\n  height: 32px;\n  line-height: 32px;\n  padding-top: 8px;\n}\n#header #area #area-droplist .prov,\n#header #area #area-droplist .city {\n  float: left;\n  height: 32px;\n  line-height: 24px;\n}\n#header #area #area-droplist span {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n#header #area #area-droplist span.city-txt {\n  width: 60px;\n}\n#header .action {\n  float: right;\n  margin-top: 12px;\n  margin-right: 12px;\n}\n#header .action a {\n  height: 28px;\n  line-height: 26px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub a {\n  padding-left: 30px;\n  padding-right: 12px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #pub.cancel-create {\n  background-color: #888;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub.cancel-create a {\n  color: white;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -88px -355px;\n}\n#header #msg a {\n  padding-left: 40px;\n  padding-right: 12px;\n  min-width: 80px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -222px -827px;\n}\n#header #personal-info {\n  width: 32px;\n  height: 32px;\n  margin-top: 8px;\n  background-color: #888;\n  cursor: pointer;\n  overflow: hidden;\n  -webkit-border-radius: 40px;\n  border-radius: 40px;\n  background-clip: padding-box;\n}\n#header #personal-info img {\n  width: 100%;\n}\n#header #personal-info .logout {\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  border: none;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -90px -352px;\n}\n#header #search input {\n  width: 160px;\n  height: 28px;\n  line-height: 28px;\n  padding-left: 36px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#header {\n  height: 48px;\n  background-color: white;\n  font-size: 18px;\n  color: #747474;\n}\n#header #logo {\n  display: inline-block;\n  float: left;\n  width: 32px;\n  height: 32px;\n  background: url(//zhao-mi.net/assets/imgs/logo.png) no-repeat 0 0;\n  margin-left: 12px;\n  margin-top: 8px;\n  font-size: 34px;\n  color: #5e5e5e;\n  line-height: 1;\n  text-indent: -9999em;\n}\n#header #area {\n  position: relative;\n  float: left;\n  margin-left: 12px;\n  padding-right: 36px;\n  vertical-align: middle;\n  z-index: 200;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 12px -100px;\n}\n#header #area em {\n  font-style: normal;\n  display: inline-block;\n  width: 60px;\n  height: 48px;\n  line-height: 48px;\n}\n#header #area #area-droplist {\n  display: none;\n  position: absolute;\n  top: 48px;\n  left: 0;\n  width: 400px;\n  height: 32px;\n  line-height: 32px;\n  padding-top: 8px;\n}\n#header #area #area-droplist .prov,\n#header #area #area-droplist .city {\n  float: left;\n  height: 32px;\n  line-height: 24px;\n}\n#header #area #area-droplist span {\n  float: left;\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n#header #area #area-droplist span.city-txt {\n  width: 60px;\n}\n#header .action {\n  float: right;\n  margin-top: 12px;\n  margin-right: 12px;\n}\n#header .action a {\n  height: 28px;\n  line-height: 26px;\n  border: 1px solid #cfcfcf;\n  background-color: transparent;\n  font-size: 14px;\n  outline: none;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub a {\n  padding-left: 30px;\n  padding-right: 12px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -182px;\n}\n#header #pub.cancel-create {\n  background-color: #888;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #pub.cancel-create a {\n  color: white;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -88px -355px;\n}\n#header #msg a {\n  padding-left: 40px;\n  padding-right: 12px;\n  min-width: 80px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -222px -827px;\n}\n#header #personal-info {\n  width: 32px;\n  height: 32px;\n  margin-top: 8px;\n  background-color: #888;\n  cursor: pointer;\n  overflow: hidden;\n  -webkit-border-radius: 40px;\n  border-radius: 40px;\n  background-clip: padding-box;\n}\n#header #personal-info img {\n  width: 100%;\n}\n#header #personal-info .logout {\n  display: inline-block;\n  width: 32px;\n  height: 32px;\n  border: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -90px -352px;\n}\n#header #search input {\n  width: 160px;\n  height: 28px;\n  line-height: 28px;\n  padding-left: 36px;\n  border: 1px solid #cfcfcf;\n  font-size: 14px;\n  outline: none;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -210px -224px;\n  -webkit-border-radius: 14px;\n  border-radius: 14px;\n  background-clip: padding-box;\n}\n#header #search input:focus {\n  box-shadow: 0 0 3px 1px rgba(82, 168, 236, 0.8);\n}\n", ""]);
 
 	// exports
 
@@ -709,8 +777,8 @@
 /***/ function(module, exports) {
 
 	// 根据传入参数拼装url，并跳转到该url
-	exports.goTo = function(params) {
-	    var oldParams = getUrlParameter();
+	exports.goTo = function(params, without) {
+	    var oldParams = without ? {} : this.getUrlParameter();
 	    var newParams = _.extend({}, oldParams, params);
 
 	    location.href = '/search?' + $.param(newParams);
@@ -738,7 +806,28 @@
 	    })
 	}
 
-	function getUrlParameter() {
+	var $doc = $(document);
+	var $win = $(window);
+
+	exports.loadMore = function(callback) {
+
+	    var timeoutId;
+	    // 处理加载更多
+	    $win.scroll(function() {
+	        var LOADING_GAP = 200;
+	        if ($doc.height() < $doc.scrollTop() + $win.height() + LOADING_GAP) {
+	            if (timeoutId) {
+	                return;
+	            }
+	            timeoutId = setTimeout(function() {
+	                callback();
+	                timeoutId = null;
+	            }, 300);
+	        }
+	    })
+	}
+
+	exports.getUrlParameter = function() {
 	    var sPageURL = window.location.search.substring(1);
 	    var sURLVariables = sPageURL.split('&');
 	    var pairs;
@@ -766,6 +855,17 @@
 	            url: url,
 	            type: 'post',
 	            data: $.extend(data, {csrfmiddlewaretoken: csrfToken}), 
+	            success: successCallback || noop,
+	            error: errorCallback || noop
+	        })
+	    },
+	    getData: function(url, data, successCallback, errorCallback) {
+
+	        // var csrfToken = $('input[name=csrfmiddlewaretoken]').val();
+	        return $.ajax({
+	            url: url,
+	            type: 'get',
+	            data: $.extend(data), 
 	            success: successCallback || noop,
 	            error: errorCallback || noop
 	        })
@@ -805,7 +905,7 @@
 	        var compiledTpl;
 
 	        if (shareLink.indexOf('/') === 0) {
-	            shareLink = 'http://zhaomi.biz' + shareLink;
+	            shareLink = 'http://zhao-mi.net' + shareLink;
 	        }
 
 	        compiledTpl = utils.compileTpl(SHAREBOX_TPL, {
@@ -889,7 +989,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#share-dialog {\n  text-align: center;\n  padding-bottom: 20px;\n}\n#share-dialog .share-link {\n  display: inline-block;\n  padding-bottom: 6px;\n  border-bottom: 1px solid #eee;\n  text-align: center;\n}\n#share-dialog .dialog-txt {\n  text-align: center;\n}\n#share-dialog .share-qrcode {\n  display: inline-block;\n  width: 200px;\n  height: 200px;\n  text-align: center;\n  margin-bottom: 20px;\n}\n#share-dialog .socials {\n  width: 400px;\n  margin: 10px auto;\n}\n#share-dialog .socials span {\n  float: left;\n  display: inline-block;\n  width: 72px;\n  height: 72px;\n  margin: 0 16px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -29px -882px;\n}\n#share-dialog .socials span.last {\n  margin-right: 0;\n}\n#share-dialog .socials #wechat {\n  cursor: default;\n}\n#share-dialog .socials #wechat-group {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -25px -772px;\n  cursor: default;\n}\n#share-dialog .socials #qq {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -28px -1101px;\n}\n#share-dialog .socials #sina {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -132px -882px;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\n#share-dialog {\n  text-align: center;\n  padding-bottom: 20px;\n}\n#share-dialog .share-link {\n  display: inline-block;\n  padding-bottom: 6px;\n  border-bottom: 1px solid #eee;\n  text-align: center;\n}\n#share-dialog .dialog-txt {\n  text-align: center;\n}\n#share-dialog .share-qrcode {\n  display: inline-block;\n  width: 200px;\n  height: 200px;\n  text-align: center;\n  margin-bottom: 20px;\n}\n#share-dialog .socials {\n  width: 400px;\n  margin: 10px auto;\n}\n#share-dialog .socials span {\n  float: left;\n  display: inline-block;\n  width: 72px;\n  height: 72px;\n  margin: 0 16px;\n  cursor: pointer;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -29px -882px;\n}\n#share-dialog .socials span.last {\n  margin-right: 0;\n}\n#share-dialog .socials #wechat {\n  cursor: default;\n}\n#share-dialog .socials #wechat-group {\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -25px -772px;\n  cursor: default;\n}\n#share-dialog .socials #qq {\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -28px -1101px;\n}\n#share-dialog .socials #sina {\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -132px -882px;\n}\n", ""]);
 
 	// exports
 
@@ -960,7 +1060,7 @@
 	exports.i(__webpack_require__(12), "");
 
 	// module
-	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n  font-family: 'HeiTi SC';\n}\n#content #mine-bg {\n  position: relative;\n}\n#content #mine-bg #personal-info {\n  position: absolute;\n  top: 15px;\n  left: 390px;\n  color: white;\n}\n#content #mine-bg #personal-info .portrait {\n  float: left;\n  display: inline-block;\n  width: 70px;\n  height: 70px;\n  margin-right: 22px;\n  -webkit-border-radius: 35px;\n  border-radius: 35px;\n  background-clip: padding-box;\n  background-color: #eee;\n  overflow: hidden;\n}\n#content #mine-bg #personal-info .portrait img {\n  width: 100%;\n}\n#content #mine-bg #personal-info .info-items {\n  float: left;\n  width: 460px;\n  height: 70px;\n}\n#content #mine-bg #personal-info .info-items .main-items {\n  height: 40px;\n}\n#content #mine-bg #personal-info .info-items .main-items .name {\n  font-size: 28px;\n}\n#content #mine-bg #personal-info .info-items .main-items .numMibi {\n  font-size: 14px;\n}\n#content #mine-bg #personal-info .info-items .main-items span {\n  margin-right: 18px;\n  vertical-align: bottom;\n}\n#content #mine-bg #personal-info .info-items .main-items .edit {\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  margin-left: 10px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -157px -280px;\n}\n#content #mine-bg #personal-info .info-items .main-items .exchange {\n  height: 36px;\n  line-height: 36px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  color: #727272;\n  background-color: #F0F0F0;\n}\n#content #mine-bg #personal-info .info-items .main-items .recommend {\n  height: 36px;\n  line-height: 32px;\n  border: 2px solid white;\n  color: white;\n  padding-left: 46px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -223px -947px;\n}\n#content #mine-bg #personal-info .info-items .sub-items {\n  height: 30px;\n  line-height: 30px;\n}\n#content #mine-bg #personal-info .info-items .sub-items span {\n  margin-right: 18px;\n}\n#content #mine-bg #personal-info-modify {\n  display: none;\n  position: absolute;\n  top: 15px;\n  left: 390px;\n  color: white;\n}\n#content #mine-bg #personal-info-modify #portrait-c {\n  float: left;\n  position: relative;\n  width: 70px;\n  height: 70px;\n  -webkit-border-radius: 35px;\n  border-radius: 35px;\n  background-clip: padding-box;\n  background-color: #eee;\n  margin: 0 auto;\n  overflow: hidden;\n}\n#content #mine-bg #personal-info-modify #portrait-c img {\n  width: 100%;\n}\n#content #mine-bg #personal-info-modify #portrait-c label {\n  position: absolute;\n  top: 10px;\n  left: 10px;\n  z-index: 100;\n  display: inline-block;\n  width: 48px;\n  height: 48px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -25px -478px;\n}\n#content #mine-bg #personal-info-modify #portrait-c input {\n  display: none;\n}\n#content #mine-bg #personal-info-modify .info-items {\n  float: left;\n  width: 440px;\n  height: 70px;\n  margin-left: 10px;\n}\n#content #mine-bg #personal-info-modify .info-items .main-items {\n  height: 40px;\n}\n#content #mine-bg #personal-info-modify .info-items .main-items .name {\n  font-size: 28px;\n}\n#content #mine-bg #personal-info-modify .info-items .main-items span {\n  margin-right: 18px;\n  vertical-align: bottom;\n}\n#content #mine-bg #personal-info-modify .info-items .sub-items {\n  height: 30px;\n  line-height: 30px;\n}\n#content #mine-bg #personal-info-modify .info-items .sub-items span {\n  margin-right: 18px;\n}\n#content #mine-bg #personal-info-modify .info-items .sub-items .save-info {\n  min-width: 80px;\n  height: 30px;\n  line-height: 30px;\n  margin-left: 20px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  color: white;\n  background-color: transparent;\n  border: 1px solid white;\n}\n#content #mine-bg #personal-info-modify .info-items .sub-items .save-info:hover {\n  background-color: #7ed321;\n}\n#content #mine-bg #personal-info-modify .info-items input {\n  width: 80px;\n  height: 22px;\n  margin-left: 12px;\n  border: none;\n  border-bottom: 1px solid #ccc;\n  background-color: transparent;\n  padding-bottom: 2px;\n}\n#content #mine-bg #personal-info-modify .info-items input:focus {\n  outline: none;\n  border-bottom: 1px solid #7ED321;\n}\n#content #mine-bg #personal-info-modify .info-items #info-name {\n  width: 120px;\n  height: 38px;\n  font-size: 32px;\n}\n#content #mine-bg #personal-info-modify .info-items #info-mobile {\n  width: 100px;\n}\n#content #mine-bg #personal-info-modify .info-items #info-gender {\n  width: 30px;\n}\n#content #mine-bg #personal-info-modify .info-items #info-bday {\n  width: 140px;\n}\n#content #mine-bg img {\n  width: 100%;\n}\n#content #mine-container {\n  position: relative;\n  width: 1000px;\n  min-height: 500px;\n  padding: 20px;\n  margin: -160px auto 0 auto;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #mine-container #mine-type a,\n#content #mine-container #mine-type span {\n  display: inline-block;\n  height: 30px;\n  line-height: 30px;\n  float: left;\n  font-size: 20px;\n  margin-right: 30px;\n  color: #4b4b4b;\n}\n#content #mine-container #mine-type a.selected,\n#content #mine-container #mine-type span.selected {\n  border-bottom: 1px solid #4b4b4b;\n}\n#content #mine-container #mine-type .hotline {\n  float: right;\n  margin-right: 0;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #mine-container #group-info {\n  height: 30px;\n  line-height: 30px;\n  padding-bottom: 10px;\n  border-bottom: 1px solid #eee;\n  color: #727272;\n  font-size: 12px;\n}\n#content #mine-container #group-info #my-group {\n  padding-left: 30px;\n  margin-right: 20px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -89px -288px;\n}\n#content #mine-container #group-info span {\n  display: inline-block;\n  height: 30px;\n  line-height: 30px;\n}\n#content #mine-container #group-info em {\n  font-style: normal;\n}\n#content #mine-container #action-info span {\n  display: inline-block;\n  height: 30px;\n  line-height: 30px;\n}\n#content #mine-container #action-info .action-title {\n  margin-right: 30px;\n}\n#content #mine-container #action-info .action-cnt {\n  padding-left: 30px;\n  margin-right: 20px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -89px -288px;\n}\n#content #mine-container #apply-list {\n  width: 740px;\n  float: left;\n}\n#content #mine-container #apply-list .apply-item {\n  min-height: 40px;\n  padding: 12px;\n  border-bottom: 1px solid #ccc;\n}\n#content #mine-container #apply-list .apply-item .portrait {\n  float: left;\n  display: inline-block;\n  width: 37px;\n  height: 37px;\n  -webkit-border-radius: 37px;\n  border-radius: 37px;\n  background-clip: padding-box;\n  background-color: #eee;\n}\n#content #mine-container #apply-list .apply-item .portrait img {\n  width: 100%;\n}\n#content #mine-container #apply-list .apply-item .name {\n  float: left;\n  display: inline-block;\n  width: 60px;\n  height: 37px;\n  line-height: 37px;\n  margin-left: 20px;\n}\n#content #mine-container #apply-list .apply-item .detail {\n  float: right;\n  height: 30px;\n  line-height: 30px;\n  padding-right: 30px;\n  margin-left: 20px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 10px -109px;\n}\n#content #mine-container #apply-list .apply-item .detail.on {\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -118px -107px;\n}\n#content #mine-container #apply-list .apply-item .detail-content {\n  display: none;\n  padding-top: 10px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .personal-info {\n  color: #B8B8B8;\n}\n#content #mine-container #apply-list .apply-item .detail-content .personal-info span {\n  font-size: 12px;\n  margin-right: 8px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer {\n  margin-bottom: 8px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer p {\n  margin: 8px 0;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer span {\n  margin-right: 8px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer .answer-img {\n  width: 150px;\n  height: 150px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer .answer-img img {\n  width: 100%;\n}\n#content #mine-container #apply-list .apply-item button {\n  float: right;\n  height: 30px;\n  line-height: 30px;\n  margin-left: 12px;\n  -webkit-border-radius: 15px;\n  border-radius: 15px;\n  background-clip: padding-box;\n}\n#content #mine-container #apply-list .apply-item button.green,\n#content #mine-container #apply-list .apply-item button.completed {\n  color: white;\n  border: none;\n  background-color: #7ed321;\n}\n#content #mine-container #apply-list .apply-item button.red {\n  color: white;\n  border: none;\n  background-color: #f56467;\n}\n#content #mine-container #apply-extra {\n  width: 200px;\n  height: 300px;\n  float: right;\n}\n#content #mine-container #apply-extra .export {\n  height: 30px;\n  line-height: 30px;\n  padding-left: 40px;\n  cursor: pointer;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -230px -888px;\n}\n#content #mine-container #apply-extra .confirm {\n  height: 30px;\n  line-height: 30px;\n  margin-left: 12px;\n  -webkit-border-radius: 15px;\n  border-radius: 15px;\n  background-clip: padding-box;\n}\n#content #mine-container #tbl {\n  width: 560px;\n  margin: 20px auto;\n}\n#content #mine-container #tbl table {\n  width: 100%;\n}\n#content #mine-container #tbl table tbody tr {\n  border-bottom: 1px solid #eee;\n}\n#content #mine-container #tbl table tr th {\n  height: 30px;\n  color: #4B4B4B;\n}\n#content #mine-container #tbl table tr td {\n  width: 33%;\n  color: #4B4B4B;\n  padding: 12px 0 12px 10px;\n}\n#content #mine-container #tbl table tr td.center {\n  text-align: center;\n}\n#content #mine-container #tbl table tr td span {\n  float: left;\n}\n#content #mine-container #tbl table .seqno {\n  display: inline-block;\n  width: 30px;\n  height: 36px;\n  line-height: 36px;\n}\n#content #mine-container #tbl table .portrait-c {\n  display: inline-block;\n  width: 36px;\n  height: 36px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n}\n#content #mine-container #tbl table .portrait-c img {\n  width: 100%;\n}\n#content #mine-container #tbl table .name {\n  display: inline-block;\n  height: 36px;\n  line-height: 36px;\n  margin-left: 8px;\n}\n#content #mine-container #list {\n  padding-top: 30px;\n}\n#content #mine-container #list ul {\n  margin: 0;\n  padding: 0;\n}\n#content #mine-container #list ul li.action-card {\n  position: relative;\n  float: left;\n  width: 308px;\n  margin-right: 18px;\n  margin-bottom: 20px;\n  list-style: none;\n  color: #727272;\n  cursor: pointer;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  -webkit-box-shadow: 2px 7px 9px 0 #808080;\n  box-shadow: 2px 7px 9px 0 #808080;\n  background-color: white;\n}\n#content #mine-container #list ul li.action-card .pic {\n  width: 308px;\n  height: 226px;\n  overflow: hidden;\n  /* display: table-cell; */\n  vertical-align: middle;\n  background-color: #eee;\n  text-align: center;\n  -webkit-border-radius: 10px 10px 0 0;\n  border-radius: 10px 10px 0 0;\n  background-clip: padding-box;\n}\n#content #mine-container #list ul li.action-card img {\n  height: 100%;\n}\n#content #mine-container #list ul li.action-card .brief-info {\n  margin: 10px;\n  border-bottom: 1px solid #f1f1f1;\n}\n#content #mine-container #list ul li.action-card .brief-info .brief-important .title {\n  width: 160px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #mine-container #list ul li.action-card .brief-info .brief-important .title:hover {\n  color: #ff7300;\n}\n#content #mine-container #list ul li.action-card .brief-info .brief-important .price {\n  float: right;\n  color: #ff4545;\n  font-size: 20px;\n  margin-top: 5px;\n}\n#content #mine-container #list ul li.action-card .brief-info .brief-important .hot-tag {\n  float: right;\n  padding: 2px;\n  margin-top: 3px;\n  margin-right: 10px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #mine-container #list ul li.action-card .brief-info .host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #mine-container #list ul li.action-card .brief-info .criteria {\n  height: 38px;\n  margin: 12px 0;\n}\n#content #mine-container #list ul li.action-card .brief-info .criteria p {\n  margin: 6px 0;\n}\n#content #mine-container #list ul li.action-card .items {\n  padding-bottom: 10px;\n  margin: 0 10px 12px 10px;\n  border-bottom: 1px solid #eee;\n}\n#content #mine-container #list ul li.action-card .items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #mine-container #list ul li.action-card .items .location {\n  background-position: -216px -15px;\n}\n#content #mine-container #list ul li.action-card .items .num {\n  background-position: -216px -51px;\n}\n#content #mine-container #list ul li.action-card .items .time {\n  background-position: -216px -90px;\n}\n#content #mine-container #list ul li.action-card .items .extra {\n  background-position: -216px -127px;\n}\n#content #mine-container #list ul li.action-card.last {\n  margin: 0;\n}\n#content #mine-container #list ul li.action-card .like {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -87px -58px;\n}\n#content #mine-container #list ul li.action-card .like.selected {\n  background-position: -87px -15px;\n}\n#content #mine-container #list ul li.action-card .share {\n  position: absolute;\n  top: 10px;\n  right: 70px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #mine-container #list ul li.action-card .c-share {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #mine-container #list ul li.action-card .operation {\n  margin: 10px 10px 20px 10px;\n}\n#content #mine-container #list ul li.action-card .operation .main {\n  text-align: center;\n}\n#content #mine-container #list ul li.action-card .operation .main button {\n  height: 36px;\n  line-height: 36px;\n  color: white;\n  border: none;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n}\n#content #mine-container #list ul li.action-card .operation .main a {\n  margin-left: 6px;\n  color: #B8B8B8;\n  font-size: 12px;\n}\n#content #mine-container #list ul li.action-card .operation .main .start-action,\n#content #mine-container #list ul li.action-card .operation .main .stop-action {\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #mine-container #list ul li.action-card .operation .main .red {\n  margin-left: 5em;\n  background-color: #F56467;\n}\n#content #mine-container #list ul li.action-card .operation .main .green {\n  margin-left: 5em;\n  background-color: #7ED321;\n}\n#content #mine-container #list ul li.action-card .operation .main .no-shift {\n  margin-left: 0;\n}\n#content #mine-container #list ul li.action-card .operation .main .starting,\n#content #mine-container #list ul li.action-card .operation .main .passed,\n#content #mine-container #list ul li.action-card .operation .main .applying {\n  background-color: #7ED321;\n}\n#content #mine-container #list ul li.action-card .operation .main .notstarted,\n#content #mine-container #list ul li.action-card .operation .main .rejected {\n  background-color: #F56467;\n}\n#content #mine-container #list ul li.action-card .operation .main .notapplyed {\n  color: #bbb;\n  border: 1px solid #bbb;\n}\n#content #mine-container #list ul li.action-card .operation .sub {\n  margin-top: 16px;\n}\n#content #mine-container #list ul li.action-card .operation .sub a {\n  float: right;\n  height: 32px;\n  line-height: 30px;\n  color: white;\n  border: none;\n  -webkit-border-radius: 17px;\n  border-radius: 17px;\n  background-clip: padding-box;\n}\n#content #mine-container #list ul li.action-card .operation .sub span {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  margin-left: 10px;\n  background: url(//zhaomi.biz/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #mine-container #list ul li.action-card .operation .sub .edit {\n  background-position: -155px -228px;\n}\n#content #mine-container #list ul li.action-card .operation .sub .duplicate {\n  background-position: -152px -166px;\n}\n#content #mine-container #list ul li.action-card .operation .sub .delete {\n  background-position: -85px -166px;\n}\n#content #mine-container #list ul li.action-card .operation .sub .b-share {\n  background-position: -89px -229px;\n}\n#content #mine-container #list ul li.action-card .operation .sub .view {\n  color: #727272;\n  border: 1px solid #727272;\n  padding: 0 14px;\n}\n", ""]);
+	exports.push([module.id, "/*\n  以下为一些全局的常用功能class\n*/\n.fn-clr:after {\n  clear: both;\n  display: block;\n  height: 0;\n  content: \" \";\n}\n.fn-overflow {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n#container .fn-hide {\n  display: none;\n}\n.fn-fl {\n  float: left;\n}\n.fn-fr {\n  float: right;\n}\nselect {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  width: 120px;\n  padding: 5px;\n  margin-right: 8px!important;\n}\ninput:-webkit-autofill,\ntextarea:-webkit-autofill,\nselect:-webkit-autofill {\n  -webkit-box-shadow: 0 0 0px 1000px transparent inset;\n}\n.z-dialog {\n  display: none;\n}\n* {\n  box-sizing: border-box !important;\n}\nbody {\n  background-color: #eaeaea;\n}\n#content {\n  width: 1190px;\n  min-height: 500px;\n  margin: 0 auto;\n  font-family: 'HeiTi SC';\n}\n#content #mine-bg {\n  position: relative;\n}\n#content #mine-bg #personal-info-origin {\n  position: absolute;\n  top: 15px;\n  left: 390px;\n  color: white;\n}\n#content #mine-bg #personal-info-origin .portrait {\n  float: left;\n  display: inline-block;\n  width: 70px;\n  height: 70px;\n  margin-right: 22px;\n  -webkit-border-radius: 35px;\n  border-radius: 35px;\n  background-clip: padding-box;\n  background-color: #eee;\n  overflow: hidden;\n}\n#content #mine-bg #personal-info-origin .portrait img {\n  width: 100%;\n}\n#content #mine-bg #personal-info-origin .info-items {\n  float: left;\n  width: 460px;\n  height: 70px;\n}\n#content #mine-bg #personal-info-origin .info-items .main-items {\n  height: 40px;\n}\n#content #mine-bg #personal-info-origin .info-items .main-items .name {\n  max-width: 150px;\n  display: inline-block;\n  font-size: 28px;\n}\n#content #mine-bg #personal-info-origin .info-items .main-items .numMibi {\n  font-size: 14px;\n}\n#content #mine-bg #personal-info-origin .info-items .main-items span {\n  margin-right: 18px;\n  vertical-align: bottom;\n}\n#content #mine-bg #personal-info-origin .info-items .main-items .edit {\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  margin-left: 10px;\n  cursor: pointer;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -157px -280px;\n}\n#content #mine-bg #personal-info-origin .info-items .main-items .exchange {\n  height: 36px;\n  line-height: 36px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  color: #727272;\n  background-color: #F0F0F0;\n}\n#content #mine-bg #personal-info-origin .info-items .main-items .recommend {\n  height: 36px;\n  line-height: 32px;\n  border: 2px solid white;\n  color: white;\n  padding-left: 46px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -223px -947px;\n}\n#content #mine-bg #personal-info-origin .info-items .sub-items {\n  height: 30px;\n  line-height: 30px;\n}\n#content #mine-bg #personal-info-origin .info-items .sub-items span {\n  margin-right: 18px;\n}\n#content #mine-bg #personal-info-modify {\n  display: none;\n  position: absolute;\n  top: 15px;\n  left: 390px;\n  color: white;\n}\n#content #mine-bg #personal-info-modify #portrait-c {\n  float: left;\n  position: relative;\n  width: 70px;\n  height: 70px;\n  -webkit-border-radius: 35px;\n  border-radius: 35px;\n  background-clip: padding-box;\n  background-color: #eee;\n  margin: 0 auto;\n  overflow: hidden;\n}\n#content #mine-bg #personal-info-modify #portrait-c img {\n  width: 100%;\n}\n#content #mine-bg #personal-info-modify #portrait-c label {\n  position: absolute;\n  top: 10px;\n  left: 10px;\n  z-index: 100;\n  display: inline-block;\n  width: 48px;\n  height: 48px;\n  cursor: pointer;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -25px -478px;\n}\n#content #mine-bg #personal-info-modify #portrait-c input {\n  display: none;\n}\n#content #mine-bg #personal-info-modify .info-items {\n  float: left;\n  width: 440px;\n  height: 70px;\n  margin-left: 10px;\n}\n#content #mine-bg #personal-info-modify .info-items .main-items {\n  height: 40px;\n}\n#content #mine-bg #personal-info-modify .info-items .main-items .name {\n  font-size: 28px;\n}\n#content #mine-bg #personal-info-modify .info-items .main-items span {\n  margin-right: 18px;\n  vertical-align: bottom;\n}\n#content #mine-bg #personal-info-modify .info-items .sub-items {\n  height: 30px;\n  line-height: 30px;\n}\n#content #mine-bg #personal-info-modify .info-items .sub-items span {\n  margin-right: 18px;\n}\n#content #mine-bg #personal-info-modify .info-items .sub-items .save-info {\n  min-width: 80px;\n  height: 30px;\n  line-height: 30px;\n  margin-left: 60px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n  color: white;\n  background-color: transparent;\n  border: 1px solid white;\n}\n#content #mine-bg #personal-info-modify .info-items .sub-items .save-info:hover {\n  background-color: #7ed321;\n}\n#content #mine-bg #personal-info-modify .info-items input {\n  width: 80px;\n  height: 22px;\n  margin-left: 12px;\n  border: none;\n  border-bottom: 1px solid #ccc;\n  background-color: transparent;\n  padding-bottom: 2px;\n}\n#content #mine-bg #personal-info-modify .info-items input:focus {\n  outline: none;\n  border-bottom: 1px solid #7ED321;\n}\n#content #mine-bg #personal-info-modify .info-items #info-name {\n  width: 240px;\n  height: 38px;\n  font-size: 32px;\n}\n#content #mine-bg #personal-info-modify .info-items #info-mobile {\n  width: 100px;\n}\n#content #mine-bg #personal-info-modify .info-items #info-gender {\n  width: 30px;\n}\n#content #mine-bg #personal-info-modify .info-items #info-bday {\n  width: 150px;\n}\n#content #mine-bg img {\n  width: 100%;\n}\n#content #mine-container {\n  position: relative;\n  width: 1000px;\n  min-height: 500px;\n  padding: 20px;\n  margin: -160px auto 0 auto;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  background-color: white;\n}\n#content #mine-container #mine-type a,\n#content #mine-container #mine-type span {\n  display: inline-block;\n  height: 30px;\n  line-height: 30px;\n  float: left;\n  font-size: 20px;\n  margin-right: 30px;\n  color: #4b4b4b;\n}\n#content #mine-container #mine-type a.selected,\n#content #mine-container #mine-type span.selected {\n  border-bottom: 1px solid #4b4b4b;\n}\n#content #mine-container #mine-type .hotline {\n  float: right;\n  margin-right: 0;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #mine-container #group-info {\n  height: 30px;\n  line-height: 30px;\n  padding-bottom: 10px;\n  border-bottom: 1px solid #eee;\n  color: #727272;\n  font-size: 12px;\n}\n#content #mine-container #group-info #my-group {\n  padding-left: 30px;\n  margin-right: 20px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -89px -288px;\n}\n#content #mine-container #group-info span {\n  display: inline-block;\n  height: 30px;\n  line-height: 30px;\n}\n#content #mine-container #group-info em {\n  font-style: normal;\n}\n#content #mine-container #action-info span {\n  display: inline-block;\n  height: 30px;\n  line-height: 30px;\n}\n#content #mine-container #action-info .action-title {\n  margin-right: 30px;\n}\n#content #mine-container #action-info .action-cnt {\n  padding-left: 30px;\n  margin-right: 20px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -89px -288px;\n}\n#content #mine-container #apply-list {\n  width: 740px;\n  float: left;\n}\n#content #mine-container #apply-list .apply-item {\n  min-height: 40px;\n  padding: 12px;\n  border-bottom: 1px solid #ccc;\n}\n#content #mine-container #apply-list .apply-item .portrait {\n  float: left;\n  display: inline-block;\n  width: 37px;\n  height: 37px;\n  -webkit-border-radius: 37px;\n  border-radius: 37px;\n  background-clip: padding-box;\n  background-color: #eee;\n}\n#content #mine-container #apply-list .apply-item .portrait img {\n  width: 100%;\n}\n#content #mine-container #apply-list .apply-item .name {\n  float: left;\n  display: inline-block;\n  width: 200px;\n  height: 37px;\n  line-height: 37px;\n  margin-left: 20px;\n}\n#content #mine-container #apply-list .apply-item .detail {\n  float: right;\n  height: 30px;\n  line-height: 30px;\n  padding-right: 30px;\n  margin-left: 20px;\n  cursor: pointer;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 10px -109px;\n}\n#content #mine-container #apply-list .apply-item .detail.on {\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -118px -107px;\n}\n#content #mine-container #apply-list .apply-item .detail-content {\n  display: none;\n  padding-top: 10px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .personal-info {\n  color: #B8B8B8;\n}\n#content #mine-container #apply-list .apply-item .detail-content .personal-info span {\n  font-size: 12px;\n  margin-right: 8px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer {\n  margin-bottom: 8px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer p {\n  margin: 8px 0;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer span {\n  margin-right: 8px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer .answer-img {\n  width: 150px;\n  height: 150px;\n}\n#content #mine-container #apply-list .apply-item .detail-content .apply-answers .apply-answer .answer-img img {\n  width: 100%;\n}\n#content #mine-container #apply-list .apply-item button {\n  float: right;\n  height: 30px;\n  line-height: 30px;\n  margin-left: 12px;\n  -webkit-border-radius: 15px;\n  border-radius: 15px;\n  background-clip: padding-box;\n}\n#content #mine-container #apply-list .apply-item button.green,\n#content #mine-container #apply-list .apply-item button.completed {\n  color: white;\n  border: none;\n  background-color: #7ed321;\n}\n#content #mine-container #apply-list .apply-item button.red {\n  color: white;\n  border: none;\n  background-color: #f56467;\n}\n#content #mine-container #apply-extra {\n  width: 200px;\n  height: 300px;\n  float: right;\n}\n#content #mine-container #apply-extra .export {\n  height: 30px;\n  line-height: 30px;\n  padding-left: 40px;\n  cursor: pointer;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -230px -888px;\n}\n#content #mine-container #apply-extra .confirm {\n  height: 30px;\n  line-height: 30px;\n  margin-left: 12px;\n  -webkit-border-radius: 15px;\n  border-radius: 15px;\n  background-clip: padding-box;\n}\n#content #mine-container #tbl {\n  width: 560px;\n  margin: 20px auto;\n}\n#content #mine-container #tbl table {\n  width: 100%;\n}\n#content #mine-container #tbl table tbody tr {\n  border-bottom: 1px solid #eee;\n}\n#content #mine-container #tbl table tr th {\n  height: 30px;\n  color: #4B4B4B;\n}\n#content #mine-container #tbl table tr td {\n  width: 33%;\n  color: #4B4B4B;\n  padding: 12px 0 12px 10px;\n}\n#content #mine-container #tbl table tr td.center {\n  text-align: center;\n}\n#content #mine-container #tbl table tr td span {\n  float: left;\n}\n#content #mine-container #tbl table .seqno {\n  display: inline-block;\n  width: 30px;\n  height: 36px;\n  line-height: 36px;\n}\n#content #mine-container #tbl table .portrait-c {\n  display: inline-block;\n  width: 36px;\n  height: 36px;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n}\n#content #mine-container #tbl table .portrait-c img {\n  width: 100%;\n}\n#content #mine-container #tbl table .name {\n  display: inline-block;\n  height: 36px;\n  line-height: 36px;\n  margin-left: 8px;\n}\n#content #mine-container #list {\n  padding-top: 30px;\n}\n#content #mine-container #list ul {\n  margin: 0;\n  padding: 0;\n}\n#content #mine-container #list ul li.action-card {\n  position: relative;\n  float: left;\n  width: 308px;\n  margin-right: 18px;\n  margin-bottom: 20px;\n  list-style: none;\n  color: #727272;\n  cursor: pointer;\n  -webkit-border-radius: 10px;\n  border-radius: 10px;\n  background-clip: padding-box;\n  -webkit-box-shadow: 2px 7px 9px 0 #808080;\n  box-shadow: 2px 7px 9px 0 #808080;\n  background-color: white;\n}\n#content #mine-container #list ul li.action-card .pic {\n  width: 308px;\n  height: 226px;\n  overflow: hidden;\n  /* display: table-cell; */\n  vertical-align: middle;\n  background-color: #eee;\n  text-align: center;\n  -webkit-border-radius: 10px 10px 0 0;\n  border-radius: 10px 10px 0 0;\n  background-clip: padding-box;\n}\n#content #mine-container #list ul li.action-card img {\n  height: 100%;\n}\n#content #mine-container #list ul li.action-card .brief-info {\n  margin: 10px;\n  border-bottom: 1px solid #f1f1f1;\n}\n#content #mine-container #list ul li.action-card .brief-info .brief-important .title {\n  width: 160px;\n  display: inline-block;\n  height: 30px;\n  overflow: hidden;\n  font-size: 30px;\n}\n#content #mine-container #list ul li.action-card .brief-info .brief-important .title:hover {\n  color: #ff7300;\n}\n#content #mine-container #list ul li.action-card .brief-info .brief-important .price {\n  float: right;\n  color: #ff4545;\n  font-size: 20px;\n  margin-top: 5px;\n}\n#content #mine-container #list ul li.action-card .brief-info .brief-important .hot-tag {\n  float: right;\n  padding: 2px;\n  margin-top: 3px;\n  margin-right: 10px;\n  background-color: #ff7a7a;\n  color: white;\n}\n#content #mine-container #list ul li.action-card .brief-info .host {\n  margin-top: 6px;\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #mine-container #list ul li.action-card .brief-info .criteria {\n  height: 38px;\n  margin: 12px 0;\n}\n#content #mine-container #list ul li.action-card .brief-info .criteria p {\n  margin: 6px 0;\n}\n#content #mine-container #list ul li.action-card .items {\n  padding-bottom: 10px;\n  margin: 0 10px 12px 10px;\n  border-bottom: 1px solid #eee;\n}\n#content #mine-container #list ul li.action-card .items p {\n  height: 32px;\n  line-height: 32px;\n  margin: 0;\n  padding-left: 36px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #mine-container #list ul li.action-card .items .location {\n  background-position: -216px -15px;\n}\n#content #mine-container #list ul li.action-card .items .num {\n  background-position: -216px -51px;\n}\n#content #mine-container #list ul li.action-card .items .time {\n  background-position: -216px -90px;\n}\n#content #mine-container #list ul li.action-card .items .extra {\n  background-position: -216px -127px;\n}\n#content #mine-container #list ul li.action-card.last {\n  margin: 0;\n}\n#content #mine-container #list ul li.action-card .like {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -87px -58px;\n}\n#content #mine-container #list ul li.action-card .like.selected {\n  background-position: -87px -15px;\n}\n#content #mine-container #list ul li.action-card .share {\n  position: absolute;\n  top: 10px;\n  right: 70px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #mine-container #list ul li.action-card .c-share {\n  position: absolute;\n  top: 10px;\n  right: 20px;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat -28px -59px;\n}\n#content #mine-container #list ul li.action-card .operation {\n  margin: 10px 10px 20px 10px;\n}\n#content #mine-container #list ul li.action-card .operation .main {\n  text-align: center;\n}\n#content #mine-container #list ul li.action-card .operation .main button {\n  height: 36px;\n  line-height: 34px;\n  color: white;\n  border: none;\n  -webkit-border-radius: 18px;\n  border-radius: 18px;\n  background-clip: padding-box;\n}\n#content #mine-container #list ul li.action-card .operation .main a {\n  margin-left: 6px;\n  color: #B8B8B8;\n  font-size: 12px;\n}\n#content #mine-container #list ul li.action-card .operation .main .start-action,\n#content #mine-container #list ul li.action-card .operation .main .stop-action {\n  font-size: 12px;\n  color: #b8b8b8;\n}\n#content #mine-container #list ul li.action-card .operation .main .red {\n  margin-left: 5em;\n  background-color: #F56467;\n}\n#content #mine-container #list ul li.action-card .operation .main .green {\n  margin-left: 5em;\n  background-color: #7ED321;\n}\n#content #mine-container #list ul li.action-card .operation .main .no-shift {\n  margin-left: 0;\n}\n#content #mine-container #list ul li.action-card .operation .main .starting,\n#content #mine-container #list ul li.action-card .operation .main .passed,\n#content #mine-container #list ul li.action-card .operation .main .applying {\n  background-color: #7ED321;\n}\n#content #mine-container #list ul li.action-card .operation .main .notstarted,\n#content #mine-container #list ul li.action-card .operation .main .rejected {\n  background-color: #F56467;\n}\n#content #mine-container #list ul li.action-card .operation .main .notapplyed {\n  color: #bbb;\n  border: 1px solid #bbb;\n}\n#content #mine-container #list ul li.action-card .operation .sub {\n  margin-top: 16px;\n}\n#content #mine-container #list ul li.action-card .operation .sub a {\n  float: right;\n  height: 32px;\n  line-height: 30px;\n  color: white;\n  border: none;\n  -webkit-border-radius: 17px;\n  border-radius: 17px;\n  background-clip: padding-box;\n}\n#content #mine-container #list ul li.action-card .operation .sub span {\n  float: right;\n  display: inline-block;\n  width: 30px;\n  height: 30px;\n  margin-left: 10px;\n  background: url(//zhao-mi.net/assets/imgs/icons.png) no-repeat 0 0;\n}\n#content #mine-container #list ul li.action-card .operation .sub .edit {\n  background-position: -155px -228px;\n}\n#content #mine-container #list ul li.action-card .operation .sub .duplicate {\n  background-position: -152px -166px;\n}\n#content #mine-container #list ul li.action-card .operation .sub .delete {\n  background-position: -85px -166px;\n}\n#content #mine-container #list ul li.action-card .operation .sub .b-share {\n  background-position: -89px -229px;\n}\n#content #mine-container #list ul li.action-card .operation .sub .view {\n  color: #727272;\n  border: 1px solid #727272;\n  padding: 0 14px;\n}\n", ""]);
 
 	// exports
 
@@ -970,62 +1070,194 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var zhaomi = __webpack_require__(19);
+	var utils = __webpack_require__(18);
 
 	exports.init = function() {
 	    var btnMapper = {
 	        'approve': '<button class="z-btn green" data-optype="approve">通过</button>',
-	        'approve_cancel': '<button class="z-btn red" data-optype="approve_cancel">取消通过</button>',
+	        'approve_cancel': '<button class="z-btn green" data-optype="approve_cancel">取消通过</button>',
 	        'deny': '<button class="z-btn red" data-optype="deny">拒绝</button>',
-	        'deny_cancel': '<button class="z-btn red" data-optype="deny_cancel">取消拒绝</button>',
+	        'deny_cancel': '<button class="z-btn green" data-optype="deny_cancel">取消拒绝</button>',
 	        'finish': '<button class="z-btn green" data-optype="finish">确认完成</button>',
-	        'finished': '<button class="z-btn green" data-optype="finished">已完成</button>'
+	        'finished': '<button class="z-btn green" data-optype="finished">已完成</button>',
+	        'denied': '<button class="z-btn red">已谢绝</button>'
 	    }
 
 	    $('#apply-list').on('click', '.apply-item-content button', function() {
 	        var $applyItemCon = $(this).closest('.apply-item-content');
+	        var $applyItem = $applyItemCon.parent('.apply-item');
+	        var $container = $applyItem.closest('#mine-container');
 	        var opType = $(this).data('optype');
-
-	        if (btnMapper[opType]) {
-	            $applyItemCon.find('button').remove();
-	        }
+	        var actionId = $container.data('action');
+	        var targetId = $applyItem.data('target');
 
 	        switch (opType) {
 	            case 'deny':
-	                $applyItemCon
-	                    .append($(btnMapper['deny_cancel']));
+	                post(opType, actionId, targetId, function() {
+	                    addBtns(['deny_cancel', 'denied']);
+	                });
 	                break;
 	            case 'deny_cancel':
-	                $applyItemCon
-	                    .append($(btnMapper['approve']))
-	                    .append($(btnMapper['deny']));
+	                post(opType, actionId, targetId, function() {
+	                    addBtns(['approve', 'deny']);
+	                });
 	                break;
 	            case 'approve':
-	                $applyItemCon
-	                    .append($(btnMapper['finish']))
-	                    .append($(btnMapper['approve_cancel']));
+	                post(opType, actionId, targetId, function() {
+	                    addBtns(['finish', 'approve_cancel']);
+	                });
 	                break;
 	            case 'approve_cancel':
-	                $applyItemCon
-	                    .append($(btnMapper['approve']))
-	                    .append($(btnMapper['deny']));
+	                post(opType, actionId, targetId, function() {
+	                    addBtns(['approve', 'deny']);
+	                });
 	                break;
 	            case 'finish':
-	                $applyItemCon
-	                    .append($(btnMapper['finished']));
+	                post(opType, actionId, targetId, function() {
+	                    addBtns(['finished']);
+	                });
 	                break;
 	        }
-	    })
-	    
-	    function post(opType, actionId, target) {
-	        zhaomi.postData('/mine/manage', {
-	            action: actionId,
-	            target: target,
-	            optype: opType
-	        }, function(ret) {
-	            
-	        })
-	    }
 
+	        function removeBtns(opType) {
+	            if (btnMapper[opType]) {
+	                $applyItemCon.find('button').remove();
+	            }
+	        }
+
+	        function addBtns(typeArr) {
+	            for (var i = 0, leni = typeArr.length; i < leni; i++) {
+	                $applyItemCon.append($(btnMapper[typeArr[i]]));
+	            }
+	        }
+
+	        function post(opType, actionId, target, callback) {
+	            zhaomi.postData('/mine/manage', {
+	                action: actionId,
+	                target: target,
+	                optype: opType,
+	            }, function(res) {
+	                var success = res && res.success;
+	                var data = res.data;
+
+	                if (res.success) {
+	                    removeBtns(opType);
+	                    callback();
+	                } else {
+	                    for (var i in data) {
+	                        utils.warn(data[i]);
+	                        break;
+	                    }
+	                    
+	                }
+	            });
+	        }
+	    })
+
+	    $('#apply-extra').on('click', '.export', function() {
+	        var $container = $('#mine-container');
+	        var action = $container.data('action');
+
+	        zhaomi.postData('/mine/manage', {
+	            optype: 'excel',
+	            action: action
+	        }, function(res) {
+	            var success = res && res.success;
+	            var data = res && res.data;
+	            
+	            if (success) {
+	                if (data.url) {
+	                    location.href = data.url;  
+	                } 
+	            }
+	        })
+	    })
+
+	}
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var utils = __webpack_require__(18);
+	var shareBox = __webpack_require__(22);
+
+	exports.init = function() {
+
+	    var $personalInfo = $('#personal-info-origin');
+	    var $modifiedInfo = $('#personal-info-modify');
+	    var $form = $('#personal-info-form');
+	    
+	    $personalInfo.on('click', '.edit', function() {
+	        $personalInfo.hide();
+	        $modifiedInfo.show();
+	    }).on('click', '.recommend', function() {
+	        var shareLink = $(this).data('link');
+
+	        if (shareLink) {
+	            shareBox.show({
+	                shareLink: shareLink
+	            })
+	        }
+	    });
+
+	    $form.submit(function() {
+
+	        var name = $('#info-name').val();
+	        var mobile = $('#info-mobile').val();
+	        var gender = $('#info-gender').val();
+	        var bday = $('#info-bday').val();
+
+	        $(this).ajaxSubmit({
+	            beforeSubmit: function(formData, jqForm, options) {
+	                
+	                if (!name) {
+	                    utils.warn('请填写姓名!');
+	                    return false;
+	                }
+
+	                // if (!mobile) {
+	                //     utils.warn('请填写手机号!');
+	                //     return false;
+	                // }
+
+	                if (!gender || (gender !== '男' && gender !== '女')) {
+	                    utils.warn('请正确填写性别!');
+	                    return false;
+	                }
+
+	                if (!bday || !/\d{4}\-\d{2}-\d{2}/.test(bday)) {
+	                    utils.warn('请选择生日，格式为1990-01-01!');
+	                    return false;
+	                }
+	            },
+	            dataType: 'json',
+	            success: function(res) {
+	                var success = res && res.success;
+	                var data = res && res.data;
+	                
+	                if (success) {
+	                    $personalInfo.show();
+	                    $modifiedInfo.hide(); 
+	                    for (var key in data) {
+	                        if (key === 'portrait' && data[key]) {
+	                            $personalInfo.find('#portrait-origin img')
+	                                .attr('src', data[key]);
+	                        } else {
+	                            $personalInfo.find('#' + key).text(data[key]);    
+	                        }
+	                    }
+	                } else {
+	                    for (var key in data) {
+	                        utils.warn(data[key]);
+	                        break;
+	                    }
+	                }
+	            }
+	        });
+
+	        return false;
+	    });
 	}
 
 /***/ }

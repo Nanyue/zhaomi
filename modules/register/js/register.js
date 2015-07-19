@@ -132,6 +132,63 @@ $(function() {
 
         return false;
     })
+    
+    // 重置密码
+    $('#resetForm').submit(function() {
+        
+        var mobile = $('#mobile').val();
+        var code = $('#verifycode').val();
+        var pwd = $('#pwd').val();
+        var pwdConfirmed = $('#pwd-confirm').val();
+
+        $(this).ajaxSubmit({
+            beforeSubmit: function(formData, jqForm, options) {
+                if (!mobile) {
+                    utils.warn('请填写手机号!');
+                    return false;
+                }
+
+                if (!code) {
+                    utils.warn('请填写验证码!');
+                    return false;
+                }
+
+                if (!pwd) {
+                    utils.warn('请填写密码!');
+                    return false;
+                }
+
+                if (!pwdConfirmed) {
+                    utils.warn('请填写确认密码!');
+                    return false;
+                }
+
+                if (pwd !== pwdConfirmed) {
+                    utils.warn('请确保两次填写的密码一致!');
+                    return false;
+                }
+            },
+            dataType: 'json',
+            success: function(res) {
+                var success = res && res.success;
+                var data = res && res.data;
+                
+                if (success) {
+                    if (data.url) {
+                        location.href = data.url;  
+                    } 
+                } else {
+                    for (var key in data) {
+                        $('#' + key).parent().removeClass('focus').addClass('err');
+                        utils.warn(data[key]);
+                        break;
+                    }
+                }
+            }
+            
+        }); 
+        return false;
+    })
 
     if ($('.form_datetime').datetimepicker) {
         $('.form_datetime').datetimepicker({

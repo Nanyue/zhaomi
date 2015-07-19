@@ -47,7 +47,7 @@ $(function() {
             if (q) {
                 utils.goTo({
                     q: q
-                })
+                }, true)
             }
         }
     })

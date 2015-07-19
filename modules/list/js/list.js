@@ -3,6 +3,7 @@ require('../css/list');
 
 var header = require('../../header/js/header');
 var shareBox = require('../../../common/pkgs/shareBox/shareBox');
+var zhaomi = require('../../../lib/common/common');
 var utils = require('../../../common/utils');
 
 $(function() {
@@ -27,15 +28,7 @@ $(function() {
     })
 
     $('.share').click(function() {
-        var $actionCard = $(this).closest('.action-card');
-        var id = $actionCard.data('id');
-        var code = $actionCard.data('code');
-        var shareLink = 'http://zhaomi.biz/action/' + id + '?code=' + code;
-
-        shareBox.show({
-            id: 'share-dialog',
-            shareLink: shareLink
-        })
+        
     });
 
     $actionCard.on('click', '.title', function() {
@@ -46,6 +39,28 @@ $(function() {
         if (shareLink || detailLink) {
             window.open(shareLink || detailLink, '_blank');
         }
+    }).on('click', '.like', function() {
+        var $like = $(this);
+        var $actionCard = $(this).closest('.action-card');
+        var actionId = $actionCard.data('id');
+        
+        zhaomi.postData('/action/like', {
+            id: actionId
+        }, function(res) {
+            var success = res && res.success;
+
+            if (success) {
+                $like.toggleClass('selected');
+            }
+        })
+    }).on('click', '.share', function() {
+        var $actionCard = $(this).closest('.action-card');
+        var shareLink = $actionCard.data('link');
+
+        shareBox.show({
+            id: 'share-dialog',
+            shareLink: shareLink
+        })
     })
 
     // 处理过滤找米热门
@@ -62,12 +77,17 @@ $(function() {
         });
     })
 
-    // 处理加载更多
-    $doc.scroll(function() {
-        var LOADING_GAP = 200;
-        if ($doc.height() < $doc.scrollTop() + $win.height() + LOADING_GAP) {
-            $('body').height($('body').height() + 500)
-            console.log('加载更多')
-        }
+    utils.loadMore(function() {
+        $.ajax({
+            url: location.href,
+            dataType: 'jsonp',
+            success: function(html) {
+                $('body').append('<p>加载更多</p>')        
+            },
+            error: function() {
+                $('body').append('<p>加载失败</p>') 
+            }
+        })
+        
     })
 });
