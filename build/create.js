@@ -48,7 +48,7 @@
 	__webpack_require__(8);
 	__webpack_require__(10);
 
-	var header = __webpack_require__(13);
+	__webpack_require__(13);
 
 	$(function() {
 

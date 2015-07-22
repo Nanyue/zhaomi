@@ -99,7 +99,7 @@ function collectData() {
             if (arr.length) {
                 data.push({
                     type: type,
-                    result: arr.length === 1? arr[0] : arr
+                    result: type === RADIO? arr[0] : arr
                 })
             }
             

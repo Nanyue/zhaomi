@@ -1,4 +1,7 @@
 // webpack.config.js
+var webpack = require('webpack');
+var PROD = JSON.parse(process.env.PROD || "0");
+
 module.exports = {
   entry: {
     list: './modules/list/js/list.js',
@@ -24,5 +27,8 @@ module.exports = {
   resolve: {
     // 现在可以写 require('file') 代替 require('file.less')
     extensions: ['', '.js', '.css', '.less'] 
-  }
+  },
+  plugins: PROD ? [
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
+  ] : []
 };

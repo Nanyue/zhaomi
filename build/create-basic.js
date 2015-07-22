@@ -216,6 +216,10 @@
 	                }
 	            },
 	            dataType: 'json',
+	            data: {
+	                province: prov,
+	                city: city
+	            },
 	            success: function(res) {
 	                var success = res && res.success;
 	                var data = res && res.data;
