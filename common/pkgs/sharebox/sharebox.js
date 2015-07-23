@@ -38,6 +38,7 @@ module.exports = {
             $dialog = $(idSelector);
         }
 
+        $dialog.find('.share-link').text(shareLink);
         $dialog.find('.share-qrcode').empty().qrcode({
             render: 'table',
             text: shareLink,
@@ -65,7 +66,8 @@ var SHAREBOX_TPL = '<div id="{id}" class="z-dialog share-dialog">' +
             '<span class="share-link">{shareLink}</span>' +
             '<p class="dialog-txt">通过二维码分享</p>' +
             '<span class="share-qrcode"></span>' +
-            '<p class="dialog-txt">通过社交网络分享</p>' +
+            '<p class="dialog-txt mb0">通过社交网络分享</p>' +
+            '<p class="dialog-txt-hint">微信好友、朋友圈请使用手机微信扫描后分享</p>' +
             '<div class="socials">' +
                 '<span id="wechat" title="请用微信扫描上方二维码后分享"></span>' +
                 '<span id="wechat-group" title="请用微信扫描上方二维码后分享"></span>' +

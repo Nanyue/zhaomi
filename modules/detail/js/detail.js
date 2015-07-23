@@ -28,15 +28,23 @@ $(function() {
     })
 
     $detailContainer.on('click', '.share, .share-bonus', function(e) {
-        console.log(1)
-        var id = $detailContainer.data('id');
-        var code = $detailContainer.data('code');
-        var shareLink = 'http://zhao-mi.net/action/' + id + '?code=' + code;
+        var shareLink = $detailContainer.data('link');
+        if (shareLink) {
+            shareBox.show({
+                selector: '#share-dialog',
+                shareLink: shareLink
+            })
+        }
+        
+    })
 
-        shareBox.show({
-            selector: '#share-dialog',
-            shareLink: shareLink
-        })
+    var rValidImg = /\.(jpg|png)$/;
+    $('input[type="file"]').on('change', function() {
+        if (rValidImg.test($(this).val())) {
+            $(this).data('valid', true);
+        } else {
+            utils.warn('请上传png/jpg图片！');
+        }
     })
 
     $('#apply-form').submit(function() {
@@ -44,8 +52,28 @@ $(function() {
 
         $(this).ajaxSubmit({
             beforeSubmit: function() {
+
+                var $fileInputs = $('input[type="file"]');
+                var isValid = true;
+
+                if (!utils.isLogin()) {
+                    location.href = '/login?next=' + encodeURI(location.href);
+                }
+
+                for (var i = 0, leni = $fileInputs.length; i < leni; i++) {
+                    if (!$fileInputs.eq(i).data('valid')) {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                if (!isValid) {
+                    utils.warn('请上传png/jpg图片！');
+                    return false;
+                }
+
                 if ($('.detail-item').length !== data.length) {
-                    utils.warn('有题目未作答！')
+                    utils.warn('有题目未作答！');
                     return false;
                 }
             },

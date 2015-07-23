@@ -28,12 +28,12 @@ $(function() {
         }
     })
 
-    $('.share').click(function() {
-        
-    });
+    $container.on('click', '.action-card', function(evt) {
 
-    $container.on('click', '.action-card .title', function() {
-        var $actionCard = $(this).closest('.action-card');
+        if ($(evt.target).hasClass('like') || $(evt.target).hasClass('share')) {
+            return false;
+        }
+        var $actionCard = $(this);
         var shareLink = $actionCard.data('link');
         var detailLink = $actionCard.data('detail');
 

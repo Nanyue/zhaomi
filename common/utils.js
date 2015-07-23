@@ -85,3 +85,7 @@ exports.getJSONPUrl = function(from, size) {
 
     return prefix + '?' + queryStr;
 }
+
+exports.isLogin = function() {
+    return $('#reg').length === 0;
+}

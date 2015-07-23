@@ -28,6 +28,11 @@ $(function() {
                     return false;
                 }
 
+                if (!/^[\w-]+$/.test(username)) {
+                    utils.warn('请使用字母、数字或下划线!');
+                    return false;   
+                }
+
                 if (!pwd) {
                     utils.warn('请填写密码!');
                     return false;
@@ -80,6 +85,10 @@ $(function() {
         }, function() {
             utils.warn('已发送验证码!');
         })
+    })
+
+    $('#portrait').on('change', function() {
+        $(this).siblings('span').css('visibility', 'visible');
     })
 
     // 注册第二步

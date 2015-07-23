@@ -32,7 +32,7 @@ $(function() {
         })
     });
 
-    $area.on('mouseenter', function() {
+    $area.on('click', function() {
         $areaDroplist.show();
     });
 
@@ -41,7 +41,7 @@ $(function() {
         if (!$(ev.target).closest('#area').length) {
             $areaDroplist.hide();
         }
-    }).on('keypress', function(ev) {
+    }).on('keyup', function(ev) {
         var q = $search.find('input').val();
         if (ev.keyCode === 13) {
             if (q) {
@@ -49,6 +49,8 @@ $(function() {
                     q: q
                 }, true)
             }
+        } else if (ev.keyCode === 27) {
+            $areaDroplist.hide();   
         }
     })
 
