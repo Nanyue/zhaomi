@@ -26,9 +26,12 @@ $(function() {
     }
 
     // 获取地区数据
-    $areaDroplist.find('.city').change(function() {
+    $areaDroplist.on('click', 'button', function() {
+        var prov = $('.prov').val() || '';
+        var city = $('.city').val() || '';
+
         utils.goTo({
-            loc: $(this).val()
+            loc: prov + '|' + city
         })
     });
 
@@ -52,9 +55,5 @@ $(function() {
         } else if (ev.keyCode === 27) {
             $areaDroplist.hide();   
         }
-    })
-
-    $doc.on('click', '.cancel-create', function() {
-        
     })
 });

@@ -425,7 +425,7 @@ body {
                     color: #727272;
                     cursor: pointer;
                     .border-radius(10px);
-                    .box-shadow(2px 7px 9px 0 #808080);
+                    .box-shadow(0 2px 4px 0 #808080);
                     background-color: white;
                     .pic {
                         width: 308px;
@@ -436,6 +436,10 @@ body {
                         background-color: #eee;
                         text-align: center;
                         .border-radius(10px 10px 0 0);
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        .box-shadow(2px 7px 9px 0 #808080);
                     }
                     img {
                         height: 100%;
