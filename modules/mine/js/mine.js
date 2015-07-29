@@ -4,6 +4,7 @@ require('../css/mine');
 var header = require('../../header/js/header');
 var zhaomi = require('../../../lib/common/common');
 var shareBox = require('../../../common/pkgs/shareBox/shareBox');
+var exchangeBox = require('../../../common/pkgs/exchange/exchange');
 var utils = require('../../../common/utils');
 var applyList = require('./apply-list');
 var personalMod = require('./personal-info');
@@ -141,14 +142,8 @@ $(function() {
     });
 
     // 推荐注册
-    $('#personal-info').on('click', '.recommend', function() {
-        var shareLink = $(this).data('link');
-
-        if (shareLink) {
-            shareBox.show({
-                shareLink: shareLink
-            })
-        }
+    $('#personal-info-origin').on('click', '.exchange', function() {
+        exchangeBox.show()
     });
 
     var fullDataReturned = true;
