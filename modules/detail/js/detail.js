@@ -4,6 +4,7 @@ require('../css/detail');
 var header = require('../../header/js/header');
 var shareBox = require('../../../common/pkgs/shareBox/shareBox');
 var utils = require('../../../common/utils');
+var zhaomi = require('../../../lib/common/common');
 
 var RADIO = 'radio';
 var CHECKBOX = 'checkbox';
@@ -36,6 +37,19 @@ $(function() {
             })
         }
         
+    }).on('click', '.like', function() {
+        var $like = $(this);
+        var actionId = $like.data('id');
+        
+        zhaomi.postData('/action/like', {
+            id: actionId
+        }, function(res) {
+            var success = res && res.success;
+
+            if (success) {
+                $like.toggleClass('selected');
+            }
+        })
     })
 
     var rValidImg = /\.(jpg|png)$/;

@@ -28,7 +28,17 @@ $(function() {
     })
 
     // 活动信息中的各种操作
-    $list.on('click', '.action-card .title', function() {
+    $list.on('click', '.action-card', function(evt) {
+
+        var $target = $(evt.target);
+        // 点击opertion区域不算
+        if ($target.closest('.operation').length ||
+            $target.hasClass('like') || 
+            $target.hasClass('c-share') ||
+            $target.hasClass('share')) {
+            return false;
+        }
+
         var $actionCard = $(this).closest('.action-card');
         var shareLink = $actionCard.data('link');
         var detailLink = $actionCard.data('detail');
@@ -36,6 +46,7 @@ $(function() {
         if (shareLink || detailLink) {
             window.open(shareLink || detailLink, '_blank');
         }
+        
     }).on('click', '.action-card .edit', function() {
         var action = $(this).data('action');
         if (action) {
