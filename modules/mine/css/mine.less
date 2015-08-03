@@ -119,22 +119,15 @@ body {
                 width: 440px;
                 height: 70px;
                 margin-left: 10px;
+                margin-top: 20px;
                 .main-items {
                     height: 40px;
                     .name {
                         font-size: 28px;
                     }
-                    
                     span {
                         margin-right: 18px;
                         vertical-align: bottom;
-                    }
-                }
-                .sub-items {
-                    height: 30px;
-                    line-height: 30px;
-                    span {
-                        margin-right: 18px;
                     }
                     .save-info {
                         min-width: 80px;
@@ -146,8 +139,17 @@ body {
                         background-color: transparent;
                         border: 1px solid white;
                         &:hover {
+                            border: 1px solid transparent;
                             background-color: #7ed321;
                         }
+                    }
+                }
+                .sub-items {
+                    display: none;
+                    height: 30px;
+                    line-height: 30px;
+                    span {
+                        margin-right: 18px;
                     }
                 }
                 input {
@@ -592,12 +594,7 @@ body {
                         .sub {
                             margin-top: 16px;
                             a {
-                                float: right;
-                                height: 32px;
-                                line-height: 30px;
-                                color: white;
-                                border: none;
-                                .border-radius(17px);
+                                
                             }
                             span {
                                 float: right;
@@ -606,6 +603,16 @@ body {
                                 height: 30px;
                                 margin-left: 10px;
                                 .icons-bg(0 0);
+                                &.view {
+                                    width: 116px;
+                                    color: #727272;
+                                    border: 1px solid #727272;
+                                    padding: 0 14px;
+                                    background: none;
+                                    height: 32px;
+                                    line-height: 30px;
+                                    .border-radius(17px);
+                                }
                             }
                             .edit {
                                 background-position: -155px -228px;
@@ -619,11 +626,7 @@ body {
                             .b-share {
                                 background-position: -89px -229px;
                             }
-                            .view {
-                                color: #727272;
-                                border: 1px solid #727272;
-                                padding: 0 14px;
-                            }
+
                         }
                     }
                 }

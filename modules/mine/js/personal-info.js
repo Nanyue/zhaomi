@@ -40,15 +40,15 @@ exports.init = function() {
                 //     return false;
                 // }
 
-                if (!gender || (gender !== '男' && gender !== '女')) {
-                    utils.warn('请正确填写性别!');
-                    return false;
-                }
+                // if (!gender || (gender !== '男' && gender !== '女')) {
+                //     utils.warn('请正确填写性别!');
+                //     return false;
+                // }
 
-                if (!bday || !/\d{4}\-\d{2}-\d{2}/.test(bday)) {
-                    utils.warn('请选择生日，格式为1990-01-01!');
-                    return false;
-                }
+                // if (!bday || !/\d{4}\-\d{2}-\d{2}/.test(bday)) {
+                //     utils.warn('请选择生日，格式为1990-01-01!');
+                //     return false;
+                // }
             },
             dataType: 'json',
             success: function(res) {

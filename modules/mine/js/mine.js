@@ -32,7 +32,11 @@ $(function() {
 
         var $target = $(evt.target);
         // 点击opertion区域不算
-        if ($target.closest('.operation').length ||
+        if ($target.hasClass('view') || 
+            $target.hasClass('edit') ||
+            $target.hasClass('duplicate') ||
+            $target.hasClass('delete') ||
+            $target.hasClass('b-share') ||
             $target.hasClass('like') || 
             $target.hasClass('c-share') ||
             $target.hasClass('share')) {
@@ -47,6 +51,11 @@ $(function() {
             window.open(shareLink || detailLink, '_blank');
         }
         
+    }).on('click', '.action-card .view', function() {
+        var action = $(this).data('action');
+        if (action) {
+            window.location.href = action;    
+        }
     }).on('click', '.action-card .edit', function() {
         var action = $(this).data('action');
         if (action) {
@@ -158,7 +167,7 @@ $(function() {
     });
 
     var fullDataReturned = true;
-    var from = 12, size = 12;
+    var start = 12, size = 12;
 
     utils.loadMore(function() {
 
@@ -167,13 +176,13 @@ $(function() {
         }
 
         $.ajax({
-            url: utils.getJSONPUrl(from, size),
+            url: utils.getJSONPUrl(start, size),
             dataType: 'jsonp',
             success: function(data) {
                 data = data || {};
                 if (data.size === size) {
                     fullDataReturned = true;
-                    from = from + size;
+                    start = start + size;
                 } else {
                     fullDataReturned = false;
                 }

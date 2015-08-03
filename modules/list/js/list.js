@@ -79,7 +79,7 @@ $(function() {
     })
 
     var fullDataReturned = true;
-    var from = 12, size = 12;
+    var start = 12, size = 12;
 
     utils.loadMore(function() {
 
@@ -89,7 +89,7 @@ $(function() {
         }
 
         $.ajax({
-            url: utils.getJSONPUrl(from, size),
+            url: utils.getJSONPUrl(start, size),
             dataType: 'jsonp',
             success: function(data) {
                 // 清除timeout才能进行下一次请求
@@ -97,7 +97,7 @@ $(function() {
                 data = data || {};
                 if (data.size === size) {
                     fullDataReturned = true;
-                    from = from + size;
+                    start = start + size;
                 } else {
                     fullDataReturned = false;
                 }
