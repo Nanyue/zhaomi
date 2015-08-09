@@ -5,6 +5,8 @@ require('../css/create');
 var header = require('../../header/js/header');
 var utils = require('../../../common/utils');
 
+var FORMAT = 'YYYY-MM-DD HH:mm';
+
 $(function() {
     $('#addr').citySelect({
         prov: '北京',
@@ -24,21 +26,144 @@ $(function() {
         initialDate: new Date()
     }).on('changeDate', function(ev) {
         var startDate = $('#startdate').val();
+        var day = $('#id_day').val() || 0;
+        var hour = $('#id_hour').val() || 0;
+        var minute = $('#id_minute').val() || 0;
+        var $endDate = $('#enddate'), endDate = $endDate.val();
+        var diffObj;
 
-        $('#form_datetime_end').datetimepicker({
-            language: 'zh-CN',
-            weekStart: 1,
-            autoclose: 1,
-            startView: 1,
-            forceParse: 0,
-            showMeridian: 1,
-            minView: 0,
-            maxView: 4,
-            format: 'yyyy-mm-dd hh:ii',
-            startDate: startDate,
-            initialDate: startDate
-        })
+        // 删除日期
+        if (!startDate) {
+            return;
+        }
+
+        if (!isDurationEmpty(day, hour, minute)) {
+            endDate = getOppositeDate(startDate, day, hour, minute);
+            $endDate.val(endDate);
+        } else {
+            if (endDate) {
+                diffObj = getDiff(startDate, endDate);
+                $('#id_day').val(diffObj.day);
+                $('#id_hour').val(diffObj.hour);
+                $('#id_minute').val(diffObj.minute);
+            }
+        }
     });
+
+    $('#form_datetime_end').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        autoclose: 1,
+        startView: 1,
+        forceParse: 0,
+        showMeridian: 1,
+        minView: 0,
+        maxView: 4,
+        format: 'yyyy-mm-dd hh:ii',
+        startDate: new Date()
+    }).on('changeDate', function(ev) {
+        var $startDate = $('#startdate');
+        var startDate = $startDate.val();
+        var day = $('#id_day').val() || 0;
+        var hour = $('#id_hour').val() || 0;
+        var minute = $('#id_minute').val() || 0;
+        var endDate = $('#enddate').val();
+        var diffObj;
+
+        // 删除日期
+        if (!endDate) {
+            return;
+        }
+
+        if (!isDurationEmpty(day, hour, minute)) {
+            startDate = getOppositeDate(endDate, -day, -hour, -minute);
+            $startDate.val(startDate);
+        } else {
+            if (startDate) {
+                diffObj = getDiff(startDate, endDate);
+                $('#id_day').val(diffObj.day);
+                $('#id_hour').val(diffObj.hour);
+                $('#id_minute').val(diffObj.minute);    
+            }
+        }
+    });
+
+    function isDurationEmpty(day, hour, minute) {
+        day = +day;
+        hour = +hour;
+        minute = +minute;
+        return !day && !hour && !minute;
+    }
+
+    function getDiff(startDate, endDate) {
+        
+        var s = moment(startDate).format(FORMAT);
+        var e = moment(endDate).format(FORMAT);
+        var millis = moment(endDate).diff(moment(startDate));
+        var seconds = millis / 1000;
+        var day, hour, minute;
+
+        day = Math.floor(seconds / (24 * 3600));
+        hour = Math.floor((seconds - day * 24 * 3600) / 3600);
+        minute = Math.floor((seconds - day * 24 * 3600 - hour * 3600) / 60);
+
+        return {
+            day: day,
+            hour: hour,
+            minute: minute
+        }
+    }
+
+    $('#secondary .time').change(function() {
+        var id = $(this).attr('id');
+        var day = $('#id_day').val() || 0;
+        var hour = $('#id_hour').val() || 0;
+        var minute = $('#id_minute').val() || 0;
+        var rDigits = /^\d*$/;
+        var $startDate = $('#startdate');
+        var startDate = $startDate.val();
+        var $endDate = $('#enddate');
+        var endDate = $endDate.val();
+        var isValid = true;
+
+        switch (id) {
+            case 'id_day':
+                if (!rDigits.test(day) || +day < 0) {
+                    isValid = false;
+                    utils.warn('您输入的持续天数不合法！');
+                }
+                break;
+            case 'id_hour':
+                if (!rDigits.test(hour) || +hour < 0 || +hour > 23) {
+                    isValid = false;
+                    utils.warn('您输入的持续小时不合法！');
+                }
+                break;
+            case 'id_minute':
+                if (!rDigits.test(minute) || +minute < 0 || +minute > 59) {
+                    isValid = false;
+                    utils.warn('您输入的持续分钟不合法！');
+                }
+                break;
+        }      
+
+        if (isValid) {
+            if (startDate) {
+                endDate = getOppositeDate(startDate, day, hour, minute);
+                $endDate.val(endDate);
+            } else if (endDate) {
+                startDate = getOppositeDate(endDate, -day, -hour, -minute);
+                $startDate.val(startDate);
+            }
+        }
+    });
+
+    function getOppositeDate(date, day, hour, minute) {
+        return moment.max(moment(date, FORMAT)
+            .add(day, 'day')
+            .add(hour, 'hour')
+            .add(minute, 'minute'), moment()).format(FORMAT);
+    }
 
     $('#poster').change(function() {
         $('#poster-hint').text($(this).val());
@@ -157,16 +282,9 @@ $(function() {
                     return false;
                 }
 
-                if (/create/.test(location.href)) {
-                    if (!poster) {
-                        utils.warn('请选择活动海报!');
-                        return false;
-                    }
-
-                    if (!/\.(jpg|png)$/.test(poster)) {
-                        utils.warn('活动海报海报仅支持png/jpg格式的文件!');
-                        return false;
-                    }
+                if (poster && !/\.(jpg|png)$/.test(poster)) {
+                    utils.warn('活动海报海报仅支持png/jpg格式的文件!');
+                    return false;
                 }
             },
             dataType: 'json',
