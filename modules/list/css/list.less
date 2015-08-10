@@ -65,14 +65,15 @@ body {
                 padding: 0 60px;
                 display: inline-block;
                 font-size: 24px;
-                .icons-bg(160px -94px);
+                color: #4b4b4b;
+                .icons-bg(150px -94px);
             }
             #hot-droplist {
                 display: none;
                 position: absolute;
                 top: 0;
-                left: -80px;
-                width: 400px;
+                left: -60px;
+                width: 360px;
                 padding: 0 30px 20px 30px;
                 border: 1px solid #ccc;
                 border-top: none;
@@ -90,7 +91,7 @@ body {
                     height: 60px;
                     line-height: 60px;
                     font-size: 24px;
-                    .icons-bg(154px -1197px);
+                    .icons-bg(144px -1197px);
                 }
                 ul {
                     margin: 0;
@@ -127,7 +128,8 @@ body {
                 padding: 0 60px;
                 display: inline-block;
                 font-size: 24px;
-                .icons-bg(160px -94px);
+                color: #4b4b4b;
+                .icons-bg(150px -94px);
             }
             #category-droplist {
                 display: none;
@@ -152,7 +154,7 @@ body {
                     height: 60px;
                     line-height: 60px;
                     font-size: 24px;
-                    .icons-bg(154px -1197px);
+                    .icons-bg(144px -1197px);
                 }
                 ul {
                     margin: 0;
@@ -190,23 +192,25 @@ body {
         }
     }
     .list {
-        padding: 30px 30px 10px 30px;
+        padding: 30px 45px 10px 45px;
         ul {
             margin: 0;
             padding: 0;
             li.action-card {
                 position: relative;
                 float: left;
-                width: 361px;
-                margin-right: 2%;
-                margin-bottom: 20px;
+                width: 250px;
+                margin-right: 31px;
+                margin-bottom: 31px;
                 list-style: none;
                 color: #727272;
                 .border-radius(10px);
+                .box-shadow(0 1px 4px 0 #eee);
+                .box-shadow(0 1px 4px 0 rgba(68, 68, 68, 0.1));
                 background-color: white;
                 .pic {
-                    width: 361px;
-                    height: 256px;
+                    width: 250px;
+                    height: 110px;
                     overflow: hidden;
                     /* display: table-cell; */
                     vertical-align: middle;
@@ -224,15 +228,17 @@ body {
                     }
                 }
                 .brief-info {
-                    margin: 10px;
+                    margin: 18px 10px 10px 10px;
                     border-bottom: 1px solid #f1f1f1;
                     .brief-important {
                         .title {
-                            width: 170px;
+                            width: 188px;
                             display: inline-block;
-                            height: 30px;
+                            height: 20px;
                             overflow: hidden;
-                            font-size: 30px;
+                            font-size: 18px;
+                            color: #4b4b4b;
+                            .fn-overflow();
                             transition: color 0.2s ease-out 0s;
                             &:hover {
                                 transition: color 0.2s ease-out 0s;
@@ -242,26 +248,29 @@ body {
                         .price {
                             float: right;
                             color: #ff4545;
-                            font-size: 24px;
-                            margin-top: 5px;
+                            font-size: 18px;
+                        }
+                        
+                    }
+                    .host {
+                        .host-c {
+                            margin-top: 6px;
+                            font-size: 12px;
+                            color: #727272;    
                         }
                         .hot-tag {
                             float: right;
                             padding: 2px;
-                            margin-top: 5px;
-                            margin-right: 16px;
                             background-color: #ff7a7a;
+                            font-size: 12px;
                             color: white;
                         }
                     }
-                    .host {
-                        margin-top: 6px;
-                        font-size: 12px;
-                        color: #b8b8b8;
-                    }
                     .criteria {
                         height: 38px;
-                        margin: 12px 0;
+                        margin-top: 12px;
+                        font-size: 12px;
+                        color: #727272;
                         p {
                             margin: 6px 0;
                         }
@@ -271,37 +280,40 @@ body {
                 .items {
                     padding: 0 10px 12px 10px;
                     p {
-                        height: 32px; 
-                        line-height: 32px;
+                        height: 24px; 
+                        line-height: 24px;
                         margin: 0;
+                        font-size: 12px;
+                        color: #b8b8b8;
                         padding-left: 36px;
                         .icons-bg(0 0);
                     }
                     .location {
-                        background-position: -216px -15px;
+                        background-position: -254px -19px;
                     }
                     .num {
-                        background-position: -216px -51px;
+                        background-position: -254px -55px;
                     }
                     .time {
-                        background-position: -216px -90px;
+                        background-position: -254px -94px;
                     }
                     .extra {
-                        background-position: -216px -127px;
+                        background-position: -255px -129px;
                     }
                 }
                 &.last {
-                    margin: 0;
+                    margin-right: 0;
                 }
                 &:hover {
                     cursor: pointer;
                     transition: all 0.1s linear 0s;
-                    .box-shadow(2px 7px 9px 0 #808080)
+                    .box-shadow(0 2px 4px 0 #f0f0f0);
+                    .box-shadow(0 2px 4px 0 rgba(0, 0, 0, 0.2));
                 }
                 .like {
                     position: absolute;
                     top: 10px;
-                    right: 20px;
+                    right: 15px;
                     display: inline-block;
                     width: 30px;
                     height: 30px;
@@ -313,7 +325,7 @@ body {
                 .share {
                     position: absolute;
                     top: 10px;
-                    right: 70px;
+                    right: 60px;
                     display: inline-block;
                     width: 30px;
                     height: 30px;
