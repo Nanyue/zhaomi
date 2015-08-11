@@ -18,15 +18,24 @@ $(function() {
 
     $banner.unslider({
         speed: 600,
-        delay: 3000, 
-        dots: true
-    });
-    // 伪延迟图片加载
-    $banner.find('img').each(function() {
-        if (!$(this).attr('src')) {
-            $(this).attr('src', $(this).data('src'));
+        delay: 4000, 
+        dots: true,
+        starting: function(banner, item) {
+            var numItems = $banner.find('img').length;
+            var nextIdx = ($banner.find('ul li').index(item) + 2) % numItems;
+            var $img = $banner.find('img').eq(nextIdx);
+            if (!$img.attr('src')) {
+                $img.attr('src', $img.data('src'));
+            }
         }
-    })
+    });
+
+    setTimeout(function() {
+        var $secondImg = $banner.find('img').eq(1);
+        if (!$secondImg.attr('src')) {
+            $secondImg.attr('src', $secondImg.data('src'));
+        }
+    }, 2000);
 
     $container.on('click', '.action-card', function(evt) {
 
