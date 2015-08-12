@@ -15,13 +15,14 @@ $(function() {
     var $container = $('#content');
     var $actionCard = $('.action-card');
     var $banner = $('#banner');
+    var numItems = $banner.find('img').length;
 
     $banner.unslider({
         speed: 600,
         delay: 4000, 
         dots: true,
         starting: function(banner, item) {
-            var numItems = $banner.find('img').length;
+            
             var nextIdx = ($banner.find('ul li').index(item) + 2) % numItems;
             var $img = $banner.find('img').eq(nextIdx);
             if (!$img.attr('src')) {
@@ -58,9 +59,14 @@ $(function() {
             id: actionId
         }, function(res) {
             var success = res && res.success;
+            var data = res && res.data;
 
             if (success) {
-                $like.toggleClass('selected');
+                if (data.url) {
+                    location.href = data.url;
+                } else {
+                    $like.toggleClass('selected');
+                }
             }
         })
     }).on('click', '.action-card .share', function() {

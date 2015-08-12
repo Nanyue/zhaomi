@@ -93,9 +93,14 @@ $(function() {
             id: actionId
         }, function(res) {
             var success = res && res.success;
+            var data = res && res.data;
 
             if (success) {
-                $like.toggleClass('selected');
+                if (data.url) {
+                    location.href = data.url;
+                } else {
+                    $like.toggleClass('selected');    
+                }
             }
         })
     }).on('click', '.action-card .publish', function() {
