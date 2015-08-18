@@ -8,6 +8,7 @@ var exchangeBox = require('../../../common/pkgs/exchange/exchange');
 var utils = require('../../../common/utils');
 var applyList = require('./apply-list');
 var personalMod = require('./personal-info');
+var rValidImg = /\.(jpg|jpeg|png)$/;
 
 $(function() {
     applyList.init();
@@ -63,18 +64,22 @@ $(function() {
         }
     }).on('click', '.action-card .duplicate, .action-card .delete', function() {
         var action = $(this).data('action');
-        if (action) {
-            zhaomi.postData(action, {}, function(res) {
-                var success = res && res.success;
-                var data = res && res.data;
-                
-                if (success) {
-                    if (data.url) {
-                        location.href = data.url;  
-                    } 
-                }
-            });
+
+        if (confirm('确认要删除该活动吗？')) {
+            if (action) {
+                zhaomi.postData(action, {}, function(res) {
+                    var success = res && res.success;
+                    var data = res && res.data;
+                    
+                    if (success) {
+                        if (data.url) {
+                            location.href = data.url;  
+                        } 
+                    }
+                });
+            }
         }
+        
     }).on('click', '.action-card .c-share, .action-card .b-share, .action-card .share', function() {
         var $actionCard = $(this).closest('.action-card');
         var shareLink = $actionCard.data('link');
@@ -165,6 +170,26 @@ $(function() {
             });    
         }
     });
+
+    $('#portrait').on('change', function() {
+        var portrait = $(this).val();
+        var files, $uploadImgBox, objectUrl;
+
+        if (portrait && !rValidImg.test(portrait)) {
+            utils.warn('请上传png/jpg图片！');
+            return false;
+        }
+
+        if (window.URL && window.URL.createObjectURL) {
+            $uploadImgBox = $(this).closest('#portrait-c');
+            
+            objectUrl = window.URL.createObjectURL($(this)[0].files[0]);
+            $uploadImgBox.find('img').attr('src', objectUrl);
+            $('#personal-info img').attr('src', objectUrl);
+        } else {
+            $(this).siblings('span').css('visibility', 'visible');    
+        }
+    })
 
     // 推荐注册
     $('#personal-info-origin').on('click', '.exchange', function() {

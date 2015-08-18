@@ -20,7 +20,7 @@ $(function() {
     $banner.unslider({
         speed: 600,
         delay: 4000, 
-        dots: true,
+        dots: numItems > 1 ? true : false,
         starting: function(banner, item) {
             
             var nextIdx = ($banner.find('ul li').index(item) + 2) % numItems;

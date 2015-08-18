@@ -6,8 +6,12 @@ var header = require('../../header/js/header');
 var utils = require('../../../common/utils');
 
 var FORMAT = 'YYYY-MM-DD HH:mm';
+var rValidImg = /\.(jpg|jpeg|png)$/;
 
 $(function() {
+
+    var startDate;
+
     $('#addr').citySelect({
         prov: '北京',
         nodata: 'none'
@@ -17,23 +21,31 @@ $(function() {
         language: 'zh-CN',
         weekStart: 1,
         autoclose: 1,
-        startView: 1,
+        startView: 2,
         forceParse: 0,
-        showMeridian: 1,
         minView: 0,
         maxView: 4,
+        pickerPosition: 'bottom-left',
         format: 'yyyy-mm-dd hh:ii',
-        initialDate: new Date()
+        startDate: new Date()
     }).on('changeDate', function(ev) {
-        var startDate = $('#startdate').val();
+        var $startDate = $('#startdate');
         var day = $('#id_day').val() || 0;
         var hour = $('#id_hour').val() || 0;
         var minute = $('#id_minute').val() || 0;
         var $endDate = $('#enddate'), endDate = $endDate.val();
         var diffObj;
 
+        startDate = $startDate.val();
+
         // 删除日期
         if (!startDate) {
+            return;
+        }
+
+        if (endDate && endDate <= startDate) {
+            utils.warn('开始时间不能晚于结束时间');
+            $startDate.val('');
             return;
         }
 
@@ -48,30 +60,41 @@ $(function() {
                 $('#id_minute').val(diffObj.minute);
             }
         }
+
+        $('#form_datetime_end').datetimepicker('setStartDate', startDate);
     });
 
     $('#form_datetime_end').datetimepicker({
         language: 'zh-CN',
         weekStart: 1,
         autoclose: 1,
-        startView: 1,
+        startView: 2,
         forceParse: 0,
-        showMeridian: 1,
         minView: 0,
         maxView: 4,
+        pickerPosition: 'bottom-left',
         format: 'yyyy-mm-dd hh:ii',
-        startDate: new Date()
-    }).on('changeDate', function(ev) {
+        startDate: startDate || new Date()
+    }).on('changeDate', changeEndDateHandler);
+
+    function changeEndDateHandler(ev) {
         var $startDate = $('#startdate');
         var startDate = $startDate.val();
         var day = $('#id_day').val() || 0;
         var hour = $('#id_hour').val() || 0;
         var minute = $('#id_minute').val() || 0;
-        var endDate = $('#enddate').val();
+        var $endDate = $('#enddate');
+        var endDate = $endDate.val();
         var diffObj;
 
         // 删除日期
         if (!endDate) {
+            return;
+        }
+
+        if (startDate && endDate <= startDate) {
+            utils.warn('开始时间不能晚于结束时间');
+            $endDate.val('');
             return;
         }
 
@@ -86,7 +109,7 @@ $(function() {
                 $('#id_minute').val(diffObj.minute);    
             }
         }
-    });
+    }
 
     function isDurationEmpty(day, hour, minute) {
         day = +day;
@@ -166,7 +189,15 @@ $(function() {
     }
 
     $('#poster').change(function() {
-        $('#poster-hint').text($(this).val());
+        var poster = $(this).val();
+        if (poster) {
+            if (!rValidImg.test(poster)) {
+                utils.warn('请上传png/jpg图片！');
+                return false;
+            }
+            $('#poster-hint').text(poster);
+        }
+        
     });
 
     var $actionTypeContainer = $('#action-type-c');
@@ -282,7 +313,7 @@ $(function() {
                     return false;
                 }
 
-                if (poster && !/\.(jpg|png)$/.test(poster)) {
+                if (poster && !/\.(jpg|jpeg|png)$/.test(poster)) {
                     utils.warn('活动海报海报仅支持png/jpg格式的文件!');
                     return false;
                 }

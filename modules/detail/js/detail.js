@@ -57,7 +57,7 @@ $(function() {
         })
     })
 
-    var rValidImg = /\.(jpg|png)$/;
+    var rValidImg = /\.(jpg|jpeg|png)$/;
     $('input[type="file"]').on('change', function() {
         if (rValidImg.test($(this).val())) {
             $(this).data('valid', true);

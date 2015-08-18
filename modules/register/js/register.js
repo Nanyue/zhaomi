@@ -3,6 +3,7 @@ require('../css/register');
 
 var zhaomi = require('../../../lib/common/common');
 var utils = require('../../../common/utils');
+var rValidImg = /\.(jpg|jpeg|png)$/;
 
 $(function() {
     // 处理在ff下的bug
@@ -88,7 +89,22 @@ $(function() {
     })
 
     $('#portrait').on('change', function() {
-        $(this).siblings('span').css('visibility', 'visible');
+        var portrait = $(this).val();
+        var files, $uploadImgBox, objectUrl;
+
+        if (portrait && !rValidImg.test(portrait)) {
+            utils.warn('请上传png/jpg图片！');
+            return false;
+        }
+
+        if (window.URL && window.URL.createObjectURL) {
+            $uploadImgBox = $(this).closest('#portrait-c');
+            
+            objectUrl = window.URL.createObjectURL($(this)[0].files[0]);
+            $uploadImgBox.find('img').attr('src', objectUrl);
+        } else {
+            $(this).siblings('span').css('visibility', 'visible');    
+        }
     })
 
     // 注册第二步
