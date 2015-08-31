@@ -67,60 +67,99 @@ body {
         position: relative;
         width: 1000px;
         min-height: 500px;
-        padding: 20px 20px 80px 20px;
-        margin: -160px auto 100px auto;
+        padding: 20px 20px 80px 40px;
+        margin: -120px auto 100px auto;
         .border-radius(10px);
         background-color: white;
+        #main {
+            margin-top: -20px;
+        }
         #main, #secondary, #extra {
             width: 800px;
-            padding-bottom: 20px;
+            padding-bottom: 30px;
             border-bottom: 1px solid #eee;
             .title {
-                font-size: 28px;
+                font-size: 18px;
                 color: #4B4B4B;
-                margin-top: 12px;
-                margin-bottom: 8px;
+                margin-top: 30px;
+                margin-bottom: 12px;
                 &-img {
                     padding-left: 36px;
                 }
                 &.location {
-                    .icons-bg(-248px -1262px);
+                    .icons-bg(-252px -19px);
                 }
                 &.datetime {
-                    .icons-bg(-248px -1334px);
+                    .icons-bg(-252px -92px);
                 }
                 &.duration {
-                    .icons-bg(-248px -1372px);   
+                    .icons-bg(-252px -128px);   
                 }
                 &.count {
-                    .icons-bg(-248px -1297px);
+                    .icons-bg(-252px -54px);
                 }
                 &.money {
-                    .icons-bg(-228px -642px);
+                    .icons-bg(-252px -157px);
+                    span {
+                        display: inline-block;
+                        height: 24px;
+                        line-height: 24px;
+                        float: left;
+                    }
+                    .txt {
+                        color: #4b4b4b;
+                    }
+                    .present {
+                        font-size: 14px;
+                        margin-left: 30px;
+                        color: #727272;
+                    }
+                    .cb {
+                        width: 30px;
+                        .icons-bg(-20px -1266px);
+                        &.checked {
+                            .icons-bg(-20px -1315px);
+                        }
+                    }
                 }
             }
             .content {
-                height: 32px;
-                line-height: 32px;
-                border: 1px solid #BEBEBE;
+                height: 50px;
+                line-height: 50px;
+                border: 2px solid #e4e4e4;
             }
             input {
-                width: 400px;
-                text-indent: 10px;
+                width: 370px;
+                height: 50px;
+                text-indent: 20px;
+                padding-left: 0!important;
                 outline: none;
                 &.time {
                     width: 100px;
                     margin-right: 10px;
+                    &#id_hour, &#id_minute {
+                        margin-left: 12px;
+                    }
                 }
                 &#name {
-                    width: 500px;
+                    
                 }
                 &.err {
-                    border: 1px solid red;
+                    border: 2px solid red;
                 }
-                &.focus {
-                    border: 1px solid green;
+                &:focus {
+                    border: 2px solid #4b4b4b;
                 }
+            }
+            select {
+                height: 50px;
+                background-color: white;
+                padding-left: 20px;
+                border-radius: 0;
+                border: 2px solid #e4e4e4;
+            }
+            .presendWrapper {
+                margin-top: 12px;
             }
             #datatime-c {
                 .form_datetime {
@@ -129,22 +168,26 @@ body {
                     margin-right: 8px;
                     input {
                         width: 200px;
+                        background-color: white;
+                        border-color: #e4e4e4;
+                    }
+                    span {
+                        background-color: white;   
+                        border-color: #e4e4e4;
                     }
                 }
             }
             #desc {
-                width: 400px;
+                width: 370px;
                 height: 200px;
                 outline: none;
+                border: 2px solid #e4e4e4;
                 &.err {
                     border: 1px solid red;
                 }
-                &.focus {
-                    border: 1px solid green;
+                &:focus {
+                    border: 2px solid #4b4b4b;
                 }
-            }
-            #city {
-                height: 30px;
             }
 
         }
@@ -154,7 +197,7 @@ body {
             }
             .verified {
                 float: left;
-                display: inline-block;
+                display: none;
                 width: 32px;
                 height: 32px;
                 margin-left: 8px;
@@ -162,10 +205,12 @@ body {
             }
             .verifiedmember {
                 float: left;
-                height: 32px;
-                line-height: 32px;
-                margin-left: 8px;
-                .border-radius(16px);
+                height: 40px;
+                line-height: 40px;
+                margin-left: 20px;
+                margin-top: 5px;
+                border-color: #cfcfcf;
+                .border-radius(20px);
             }
         }
         #secondary {
@@ -185,9 +230,12 @@ body {
             #poster-t {
                 height: 36px;
                 line-height: 36px;
+                color: #ccc;
+                border-color: #ccc;
                 .border-radius(18px);
             }
             #poster-hint {
+                margin-left: 12px;
                 color: #ccc;
             }
             #action-type-c {
@@ -195,18 +243,18 @@ body {
                 width: 400px;
                 p {
                     width: 400px;
-                    height: 40px;
-                    line-height: 40px;
+                    height: 50px;
+                    line-height: 50px;
                     padding-right: 60px;
                     margin: 0;
-                    text-indent: 8px;
-                    border: 1px solid #ccc;
-                    .icons-bg(330px -166px);
+                    text-indent: 20px;
+                    border: 2px solid #e4e4e4;
+                    .icons-bg(334px -100px);
                 }
                 #action-type-droplist {
                     position: absolute;
                     z-index: 200;
-                    top: 39px;
+                    top: 48px;
                     left: 0;
                     display: none;
                     margin: 0;
@@ -214,8 +262,8 @@ body {
                     li {
                         display: inline-block;
                         width: 400px;
-                        height: 40px;
-                        line-height: 40px;
+                        height: 50px;
+                        line-height: 50px;
                         list-style: none;
                         background-color: #eee;
                         text-indent: 20px;
@@ -228,7 +276,7 @@ body {
         }
         #btns {
             width: 800px;
-            margin-top: 12px;
+            margin-top: 30px;
             .next {
                 float: right;
                 height: 36px;
@@ -247,11 +295,12 @@ body {
                 height: 30px;
                 .action-name {
                     float: left;
-                    width: 170px;
+                    width: 330px;
                     display: inline-block;
                     height: 30px;
                     overflow: hidden;
-                    font-size: 30px;
+                    font-size: 26px;
+                    .fn-overflow();
                 }
                 .action-hot {
                     float: right;
@@ -270,7 +319,7 @@ body {
             }
             .action-oper {
                 float: right;
-                width: 400px;
+                width: 380px;
                 margin-left: 84px;
                 .like {
                     float: right;

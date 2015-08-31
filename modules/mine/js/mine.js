@@ -40,7 +40,11 @@ $(function() {
             $target.hasClass('b-share') ||
             $target.hasClass('like') || 
             $target.hasClass('c-share') ||
-            $target.hasClass('share')) {
+            $target.hasClass('share') ||
+            $target.hasClass('apply-forbidden') ||
+            $target.hasClass('publish') ||
+            $target.hasClass('unapply') ||
+            $target.hasClass('apply-resume')) {
             return false;
         }
 
@@ -62,7 +66,23 @@ $(function() {
         if (action) {
             window.location.href = action;    
         }
-    }).on('click', '.action-card .duplicate, .action-card .delete', function() {
+    }).on('click', '.action-card .duplicate', function() {
+        var action = $(this).data('action');
+
+        if (action) {
+            zhaomi.postData(action, {}, function(res) {
+                var success = res && res.success;
+                var data = res && res.data;
+                
+                if (success) {
+                    if (data.url) {
+                        location.href = data.url;  
+                    } 
+                }
+            });
+        }
+        
+    }).on('click', '.action-card .delete', function() {
         var action = $(this).data('action');
 
         if (confirm('确认要删除该活动吗？')) {
@@ -167,7 +187,7 @@ $(function() {
                 if (success) {
                     location.href = '/mine/apply';
                 }
-            });    
+            });
         }
     });
 

@@ -56,6 +56,10 @@ $(function() {
         } 
         // 删除问题的某个选项
         else {
+            if ($(this).parents('.action-answers').find('.criteria-a-input').length < 3) {
+                utils.warn('选项数不能少于2个！');
+                return false;
+            }
             $(this).closest('li').remove();
         }
     }).on('click', '.criteria-add', function() {

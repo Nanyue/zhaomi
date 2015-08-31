@@ -17,6 +17,12 @@ module.exports = {
             return;
         }
 
+        // 检测是否已登陆
+        if (!utils.isLogin()) {
+            location.href = '/login?next=' + encodeURI(location.href);
+            return;
+        }
+
         var id = data.id || 'share-dialog';
         var idSelector = '#' + id;
         var $dialog = $(idSelector);

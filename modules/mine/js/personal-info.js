@@ -30,10 +30,10 @@ exports.init = function() {
         $(this).ajaxSubmit({
             beforeSubmit: function(formData, jqForm, options) {
                 
-                if (!name) {
-                    utils.warn('请填写姓名!');
-                    return false;
-                }
+                // if (!name) {
+                //     utils.warn('请填写姓名!');
+                //     return false;
+                // }
 
                 // if (!mobile) {
                 //     utils.warn('请填写手机号!');
@@ -60,7 +60,7 @@ exports.init = function() {
                     $modifiedInfo.hide(); 
                     for (var key in data) {
                         if (key === 'portrait' && data[key]) {
-                            $personalInfo.find('#portrait-origin img')
+                            $personalInfo.find('.portrait img')
                                 .attr('src', data[key]);
                         } else {
                             $personalInfo.find('#' + key).text(data[key]);    

@@ -73,7 +73,13 @@ $(function() {
     })
     
     // 第二步注册
-    $('#sendcode').click(function() {
+    $('#mobile-wrapper').on('click', '#sendcode', function() {
+
+        var $wrapper = $('#mobile-wrapper');
+        if ($wrapper.hasClass('disabled')) {
+            return;
+        }
+
         var mobile = $('#mobile').val();
 
         if (!mobile) {
@@ -84,8 +90,27 @@ $(function() {
         zhaomi.postData('/sendcode', {
             mobile: mobile
         }, function() {
-            utils.warn('已发送验证码!');
+            countdown($wrapper);
         })
+
+        function countdown(wrapper) {
+            var $sendCode = wrapper.find('#sendcode');
+            var iId;
+            var numCD = 60;
+
+            wrapper.addClass('disabled');
+            $sendCode.text('重新发送(' + --numCD + ')');
+
+            iId = setInterval(function() {
+                if (numCD <= 0) {
+                    clearInterval(iId);
+                    wrapper.removeClass('disabled');
+                    $sendCode.text('重新发送');
+                } else {
+                    $sendCode.text('重新发送(' + --numCD + ')');
+                }
+            }, 1000);
+        }
     })
 
     $('#portrait').on('change', function() {
@@ -222,10 +247,10 @@ $(function() {
             autoclose: 1,
             startView: 4,
             forceParse: 0,
-            showMeridian: 1,
             minView: 2,
             maxView: 4,
             format: 'yyyy-mm-dd',
+            pickerPosition: 'bottom-left',
             initialDate: new Date('1990-01-01')
         });
     }

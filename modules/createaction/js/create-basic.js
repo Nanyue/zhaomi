@@ -200,6 +200,19 @@ $(function() {
         
     });
 
+    $('.money').on('click', '.cb', function() {
+
+        if ($(this).hasClass('checked')) {
+            $('#id_present').parent('.presendWrapper').remove();
+            $(this).removeClass('checked');
+        } else {
+            $('#secondary').append('<div class="presendWrapper"><input id="id_present" class="content"' + 
+                ' placeholder="请输入礼品详情"></div>')
+            $(this).addClass('checked');
+        }
+        
+    })
+
     var $actionTypeContainer = $('#action-type-c');
     var $actionTypeDroplist = $actionTypeContainer.find('#action-type-droplist');
     var $actionType = $actionTypeContainer.find('#action-type');
@@ -227,6 +240,8 @@ $(function() {
         var durationMin = $('#id_minute').val();
         var maxAttendee = $('#id_max_attend').val();
         var bonus = $('#id_reward').val();
+        var presendChecked = $('.money .cb').hasClass('checked');
+        var present = $('#id_present').val();
         var desc = $('#desc').val();
         var actionType = $('#action-type').val();
         var poster = $('#poster').val();
@@ -300,6 +315,11 @@ $(function() {
 
                 if (bonus < 0) {
                     utils.warn('奖励金额值不合法!');
+                    return false;
+                }
+
+                if (presendChecked && !present) {
+                    utils.warn('请输入礼品详情!');
                     return false;
                 }
 

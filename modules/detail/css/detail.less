@@ -17,9 +17,32 @@ body {
         width: 1000px;
         min-height: 500px;
         padding: 20px;
-        margin: -160px auto 0 auto;
+        margin: -120px auto 0 auto;
         .border-radius(10px);
         background-color: white;
+        &.finished {
+            #detail-important {
+                .detail-name-w {
+                    .detail-name {
+                        color: #b4b4b4;
+                    }
+                    .detail-finished {
+                        float: right;
+                        padding: 2px 6px;
+                        margin-top: 3px;
+                        margin-right: 16px;
+                        color: white;
+                        background-color: #b4b4b4;
+                    }
+                }
+            }
+            #detail-apply {
+                .apply {
+                    background-color: #b4b4b4;
+                    cursor: default;   
+                }
+            }
+        }
         #detail-important {
             .detail-name-w {
                 float: left;
@@ -30,14 +53,15 @@ body {
                     width: 330px;
                     display: inline-block;
                     height: 30px;
+                    line-height: 30px;
                     overflow: hidden;
-                    font-size: 30px;
+                    font-size: 26px;
                     .fn-overflow();
                 }
                 .detail-hot {
                     float: right;
                     padding: 2px;
-                    margin-top: 5px;
+                    margin-top: 3px;
                     margin-right: 16px;
                     background-color: #ff7a7a;
                     color: white;
@@ -46,7 +70,6 @@ body {
                     float: right;
                     color: #ff4545;
                     font-size: 24px;
-                    margin-top: 5px;
                 }
             }
             .detail-oper {
