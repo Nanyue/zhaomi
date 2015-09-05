@@ -123,6 +123,9 @@ $(function() {
                     for (var key in data) {
                         $('#' + key).removeClass('focus').addClass('err');
                         utils.warn(data[key]);
+
+                        $applyBtnW.removeClass('ing');
+                        $applyBtn.text('报名');
                         break;
                     }
                 }

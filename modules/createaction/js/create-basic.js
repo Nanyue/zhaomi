@@ -241,11 +241,13 @@ $(function() {
         var durationMin = $('#id_minute').val();
         var maxAttendee = $('#id_max_attend').val();
         var bonus = $('#id_reward').val();
-        var presendChecked = $('.money .cb').hasClass('checked');
+        var presentChecked = $('.money .cb').hasClass('checked');
         var present = $('#id_present').val();
         var desc = $('#desc').val();
         var actionType = $('#action-type').val();
         var poster = $('#poster').val();
+
+        
 
         $(this).ajaxSubmit({
             beforeSubmit: function(formData, jqForm, options) {
@@ -319,7 +321,7 @@ $(function() {
                     return false;
                 }
 
-                if (presendChecked && !present) {
+                if (presentChecked && !present) {
                     utils.warn('请输入礼品详情!');
                     return false;
                 }
