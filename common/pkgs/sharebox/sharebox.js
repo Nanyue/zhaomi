@@ -40,8 +40,15 @@ module.exports = {
         })
 
         if (!$dialog.length) {
-            $('body').append($(compiledTpl));
-            $dialog = $(idSelector);
+            $dialog = $(compiledTpl);
+            $('body').append($dialog);
+            $dialog.on('click', '.socials span', function() {
+                var webid = $(this).data('webid');
+                share({
+                    webid: webid,
+                    url: shareLink
+                })
+            })
         }
 
         $dialog.find('.share-link').text(shareLink);
@@ -55,24 +62,20 @@ module.exports = {
         $dialog.dialog({
             resizable: false,
             width: width,
-            title: '通过链接分享'
-        }); 
+            modal: true,
+            title: '通过以下专属渠道分享，可为您自动计算米币'
+        });
 
-        $dialog.on('click', '.socials span', function() {
-            var webid = $(this).data('webid');
-            share({
-                webid: webid,
-                url: shareLink
-            })
-        })
+        
     }
 }
 
 var SHAREBOX_TPL = '<div id="{id}" class="z-dialog share-dialog">' +
+            '<p class="dialog-txt">复制连接分享</p>' +
             '<span class="share-link">{shareLink}</span>' +
-            '<p class="dialog-txt">通过二维码分享</p>' +
+            '<p class="dialog-txt">手机扫一扫，分享给更多人</p>' +
             '<span class="share-qrcode"></span>' +
-            '<p class="dialog-txt mb0">通过社交网络分享</p>' +
+            '<p class="dialog-txt mb0">点击分享到更多平台</p>' +
             '<p class="dialog-txt-hint">微信好友、朋友圈请使用手机微信扫描后分享</p>' +
             '<div class="socials">' +
                 '<span id="wechat" title="请用微信扫描上方二维码后分享"></span>' +

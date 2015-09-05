@@ -3,8 +3,9 @@ require('../css/mine');
 
 var header = require('../../header/js/header');
 var zhaomi = require('../../../lib/common/common');
-var shareBox = require('../../../common/pkgs/shareBox/shareBox');
+var shareBox = require('../../../common/pkgs/sharebox/sharebox');
 var exchangeBox = require('../../../common/pkgs/exchange/exchange');
+var toast = require('../../../common/pkgs/toast/toast');
 var utils = require('../../../common/utils');
 var applyList = require('./apply-list');
 var personalMod = require('./personal-info');
@@ -69,17 +70,19 @@ $(function() {
     }).on('click', '.action-card .duplicate', function() {
         var action = $(this).data('action');
 
-        if (action) {
-            zhaomi.postData(action, {}, function(res) {
-                var success = res && res.success;
-                var data = res && res.data;
-                
-                if (success) {
-                    if (data.url) {
-                        location.href = data.url;  
-                    } 
-                }
-            });
+        if (confirm('确认要复制该活动吗？')) {
+            if (action) {
+                zhaomi.postData(action, {}, function(res) {
+                    var success = res && res.success;
+                    var data = res && res.data;
+                    
+                    if (success) {
+                        if (data.url) {
+                            location.href = data.url;  
+                        } 
+                    }
+                });
+            }    
         }
         
     }).on('click', '.action-card .delete', function() {
@@ -185,6 +188,11 @@ $(function() {
                 var success = res && res.success;
 
                 if (success) {
+                    toast.show({
+                        txt: '取消申请成功，即将刷新页面…',
+                        nextAction: '/mine/apply',
+                        timeout: 2000
+                    });
                     location.href = '/mine/apply';
                 }
             });

@@ -26,14 +26,16 @@ body {
                     .detail-name {
                         color: #b4b4b4;
                     }
-                    .detail-finished {
-                        float: right;
-                        padding: 2px 6px;
-                        margin-top: 3px;
-                        margin-right: 16px;
-                        color: white;
-                        background-color: #b4b4b4;
-                    }
+                }
+            }
+            #detail-host {
+                .detail-finished {
+                    float: right;
+                    padding: 2px 6px;
+                    margin-top: 3px;
+                    margin-right: 16px;
+                    color: white;
+                    background-color: #b4b4b4;
                 }
             }
             #detail-apply {
@@ -46,25 +48,20 @@ body {
         #detail-important {
             .detail-name-w {
                 float: left;
-                width: 470px;
-                height: 30px;
+                width: 480px;
+                &.with-present {
+                    .detail-name {
+                        width: 350px;    
+                    }
+                    
+                }
                 .detail-name {
                     float: left;
-                    width: 330px;
+                    width: 400px;
                     display: inline-block;
-                    height: 30px;
                     line-height: 30px;
                     overflow: hidden;
                     font-size: 26px;
-                    .fn-overflow();
-                }
-                .detail-hot {
-                    float: right;
-                    padding: 2px;
-                    margin-top: 3px;
-                    margin-right: 16px;
-                    background-color: #ff7a7a;
-                    color: white;
                 }
                 .detail-price {
                     float: right;
@@ -75,7 +72,7 @@ body {
             .detail-oper {
                 float: right;
                 width: 400px;
-                margin-left: 84px;
+                margin-right: 20px;
                 .like {
                     float: right;
                     display: inline-block;
@@ -99,17 +96,26 @@ body {
             }
         }
         #detail-host {
+            width: 480px;
             margin-top: 6px;
             font-size: 12px;
             color: #b8b8b8;
             span {
                 margin-right: 20px;
             }
+            .detail-hot {
+                float: right;
+                padding: 2px;
+                margin-right: 0;
+                background-color: #ff7a7a;
+                color: white;
+            }
         }
         #detail-info {
             width: 480px;
             color: #747474;
             p {
+                line-height: 1.5;
                 margin: 18px 0;
             }
         }
@@ -214,6 +220,11 @@ body {
         #detail-apply {
             border-top: 1px solid #eee;
             padding: 20px 0 10px 0;
+            &.ing {
+                .apply {
+                    background-color: #cfcfcf;
+                }
+            }
             .apply {
                 float: right;
                 background-color: #7ed321;
@@ -238,6 +249,10 @@ body {
             text-align: right;
             font-size: 16px;
             color: #727272;
+            em {
+                margin: 0 3px;
+                font-style: normal;
+            }
         }
     }
 }

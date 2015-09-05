@@ -2,7 +2,7 @@ require('../../../common/pkgs/button/button');
 require('../css/list');
 
 var header = require('../../header/js/header');
-var shareBox = require('../../../common/pkgs/shareBox/shareBox');
+var shareBox = require('../../../common/pkgs/sharebox/sharebox');
 var zhaomi = require('../../../lib/common/common');
 var utils = require('../../../common/utils');
 

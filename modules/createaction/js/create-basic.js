@@ -206,7 +206,8 @@ $(function() {
             $('#id_present').parent('.presendWrapper').remove();
             $(this).removeClass('checked');
         } else {
-            $('#secondary').append('<div class="presendWrapper"><input id="id_present" class="content"' + 
+            $('#secondary').append('<div class="presendWrapper">' +
+                '<input id="id_present" name="present" class="content"' + 
                 ' placeholder="请输入礼品详情"></div>')
             $(this).addClass('checked');
         }

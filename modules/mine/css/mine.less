@@ -13,7 +13,7 @@ body {
         #personal-info-origin {
             position: absolute;
             top: 15px;
-            left: 330px;
+            left: 260px;
             color: white;
             .portrait {
                 float: left;
@@ -32,7 +32,7 @@ body {
             }
             .info-items {
                 float: left;
-                width: 580px;
+                width: 620px;
                 height: 70px;
                 .main-items {
                     height: 40px;
@@ -65,8 +65,17 @@ body {
                         border: 1px solid #b8b8b8;
                         color: #b8b8b8;
                         padding-left: 46px;
+                        margin-right: 8px;
                         .border-radius(18px);
                         .icons-bg(-223px -947px);
+                    }
+                    .verified-action {
+                        height: 36px;
+                        line-height: 36px;
+                        .border-radius(18px);
+                        color: #b8b8b8;
+                        border: 1px solid #b8b8b8;
+                        background-color: transparent;
                     }
                     
                 }
@@ -509,6 +518,11 @@ body {
                         margin: 10px;
                         border-bottom: 1px solid #f1f1f1;
                         .brief-important {
+                            &.with-present {
+                                .title {
+                                    width: 130px;
+                                }
+                            }
                             .title {
                                 width: 180px;
                                 display: inline-block;
@@ -537,13 +551,23 @@ body {
                             }
                         }
                         .host {
-                            margin-top: 6px;
-                            font-size: 12px;
-                            color: #b8b8b8;
+                            .host-c {
+                                margin-top: 6px;
+                                font-size: 12px;
+                                color: #727272;    
+                            }
+                            .hot-tag {
+                                float: right;
+                                padding: 2px;
+                                background-color: #ff7a7a;
+                                font-size: 12px;
+                                color: white;
+                            }
                         }
                         .criteria {
                             height: 38px;
                             font-size: 12px;
+                            margin-top: 10px;
                             p {
                                 margin: 6px 0;
                             }
@@ -637,6 +661,9 @@ body {
                                 margin-left: 5em;
                                 background-color: #7ED321;
                             }
+                            .grey {
+                                background-color: #b4b4b4;
+                            }
                             .no-shift {
                                 margin-left: 0!important;
                             }
@@ -648,6 +675,7 @@ body {
                                 background-color: #F56467;
                             }
                             .notapplyed {
+                                margin-left: 5em;
                                 color: #bbb;
                                 border: 1px solid #bbb;
                             }

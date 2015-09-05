@@ -1,5 +1,5 @@
 var utils = require('../../../common/utils');
-var shareBox = require('../../../common/pkgs/shareBox/shareBox');
+var shareBox = require('../../../common/pkgs/sharebox/sharebox');
 
 exports.init = function() {
 

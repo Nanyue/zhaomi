@@ -5,6 +5,8 @@ var zhaomi = require('../../../lib/common/common');
 var utils = require('../../../common/utils');
 var rValidImg = /\.(jpg|jpeg|png)$/;
 
+var toast = require('../../../common/pkgs/toast/toast');
+
 $(function() {
     // 处理在ff下的bug
     if ($.browser.mozilla) {
@@ -168,7 +170,12 @@ $(function() {
                 
                 if (success) {
                     if (data.url) {
-                        location.href = data.url;  
+                        // location.href = data.url;  
+                        toast.show({
+                            txt: '注册成功，正在跳转…',
+                            nextAction: data.url,
+                            timeout: 2000
+                        });
                     } 
                 } else {
                     for (var key in data) {

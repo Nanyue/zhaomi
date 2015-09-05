@@ -2,7 +2,7 @@ require('../../../common/pkgs/button/button');
 require('../css/detail');
 
 var header = require('../../header/js/header');
-var shareBox = require('../../../common/pkgs/shareBox/shareBox');
+var shareBox = require('../../../common/pkgs/sharebox/sharebox');
 var utils = require('../../../common/utils');
 var zhaomi = require('../../../lib/common/common');
 
@@ -66,8 +66,15 @@ $(function() {
         }
     })
 
-    $('#apply-form').submit(function() {
+    $('#apply-form').submit(function(ev) {
         var data = collectData();
+
+        var $applyBtnW = $(this).find('#detail-apply');
+        var $applyBtn = $applyBtnW.find('.apply');
+
+        if ($applyBtnW.hasClass('ing')) {
+            return false;
+        }
 
         $(this).ajaxSubmit({
             beforeSubmit: function() {
@@ -77,6 +84,7 @@ $(function() {
 
                 if (!utils.isLogin()) {
                     location.href = '/login?next=' + encodeURI(location.href);
+                    return false;
                 }
 
                 for (var i = 0, leni = $fileInputs.length; i < leni; i++) {
@@ -95,6 +103,9 @@ $(function() {
                     utils.warn('有题目未作答！');
                     return false;
                 }
+
+                $applyBtnW.addClass('ing');
+                $applyBtn.text('上传中...');
             },
             dataType: 'json',
             data: {
