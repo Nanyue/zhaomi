@@ -193,7 +193,7 @@ $(function() {
                         nextAction: '/mine/apply',
                         timeout: 2000
                     });
-                    location.href = '/mine/apply';
+                    // location.href = '/mine/apply';
                 }
             });
         }

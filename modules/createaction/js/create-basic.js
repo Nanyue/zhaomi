@@ -247,7 +247,12 @@ $(function() {
         var actionType = $('#action-type').val();
         var poster = $('#poster').val();
 
-        
+        var $nextBtnW = $(this).find('#btns');
+        var $nextBtn = $nextBtnW.find('button');
+
+        if ($nextBtnW.hasClass('ing')) {
+            return false;
+        }
 
         $(this).ajaxSubmit({
             beforeSubmit: function(formData, jqForm, options) {
@@ -340,6 +345,9 @@ $(function() {
                     utils.warn('活动海报海报仅支持png/jpg格式的文件!');
                     return false;
                 }
+
+                $nextBtnW.addClass('ing');
+                $nextBtn.text('上传中...');
             },
             dataType: 'json',
             data: {
@@ -358,6 +366,9 @@ $(function() {
                     for (var key in data) {
                         $('#' + key).removeClass('focus').addClass('err');
                         utils.warn(data[key]);
+
+                        $nextBtnW.removeClass('ing');
+                        $nextBtn.text('下一步');
                         break;
                     }
                 }

@@ -105,7 +105,7 @@ $(function() {
                 }
 
                 $applyBtnW.addClass('ing');
-                $applyBtn.text('上传中...');
+                $applyBtn.text('报名中...');
             },
             dataType: 'json',
             data: {
