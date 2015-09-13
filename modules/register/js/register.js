@@ -8,6 +8,10 @@ var rValidImg = /\.(jpg|jpeg|png)$/;
 var toast = require('../../../common/pkgs/toast/toast');
 
 $(function() {
+
+    // placeholder polyfill
+    $('input, textarea').placeholder();
+    
     // 处理在ff下的bug
     if ($.browser.mozilla) {
         $(document).on('click', 'label', function(e) {

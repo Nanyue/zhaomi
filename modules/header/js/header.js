@@ -7,6 +7,9 @@ module.exports = function() {}
 
 $(function() {
 
+    // placeholder polyfill
+    $('input, textarea').placeholder();
+    
     var $win = $(window);
     var $doc = $(document);
     var $area = $('#area');

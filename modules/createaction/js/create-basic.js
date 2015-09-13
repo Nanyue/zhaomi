@@ -9,7 +9,7 @@ var FORMAT = 'YYYY-MM-DD HH:mm';
 var rValidImg = /\.(jpg|jpeg|png)$/;
 
 $(function() {
-
+    
     var startDate;
 
     $('#addr').citySelect({
@@ -210,6 +210,8 @@ $(function() {
                 '<input id="id_present" name="present" class="content"' + 
                 ' placeholder="请输入礼品详情"></div>')
             $(this).addClass('checked');
+            // placeholder polyfill
+            $('input, textarea').placeholder();
         }
         
     })
@@ -375,6 +377,8 @@ $(function() {
             },
             error: function() {
                 console.error('擦了，创建活动提交失败~')
+                $nextBtnW.removeClass('ing');
+                $nextBtn.text('下一步');
             }
         });
 

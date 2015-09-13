@@ -41,6 +41,9 @@ $(function() {
                 $questions.append($(compileTpl(UPLOAD_TPL, ctx)));
                 break;
         }
+
+        // placeholder polyfill
+        $('input').placeholder();
     })
 
     $questions.on('mouseenter', '.criteria-q, ul li', function() {

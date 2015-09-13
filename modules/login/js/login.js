@@ -5,6 +5,10 @@ var zhaomi = require('../../../lib/common/common');
 var utils = require('../../../common/utils');
 
 $(function() {
+
+    // placeholder polyfill
+    $('input, textarea').placeholder();
+    
     $doc = $(document);
 
     $('body').height($doc.height());
