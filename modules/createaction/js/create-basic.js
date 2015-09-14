@@ -170,15 +170,15 @@ $(function() {
                 break;
         }      
 
-        if (isValid) {
-            if (startDate) {
-                endDate = getOppositeDate(startDate, day, hour, minute);
-                $endDate.val(endDate);
-            } else if (endDate) {
-                startDate = getOppositeDate(endDate, -day, -hour, -minute);
-                $startDate.val(startDate);
-            }
-        }
+        // if (isValid) {
+        //     if (startDate) {
+        //         endDate = getOppositeDate(startDate, day, hour, minute);
+        //         $endDate.val(endDate);
+        //     } else if (endDate) {
+        //         startDate = getOppositeDate(endDate, -day, -hour, -minute);
+        //         $startDate.val(startDate);
+        //     }
+        // }
     });
 
     function getOppositeDate(date, day, hour, minute) {
