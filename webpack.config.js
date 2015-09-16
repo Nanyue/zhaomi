@@ -1,6 +1,6 @@
 // webpack.config.js
 var webpack = require('webpack');
-var PROD = JSON.parse(process.env.PROD || "0");
+var isProd = JSON.parse(process.env.PROD || "0");
 
 module.exports = {
   entry: {
@@ -14,21 +14,22 @@ module.exports = {
     create: './modules/createaction/js/create.js',
     message: './modules/message/js/message.js'
   },
+  devtool: isProd ? '' : 'source-map',
   output: {
     path: 'build',
     filename: '[name].js'       
   },
   module: {
     loaders: [
-      { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' },
-      { test: /\.css$/, loader: 'style-loader!css-loader' }
+      { test: /\.less$/, loader: isProd ? 'style!css!less' : 'style!css?sourceMap!less' },
+      { test: /\.css$/, loader: isProd ? 'style!css' : 'style!css?sourceMap'}
     ]
   },
   resolve: {
     // 现在可以写 require('file') 代替 require('file.less')
     extensions: ['', '.js', '.css', '.less'] 
   },
-  plugins: PROD ? [
+  plugins: isProd ? [
     new webpack.optimize.UglifyJsPlugin({minimize: true})
   ] : []
 };
