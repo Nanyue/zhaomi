@@ -61,25 +61,27 @@ exports.init = function() {
         }
 
         function post(opType, actionId, target, callback) {
-            zhaomi.postData('/mine/manage', {
-                action: actionId,
-                target: target,
-                optype: opType,
-            }, function(res) {
-                var success = res && res.success;
-                var data = res.data;
+            // zhaomi.postData('/mine/manage', {
+            //     action: actionId,
+            //     target: target,
+            //     optype: opType,
+            // }, function(res) {
+            //     var success = res && res.success;
+            //     var data = res.data;
 
-                if (res.success) {
-                    removeBtns(opType);
-                    callback();
-                } else {
-                    for (var i in data) {
-                        utils.warn(data[i]);
-                        break;
-                    }
+            //     if (res.success) {
+            //         removeBtns(opType);
+            //         callback();
+            //     } else {
+            //         for (var i in data) {
+            //             utils.warn(data[i]);
+            //             break;
+            //         }
                     
-                }
-            });
+            //     }
+            // });
+removeBtns(opType);
+callback();
         }
     })
 
