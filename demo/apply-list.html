@@ -3,9 +3,11 @@
 <head>
     <title>我关注的活动页面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="//zhao-mi.net/lib/jqueryui/jquery-ui.css"/>
     <script type="text/javascript" src="//zhao-mi.net/lib/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="//zhao-mi.net/lib/es5/es5-shim.min.js"></script>
     <script type="text/javascript" src="//zhao-mi.net/lib/placeholder/jquery.placeholder.min.js"></script>
+    <script type="text/javascript" src="//zhao-mi.net/lib/jqueryui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="//zhao-mi.net/build/mine.js"></script>
 </head>
 <body>
@@ -73,26 +75,6 @@
                             <span>本科</span>
                         </div>
                         <div class="apply-answer">
-                            <p>3、您的学历？</p>
-                            <span>本科</span>
-                        </div>
-                        <div class="apply-answer">
-                            <p>3、您的学历？</p>
-                            <span>本科</span>
-                        </div>
-                        <div class="apply-answer">
-                            <p>4、您的照片？</p>
-                            <div class="answer-img">
-                                <img src="/assets/imgs/portrait.png" alt="">    
-                            </div>
-                        </div>
-                        <div class="apply-answer">
-                            <p>4、您的照片？</p>
-                            <div class="answer-img">
-                                <img src="/assets/imgs/portrait.png" alt="">    
-                            </div>
-                        </div>
-                        <div class="apply-answer">
                             <p>4、您的照片？</p>
                             <div class="answer-img">
                                 <img src="/assets/imgs/portrait.png" alt="">    
@@ -101,15 +83,15 @@
                     </div>
                 </div>
             </div>
-            <div class="apply-item">
+            <div class="apply-item" data-action="123456" data-target="123" data-status="finished">
                 <div class="apply-item-content fn-clr">
                     <span class="portrait">
                         <img src="//zhao-mi.net/assets/imgs/portrait.png" alt="">
                     </span>
                     <span class="name">龚子仪</span>
                     <span class="detail">详情</span>
-                    <button class="z-btn approve">确认完成</button>
-                    <button class="z-btn completed">已完成</button>
+                    <button class="z-btn green" data-optype="approve">通过</button>
+                    <button class="z-btn red" data-optype="deny">拒绝</button>
                 </div>
                 <div class="detail-content">
                     <div class="personal-info">

@@ -14,7 +14,7 @@ module.exports = {
      */
     show: function(data) {
 
-        if (!data || !data.nextAction) {
+        if (!data) {
             return;
         }
 
@@ -25,7 +25,7 @@ module.exports = {
         var txt = data.txt || '操作成功';
         var width = data.width || 320;
         var toastTimeout = data.timeout || 3000;
-        var nextAction = data.nextAction || '/';
+        var nextAction = data.nextAction;
         var compiledTpl;
 
         compiledTpl = utils.compileTpl(TOAST_TPL, {
@@ -48,7 +48,9 @@ module.exports = {
 
         setTimeout(function() {
             $dialog.dialog('close');
-            location.href = nextAction;
+            if (nextAction) {
+                location.href = nextAction;  
+            }
         }, toastTimeout);
     }
 }

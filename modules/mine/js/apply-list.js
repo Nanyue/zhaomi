@@ -1,10 +1,11 @@
 var zhaomi = require('../../../lib/common/common');
 var utils = require('../../../common/utils');
+var toast = require('../../../common/pkgs/toast/toast');
 
 exports.init = function() {
     var btnMapper = {
         'approve': '<button class="z-btn green" data-optype="approve">通过</button>',
-        'approve_cancel': '<button class="z-btn green" data-optype="approve_cancel">取消通过</button>',
+        'approve_cancel': '<button class="z-btn red" data-optype="approve_cancel">取消通过</button>',
         'deny': '<button class="z-btn red" data-optype="deny">拒绝</button>',
         'deny_cancel': '<button class="z-btn green" data-optype="deny_cancel">取消拒绝</button>',
         'finish': '<button class="z-btn green" data-optype="finish">确认完成</button>',
@@ -19,6 +20,7 @@ exports.init = function() {
         var opType = $(this).data('optype');
         var actionId = $container.data('action');
         var targetId = $applyItem.data('target');
+        var isFinished = $applyItem.data('status') === 'finished';
 
         switch (opType) {
             case 'deny':
@@ -42,9 +44,16 @@ exports.init = function() {
                 });
                 break;
             case 'finish':
-                post(opType, actionId, targetId, function() {
-                    addBtns(['finished']);
-                });
+                if (isFinished) {
+                    post(opType, actionId, targetId, function() {
+                        addBtns(['finished']);
+                    });
+                } else {
+                    toast.show({
+                        txt: '活动尚未结束，请结束后操作',
+                        timeout: 2000
+                    });
+                }
                 break;
         }
 
@@ -61,27 +70,25 @@ exports.init = function() {
         }
 
         function post(opType, actionId, target, callback) {
-            // zhaomi.postData('/mine/manage', {
-            //     action: actionId,
-            //     target: target,
-            //     optype: opType,
-            // }, function(res) {
-            //     var success = res && res.success;
-            //     var data = res.data;
+            zhaomi.postData('/mine/manage', {
+                action: actionId,
+                target: target,
+                optype: opType,
+            }, function(res) {
+                var success = res && res.success;
+                var data = res.data;
 
-            //     if (res.success) {
-            //         removeBtns(opType);
-            //         callback();
-            //     } else {
-            //         for (var i in data) {
-            //             utils.warn(data[i]);
-            //             break;
-            //         }
+                if (res.success) {
+                    removeBtns(opType);
+                    callback();
+                } else {
+                    for (var i in data) {
+                        utils.warn(data[i]);
+                        break;
+                    }
                     
-            //     }
-            // });
-removeBtns(opType);
-callback();
+                }
+            });
         }
     })
 
